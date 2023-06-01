@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "bliss_front_end",
+    "slug": "bliss_front_end",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/Bliss_tree.jpg",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/BlissQuantsTM.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#3a3332"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "IOSAPK"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/BlissQuantsTM.jpg",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.krish_m.bliss_front_end"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e41848af-e79f-4164-af81-5a12918ddc53"
+      }
+    }
+  }
+}
