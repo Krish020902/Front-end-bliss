@@ -7,73 +7,66 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
-import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const User = () => {
+import React, { useState , useEffect } from "react";
+import { useToast } from "react-native-toast-notifications";
+import { GET_USER_DATA } from "../constants/api";
+import { useUserContext } from "../context/user_context";
+import axios from "axios";
+
+const User = ({navigation}) => {
+    const {  name , email, phone , setUserEmail , setUserName } = useUserContext();
+
+  const toast = useToast();
   const userData = {
-    name: "Krish Mehta",
-    email: "krish.mehta.3822@gmail.com",
-    phoneNumber: "+91-8401265994",
+    
+    name: `${name}`,
+    email: `${email}`,
+    phone: `${phone}`,
   };
   const [buttonOpacity] = useState(new Animated.Value(1));
 
   const handleLogout = () => {
-    // Animated.timing(buttonOpacity, {
-    //   toValue: 0.5,
-    //   duration: 200,
-    //   useNativeDriver: true,
-    // }).start(() => {
-    //   // Handle logout functionality
-    //   // ...
-    //   // Reset button opacity
-    //   Animated.timing(buttonOpacity, {
-    //     toValue: 1,
-    //     duration: 200,
-    //     useNativeDriver: true,
-    //   }).start();
-    // });
-    // Handle logout functionality
-    // ...
+    toast.show("Logged out Successfully! ", {
+      type: "success",
+       placement: "top",
+      animationType: "zoom-in",
+    })
+    navigation.navigate("Login");
+    
   };
 
   const handleChangePassword = () => {
-    // Animated.timing(buttonOpacity, {
-    //   toValue: 0.5,
-    //   duration: 200,
-    //   useNativeDriver: true,
-    // }).start(() => {
-    //   // Handle change password functionality
-    //   // ...
-    //   // Reset button opacity
-    //   Animated.timing(buttonOpacity, {
-    //     toValue: 1,
-    //     duration: 200,
-    //     useNativeDriver: true,
-    //   }).start();
-    // });
-    // Handle change password functionality
-    // ...
+    navigation.navigate("ResetPass");
+    
   };
 
   const handleEditProfile = () => {
-    // Animated.timing(buttonOpacity, {
-    //   toValue: 0.5,
-    //   duration: 200,
-    //   useNativeDriver: true,
-    // }).start(() => {
-    //   // Handle edit profile functionality
-    //   // ...
-    //   // Reset button opacity
-    //   Animated.timing(buttonOpacity, {
-    //     toValue: 1,
-    //     duration: 200,
-    //     useNativeDriver: true,
-    //   }).start();
-    // });
-    // Handle edit profile functionality
-    // ...
+    navigation.navigate('SetUserDetails')
   };
+  const getUserdata  = async () => {
+    const resultUrl = `${GET_USER_DATA}/${phone}`;
+    
+    const token = await AsyncStorage.getItem("token");
+    try {
+      const result = await axios.get(resultUrl, {
+        headers:{
+          Authorization:`Bearer ${token}`
+        } 
+      });
+      setUserEmail(result.data.data.email);
+      setUserName(result.data.data.name);
+      console.log("this is result",result.data.data.email)
 
+      
+    } catch (err) {
+      console.log(err);
+    }
+  };
+useEffect(() => {
+    getUserdata();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -98,13 +91,14 @@ const User = () => {
       </View>
       <View style={styles.profileContainer}>
         <Text style={styles.label}>Name:</Text>
-        <Text style={styles.detail}>Krish Mehta</Text>
+        
+        <Text style={styles.detail}>{userData.name}</Text>
 
         <Text style={styles.label}>Email:</Text>
-        <Text style={styles.detail}>krish.mehta.3822@gmail.com</Text>
+        <Text style={styles.detail}>{userData.email}</Text>
 
         <Text style={styles.label}>Phone Number:</Text>
-        <Text style={styles.detail}>+91-8401265994</Text>
+        <Text style={styles.detail}>{userData.phone}</Text>
       </View>
 
       <View style={styles.buttonContainer}>
@@ -182,4 +176,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default User;
+export default User

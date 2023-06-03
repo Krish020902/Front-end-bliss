@@ -14,7 +14,13 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Email from "./screens/Email";
-
+import SetPassword from "./screens/SetPassword";
+import { ToastProvider, useToast } from "react-native-toast-notifications";
+import NewPass from "./screens/NewPass";
+import ForgotPass from "./screens/ForgotPass";
+import ForgotOtp from "./screens/ForgotOtp";
+import ResetPass from "./screens/ResetPass";
+import SetUserDetails from "./screens/SetUserDetails";
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -27,6 +33,9 @@ export default function App() {
     );
   };
   return (
+    <ToastProvider
+    offsetTop={30}>
+
     <UserProvider>
       <DashboardProvider>
         <NavigationContainer>
@@ -39,9 +48,18 @@ export default function App() {
             <Stack.Screen name="MobileNo" component={MobileNo} />
             <Stack.Screen name="OTP_REGISTER" component={OTP_REGISTER} />
             <Stack.Screen name="OTP_LOGIN" component={OTP_LOGIN} />
+            <Stack.Screen name="SetPassword" component={SetPassword} />
+            <Stack.Screen name="ForgotPass" component={ForgotPass} />
+            <Stack.Screen name="NewPass" component={NewPass} />
+            <Stack.Screen name="ForgotOtp" component={ForgotOtp} />
+            <Stack.Screen name="ResetPass" component={ResetPass} />
+            <Stack.Screen name="SetUserDetails" component={SetUserDetails} />
+
+            
           </Stack.Navigator>
         </NavigationContainer>
       </DashboardProvider>
     </UserProvider>
+    </ToastProvider>
   );
 }

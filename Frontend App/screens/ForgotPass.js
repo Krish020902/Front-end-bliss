@@ -13,9 +13,8 @@ import axios from "axios";
 import { LOGIN_MOBILE } from "../constants/api";
 import { Link } from "@react-navigation/native";
 import Email from "./Email";
-import { useToast } from "react-native-toast-notifications";
-const Login = ({ navigation }) => {
-  const toast = useToast();
+
+const ForgotPass = ({ navigation }) => {
   const { setUserPhone, setUserOtp, phone } = useUserContext();
   const clickemail = () => {
     navigation.navigate("Email");
@@ -48,17 +47,11 @@ const Login = ({ navigation }) => {
         console.log("otp is :");
         console.log(res.data.data.otp);
         setUserOtp(res.data.data.otp);
-        navigation.navigate("OTP_LOGIN");
+        navigation.navigate("ForgotOtp");
       } else {
-        toast.show("Sorry there is no user! ", {
-      type: "danger",
-       placement: "top",
-      animationType: "zoom-in",
-    })
         console.log(err);
       }
     } catch (err) {
-      
       console.log(err);
     }
   };
@@ -78,7 +71,7 @@ const Login = ({ navigation }) => {
       >
         Welcome,
       </Text>
-      <Text style={styles.font}>Enter Your Mobile Number</Text>
+      <Text style={styles.font}>Enter Your Mobile Number to recover password.</Text>
       <TextInput
         maxLength={10}
         keyboardType="phone-pad"
@@ -97,14 +90,7 @@ const Login = ({ navigation }) => {
       <Text style={{ fontWeight: "lighter", color: "grey", marginLeft: 15 }}>
         OTP Message will be sent to your Phone Number
       </Text>
-      <View style={{ flexDirection: "row" }}>
-        <Text style={styles.font}>Use different method </Text>
-        <TouchableOpacity onPress={clickemail}>
-          <Text style={{ color: "lightblue", paddingLeft: 4, paddingTop: 5 }}>
-            click here
-          </Text>
-        </TouchableOpacity>
-      </View>
+      
       <TouchableOpacity
         onPress={generateOtp}
         style={{
@@ -165,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default ForgotPass;

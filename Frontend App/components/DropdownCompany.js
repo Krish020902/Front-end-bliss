@@ -105,10 +105,10 @@ export default function DropdownCompany() {
             onBlur={() => setDdFocus1(false)}
             onChange={(item) => {
               setDdValue1(item.value);
-              console.log(ddValue1);
-              console.log(
-                companies[parseInt(item.value)]?.Label?.toLowerCase()
-              );
+              // console.log(ddValue1);
+              // console.log(
+              //   companies[parseInt(item.value)]?.Label?.toLowerCase()
+              // );
               setCurrCompany(
                 companies[parseInt(item.value)]?.Label?.toLowerCase()
               );
@@ -145,8 +145,8 @@ export default function DropdownCompany() {
             onBlur={() => setDdFocus2(false)}
             onChange={(item) => {
               setDdValue2(item.value);
-              console.log("here in type of graph changed");
-              console.log(item.value);
+              // console.log("here in type of graph changed");
+              // console.log(item.value);
               // console.log(typeOfGraph[(item.value) - 1].name);
               // console.log(typeOfGraph[typeOfGraph[toString(item.value) - 1]?.name]);
               setCurrTypeOfGraph(typeOfGraph[item.value - 1]?.name);

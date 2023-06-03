@@ -9,8 +9,14 @@ import {
   Image,
 } from "react-native";
 import Navbar from "../components/Navbar";
+import { ToastProvider, useToast } from "react-native-toast-notifications";
 
 const Home = ({ navigation }) => {
+  const onClickLogin = () =>{
+   
+    navigation.navigate("Login")
+  }
+  const toast = useToast();
   return (
     <>
       <View style={styles.logoContainer}>
@@ -28,7 +34,7 @@ const Home = ({ navigation }) => {
         }}
       >
         <TouchableOpacity
-          onPress={() => navigation.navigate("Login")}
+          onPress={ onClickLogin}
           style={{
             backgroundColor: "rgb(132,194,37)",
             padding: 10,

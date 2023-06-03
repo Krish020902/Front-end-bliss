@@ -60,6 +60,11 @@ const OTP = ({ navigation }) => {
       if(res.data.valid){
         console.log("inside valid")
         await AsyncStorage.setItem("token", res.data.access_token);
+         toast.show("Signed up Successfully", {
+      type: "success",
+       placement: "top",
+      animationType: "zoom-in",
+    })
         navigation.navigate("MainDashboard");
       }
       else{
