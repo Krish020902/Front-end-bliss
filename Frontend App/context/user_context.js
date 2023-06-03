@@ -5,6 +5,8 @@ import {
   SET_USER_OTP,
   SET_USER_PHONE,
   SET_USER_PASSWORD,
+  SET_USER_OLD_PASSWORD,
+  SET_USER_NAME
 } from "../action";
 
 const initialState = {
@@ -12,6 +14,8 @@ const initialState = {
   phone: "",
   otp: "",
   password: "",
+  oldpassword:"",
+  name:""
 };
 
 const UserContext = React.createContext();
@@ -31,6 +35,12 @@ export const UserProvider = ({ children }) => {
   const setUserPassword = (val) => {
     dispath({ type: SET_USER_PASSWORD, payload: val });
   };
+  const setUserOldPassword = (val) => {
+    dispath({ type: SET_USER_OLD_PASSWORD, payload: val });
+  };
+  const setUserName = (val) => {
+    dispath({ type: SET_USER_NAME, payload: val });
+  };
 
   return (
     <UserContext.Provider
@@ -40,6 +50,8 @@ export const UserProvider = ({ children }) => {
         setUserPhone,
         setUserOtp,
         setUserPassword,
+        setUserOldPassword,
+        setUserName
       }}
     >
       {children}

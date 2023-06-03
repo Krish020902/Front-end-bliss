@@ -8,29 +8,49 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ToastProvider, useToast } from "react-native-toast-notifications";
 
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
-import { LOGIN_EMAIL } from "../constants/api";
+import { SET_PASSWORD } from "../constants/api";
 
-const Email = ({ navigation }) => {
-  const { setUserEmail, setUserPassword, email, password  , setUserPhone,  phone} = useUserContext();
-  const forgotpass = () =>{
-    navigation.navigate("ForgotPass");
+const NewPass = ({ navigation }) => {
+  const { setUserEmail, setUserPassword, email, password , phone , setUserPhone} = useUserContext();
+  const toast = useToast();
+const [password1, setPassword1] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const setnewpass = (change) =>{
+      setUserPassword(change);
+      setPassword1(change);
+  }
+  const setconfirmpass = (change) =>{
+    setConfirmPassword(change);
+    
   }
   const login = async () => {
+    if(password1===confirmPassword){
+const token = await AsyncStorage.getItem("token");
+const numberurl = `${SET_PASSWORD}/${phone}`
     try {
-      console.log(typeof setUserEmail);
-      console.log("email and aps5s", password);
-      const res = await axios.post(LOGIN_EMAIL, {
-        mobile: `${phone}`,
-        password: `${password}`,
+      // console.log(typeof setUserEmail);
+      // console.log("email and aps5s", password);
+      const res = await axios.put(numberurl, {
+        
+        new_password: `${password}`,
+        
+      },{
+        headers:{
+          Authorization:`Bearer ${token}`
+        } 
       });
 
       if (res.data.valid) {
         console.log(res.data.message);
-
+         toast.show("Password set Successfully!", {
+      type: "success",
+    })
         navigation.navigate("MainDashboard");
       } else {
         console.log("some error", err);
@@ -38,6 +58,16 @@ const Email = ({ navigation }) => {
     } catch (err) {
       console.log("Outside catch", err);
     }
+    }
+    else{
+      console.log("unsuccessfull");
+      toast.show("Passwords don't match ", {
+      type: "danger",
+      placement: "top",
+      animationType: "zoom-in",
+    })
+    }
+        
   };
   return (
     <View style={styles.container}>
@@ -55,9 +85,10 @@ const Email = ({ navigation }) => {
       >
         Welcome,
       </Text>
-      <Text style={styles.font}>Enter Your Mobile Number</Text>
+      <Text style={styles.font}>Set new Password</Text>
       <TextInput
-              keyboardType="phone-pad"
+              
+        secureTextEntry={true}
 
         style={{
           height: 26,
@@ -69,9 +100,9 @@ const Email = ({ navigation }) => {
           borderBottomWidth: 1,
           borderBottomColor: "#555",
         }}
-        onChangeText={(number) => setUserPhone(number)}
+        onChangeText={setnewpass}
       />
-      <Text style={styles.font}>Enter Your Password</Text>
+      <Text style={styles.font}>Confirm Your Password</Text>
       <TextInput
         secureTextEntry={true}
         
@@ -86,13 +117,8 @@ const Email = ({ navigation }) => {
           borderBottomWidth: 1,
           borderBottomColor: "#555",
         }}
-        onChangeText={(pass) => setUserPassword(pass)}
+        onChangeText={setconfirmpass}
       />
-      <TouchableOpacity onPress={forgotpass}>
-          <Text style={{ color: "lightblue", paddingLeft: 17, paddingTop: 5 }}>
-            Forgot Password?
-          </Text>
-        </TouchableOpacity>
       <TouchableOpacity
         onPress={login}
         style={{
@@ -152,4 +178,4 @@ const styles = StyleSheet.create({
     // marginBottom: 10,
   },
 });
-export default Email;
+export default NewPass;

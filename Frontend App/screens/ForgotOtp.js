@@ -16,7 +16,7 @@ import { VERIFY_LOGIN, VERIFY_REGISTER_API } from "../constants/api";
 import { useUserContext } from "../context/user_context";
 import Timer from "../components/Timer";
 
-const OTP = ({ navigation }) => {
+const ForgotOtp = ({ navigation }) => {
   //   const [flag, setFlag] = useState(false);
   //   const handleTimer = () => {
     //     setFlag(true);
@@ -37,15 +37,15 @@ const OTP = ({ navigation }) => {
 
       if(res.data.valid){
         
-         toast.show("Logged in Successfull! ", {
+         toast.show("Correct Otp ", {
       type: "success",
        placement: "top",
       animationType: "zoom-in",
     })
-        navigation.navigate("MainDashboard");
+        navigation.navigate("NewPass");
       }
       else{
-        toast.show("Incorrect Otp", {
+         toast.show("Incorrect Otp s", {
       type: "danger",
        placement: "top",
       animationType: "zoom-in",
@@ -103,7 +103,7 @@ const OTP = ({ navigation }) => {
         onPress={handleOtp}
         style={{ backgroundColor: "rgb(132,194,37)", padding: 10, marginTop: 20}}
         >
-        <Text style={{ color: "white", textAlign:"center"}}>Go To Dashboard</Text>
+        <Text style={{ color: "white", textAlign:"center"}}>Set new password</Text>
       </TouchableOpacity>
         <Image
           source={require("../assets/FooterLogo.png")}
@@ -150,4 +150,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default OTP;
+export default  ForgotOtp;

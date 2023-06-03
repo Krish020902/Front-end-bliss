@@ -5,7 +5,11 @@ import axios from "axios";
 import { useDashboardContext } from "../context/dashboard_context";
 import { API } from "../constants/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize
+} from "react-native-responsive-dimensions";
 const DropdownTable = () => {
   const { tableData, setTableData, currCompany } = useDashboardContext();
 
@@ -17,7 +21,7 @@ const DropdownTable = () => {
       const result = await axios.get(resultUrl, {
         headers:{
           Authorization:`Bearer ${token}`
-        }
+        } 
       });
       const genResultData = result.data.result.map((element) => {
         return {
@@ -96,8 +100,8 @@ const DropdownTable = () => {
             <View style={styles.container}>
               <View style={styles.headerRow}>
                 {item.headers.map((header) => {
-                  console.log("insider header");
-                  console.log(item);
+                  // console.log("insider header");
+                  // console.log(item);
                   return <Text style={styles.header}>{header}</Text>;
                 })}
               </View>
@@ -135,7 +139,7 @@ const styles = StyleSheet.create({
     // position: "absolute",
     marginTop: 270,
     backgroundColor: "#3a3332",
-    width: 420,
+    width: responsiveWidth(100),
     // marginLeft: 2,
     height: 258,
     // alignItems: "center",

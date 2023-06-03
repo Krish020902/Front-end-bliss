@@ -8,29 +8,57 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ToastProvider, useToast } from "react-native-toast-notifications";
 
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
-import { LOGIN_EMAIL } from "../constants/api";
+import { UPDATE_USER_DATA } from "../constants/api";
 
-const Email = ({ navigation }) => {
-  const { setUserEmail, setUserPassword, email, password  , setUserPhone,  phone} = useUserContext();
-  const forgotpass = () =>{
-    navigation.navigate("ForgotPass");
-  }
+const SetUserDetails = ({ navigation }) => {
+  const { setUserEmail, setUserName, email, name, phone , setUserPhone} = useUserContext();
+  const toast = useToast();
+
+
+
   const login = async () => {
+   
+   const token = await AsyncStorage.getItem("token");
+const infourl = `${UPDATE_USER_DATA}/${phone}`
     try {
-      console.log(typeof setUserEmail);
-      console.log("email and aps5s", password);
-      const res = await axios.post(LOGIN_EMAIL, {
-        mobile: `${phone}`,
-        password: `${password}`,
+      // console.log(typeof setUserEmail);
+      // console.log("email and aps5s", password);
+      const res = await axios.put(infourl, {
+        "birthyear": "",
+        "company": "",
+        "country": "",
+        "email": email,
+        "email_org": "",
+        "first_date": "",
+        "interest": "",
+        "leader_name": "",
+        "mobile": phone,
+        "name": name,
+        "passreset": "",
+        "password": "",
+        "pincode": "",
+        "plan": "",
+        "register_date": "",
+        "role": "",
+        "session_id": "",
+        "status": ""
+},{
+        headers:{
+          Authorization:`Bearer ${token}`
+        } 
       });
 
       if (res.data.valid) {
         console.log(res.data.message);
-
+         toast.show("Details updated Successfully!", {
+      type: "success",
+    })
         navigation.navigate("MainDashboard");
       } else {
         console.log("some error", err);
@@ -38,6 +66,8 @@ const Email = ({ navigation }) => {
     } catch (err) {
       console.log("Outside catch", err);
     }
+
+        
   };
   return (
     <View style={styles.container}>
@@ -45,19 +75,11 @@ const Email = ({ navigation }) => {
         source={require("../assets/BlissQuantsTM.jpg")}
         style={styles.logo}
       />
-      <Text
-        style={{
-          fontWeight: "bold",
-          color: "white",
-          marginLeft: 15,
-          marginTop: 20,
-        }}
-      >
-        Welcome,
-      </Text>
-      <Text style={styles.font}>Enter Your Mobile Number</Text>
+      
+      <Text style={styles.font}>Name</Text>
       <TextInput
-              keyboardType="phone-pad"
+              
+        
 
         style={{
           height: 26,
@@ -69,13 +91,14 @@ const Email = ({ navigation }) => {
           borderBottomWidth: 1,
           borderBottomColor: "#555",
         }}
-        onChangeText={(number) => setUserPhone(number)}
+        onChangeText={(change)=>{setUserName(change)}}
       />
-      <Text style={styles.font}>Enter Your Password</Text>
+     
+      <Text style={styles.font}>Phone</Text>
       <TextInput
-        secureTextEntry={true}
+              
         
-        maxLength={10}
+
         style={{
           height: 26,
           alignSelf: "center",
@@ -86,13 +109,23 @@ const Email = ({ navigation }) => {
           borderBottomWidth: 1,
           borderBottomColor: "#555",
         }}
-        onChangeText={(pass) => setUserPassword(pass)}
+        onChangeText={(change)=>{setUserPhone(change)}}
       />
-      <TouchableOpacity onPress={forgotpass}>
-          <Text style={{ color: "lightblue", paddingLeft: 17, paddingTop: 5 }}>
-            Forgot Password?
-          </Text>
-        </TouchableOpacity>
+      <Text style={styles.font}>Email</Text>
+      <TextInput
+        
+        style={{
+          height: 26,
+          alignSelf: "center",
+          margin: 15,
+          width: 350,
+          fontSize: 20,
+          color: "white",
+          borderBottomWidth: 1,
+          borderBottomColor: "#555",
+        }}
+        onChangeText={(change)=>{setUserEmail(change)}}
+      />
       <TouchableOpacity
         onPress={login}
         style={{
@@ -152,4 +185,4 @@ const styles = StyleSheet.create({
     // marginBottom: 10,
   },
 });
-export default Email;
+export default SetUserDetails;

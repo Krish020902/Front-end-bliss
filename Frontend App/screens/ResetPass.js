@@ -8,29 +8,56 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ToastProvider, useToast } from "react-native-toast-notifications";
 
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
-import { LOGIN_EMAIL } from "../constants/api";
+import { RESET_PASSWORD } from "../constants/api";
 
-const Email = ({ navigation }) => {
-  const { setUserEmail, setUserPassword, email, password  , setUserPhone,  phone} = useUserContext();
-  const forgotpass = () =>{
-    navigation.navigate("ForgotPass");
+const ResetPass = ({ navigation }) => {
+  const { setUserEmail, setUserPassword, email, password , phone , setUserPhone , oldpassword , setUserOldPassword} = useUserContext();
+  const toast = useToast();
+const [password1, setPassword1] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const setoldpass = (change) =>{
+    setUserOldPassword(change);
+    console.log("old pass",oldpassword)
+  }
+  const setnewpass = (change) =>{
+      setUserPassword(change);
+      setPassword1(change);
+      console.log(password)
+  }
+  const setconfirmpass = (change) =>{
+    setConfirmPassword(change);
+    
   }
   const login = async () => {
+    if(password1===confirmPassword){
+const token = await AsyncStorage.getItem("token");
+const numberurl = `${RESET_PASSWORD}/${phone}`
     try {
-      console.log(typeof setUserEmail);
-      console.log("email and aps5s", password);
-      const res = await axios.post(LOGIN_EMAIL, {
-        mobile: `${phone}`,
-        password: `${password}`,
+      // console.log(typeof setUserEmail);
+      // console.log("email and aps5s", password);
+      const res = await axios.put(numberurl, {
+        "old_password":`${oldpassword}`,
+        "new_password": `${password}`
+        
+      },{
+        headers:{
+          Authorization:`Bearer ${token}`
+        } 
       });
 
       if (res.data.valid) {
-        console.log(res.data.message);
+              console.log("isvalid",oldpassword);
 
+        console.log(res.data.message);
+         toast.show("Password reset Successfully!", {
+      type: "success",
+    })
         navigation.navigate("MainDashboard");
       } else {
         console.log("some error", err);
@@ -38,6 +65,16 @@ const Email = ({ navigation }) => {
     } catch (err) {
       console.log("Outside catch", err);
     }
+    }
+    else{
+      console.log("unsuccessfull");
+      toast.show("Passwords don't match ", {
+      type: "danger",
+      placement: "top",
+      animationType: "zoom-in",
+    })
+    }
+        
   };
   return (
     <View style={styles.container}>
@@ -45,19 +82,11 @@ const Email = ({ navigation }) => {
         source={require("../assets/BlissQuantsTM.jpg")}
         style={styles.logo}
       />
-      <Text
-        style={{
-          fontWeight: "bold",
-          color: "white",
-          marginLeft: 15,
-          marginTop: 20,
-        }}
-      >
-        Welcome,
-      </Text>
-      <Text style={styles.font}>Enter Your Mobile Number</Text>
+      
+      <Text style={styles.font}>Enter Old Password</Text>
       <TextInput
-              keyboardType="phone-pad"
+              
+        secureTextEntry={true}
 
         style={{
           height: 26,
@@ -69,9 +98,26 @@ const Email = ({ navigation }) => {
           borderBottomWidth: 1,
           borderBottomColor: "#555",
         }}
-        onChangeText={(number) => setUserPhone(number)}
+        onChangeText={setoldpass}
       />
-      <Text style={styles.font}>Enter Your Password</Text>
+      <Text style={styles.font}>Set new Password</Text>
+      <TextInput
+              
+        secureTextEntry={true}
+
+        style={{
+          height: 26,
+          alignSelf: "center",
+          margin: 15,
+          width: 350,
+          fontSize: 20,
+          color: "white",
+          borderBottomWidth: 1,
+          borderBottomColor: "#555",
+        }}
+        onChangeText={setnewpass}
+      />
+      <Text style={styles.font}>Confirm Your Password</Text>
       <TextInput
         secureTextEntry={true}
         
@@ -86,13 +132,8 @@ const Email = ({ navigation }) => {
           borderBottomWidth: 1,
           borderBottomColor: "#555",
         }}
-        onChangeText={(pass) => setUserPassword(pass)}
+        onChangeText={setconfirmpass}
       />
-      <TouchableOpacity onPress={forgotpass}>
-          <Text style={{ color: "lightblue", paddingLeft: 17, paddingTop: 5 }}>
-            Forgot Password?
-          </Text>
-        </TouchableOpacity>
       <TouchableOpacity
         onPress={login}
         style={{
@@ -152,4 +193,4 @@ const styles = StyleSheet.create({
     // marginBottom: 10,
   },
 });
-export default Email;
+export default ResetPass;
