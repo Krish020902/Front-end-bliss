@@ -8,9 +8,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   responsiveHeight,
   responsiveWidth,
-  responsiveFontSize
+  responsiveFontSize,
 } from "react-native-responsive-dimensions";
+import Spinner from "react-native-loading-spinner-overlay";
+
 const DropdownTable = () => {
+  const [loading, setLoading] = useState(false);
+
   const { tableData, setTableData, currCompany } = useDashboardContext();
 
   const getTableData = async () => {
@@ -18,10 +22,11 @@ const DropdownTable = () => {
     const movementUrl = `${API}/movement/${currCompany}`;
     const token = await AsyncStorage.getItem("token");
     try {
+      setLoading(true);
       const result = await axios.get(resultUrl, {
-        headers:{
-          Authorization:`Bearer ${token}`
-        } 
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       const genResultData = result.data.result.map((element) => {
         return {
@@ -45,9 +50,9 @@ const DropdownTable = () => {
       // for movement
 
       const movement = await axios(movementUrl, {
-        headers:{
-          Authorization:`Bearer ${token}`
-        }
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       const genMovementData = movement.data.movement.map((element) => {
         return {
@@ -72,6 +77,7 @@ const DropdownTable = () => {
       };
 
       setTableData([createdResultData, createdMovementData]);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -82,6 +88,7 @@ const DropdownTable = () => {
   }, [currCompany]);
   return (
     <View>
+      <Spinner visible={loading} color="green" />
       {tableData.length !== 0 && (
         <SwiperFlatList
           autoplay

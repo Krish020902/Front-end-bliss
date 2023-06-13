@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDashboardContext } from "../context/dashboard_context";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -8,8 +8,11 @@ import RNPickerSelect from "react-native-picker-select";
 import axios from "axios";
 import { API_GET_ALL_COMPANIES } from "../constants/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Spinner from "react-native-loading-spinner-overlay";
 
 export default function DropdownCompany() {
+  const [loading, setLoading] = useState(false);
+
   const {
     ddValue1,
     ddValue2,
@@ -54,16 +57,18 @@ export default function DropdownCompany() {
   const getAllCompanies = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
+      setLoading(true);
       const res = await axios.get(API_GET_ALL_COMPANIES, {
         headers: {
-        Authorization: `Bearer ${token}`
-      }
+          Authorization: `Bearer ${token}`,
+        },
       });
       const newData = res.data.data.map((item, index) => {
         return { Label: item.c_name, value: index };
       });
 
       setCompanies(newData);
+      setLoading(false);
       // setTypeOfGraph([
       //   { name: "intraDay", value: "1" },
       //   { name: "Daily", value: "2" },
@@ -85,6 +90,7 @@ export default function DropdownCompany() {
       {companies?.length !== 0 && (
         <View style={styles.container}>
           {renderLabel1()}
+          {/* <Spinner visible={loading} color="green" /> */}
           <Dropdown
             iconColor="white"
             style={[styles.dropdown, { borderColor: "rgb(132,194,37)" }]}

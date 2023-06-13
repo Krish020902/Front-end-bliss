@@ -7,16 +7,14 @@ import DropdownTable from "../components/DropdownTable";
 import Navbar from "../components/Navbar";
 import PopupBox from "./PopupBox";
 import SetPassword from "./SetPassword";
-
-const Dashboard = ({navigation}) => {
-
-
+import { Button } from "@rneui/base";
+const Dashboard = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <PopupBox navigation={navigation}/>
-
+      <PopupBox navigation={navigation} />
       <Navbar />
-
+      {/* <Button title="Solid" type="solid"  /> */}
+      {/* <Button title="Solid" type="solid" loading={false} />; */}
       <DropdownCompany />
       <DropdownGraph />
       <DropdownTable />

@@ -14,16 +14,19 @@ import {
 import { useDashboardContext } from "../context/dashboard_context";
 import { API } from "../constants/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Spinner from "react-native-loading-spinner-overlay";
 
 export default function DropdownGraph() {
+  const [loading, setLoading] = useState(false);
+
   const [zoomDomain, setZoomDomain] = useState(null);
   const { graphData, setGraphData, currCompany, currTypeOfGraph } =
     useDashboardContext();
 
   const getGraphData = async () => {
-    console.log("here in get graph data");
-    console.log(currCompany);
-    console.log(currTypeOfGraph);
+    // console.log("here in get graph data");
+    // console.log(currCompany);
+    // console.log(currTypeOfGraph);
     const token = await AsyncStorage.getItem("token");
     const url =
       API +
@@ -34,10 +37,12 @@ export default function DropdownGraph() {
     try {
       console.log("here in url");
       console.log(url);
+
+      setLoading(true);
       const res = await axios.get(url, {
-        headers:{
-          Authorization: `Bearer ${token}`
-        }
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       const tempData = res.data.iv_data.map((item, i) => {
         // console.log(item.date);
@@ -54,6 +59,7 @@ export default function DropdownGraph() {
       });
 
       setGraphData(tempData);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -74,6 +80,7 @@ export default function DropdownGraph() {
     <View style={styles.container}>
       {graphData?.length !== 0 && (
         <View>
+          {/* <Spinner visible={loading} color="green" /> */}
           <VictoryChart
             width={375}
             height={250}

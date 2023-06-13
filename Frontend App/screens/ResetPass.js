@@ -10,71 +10,108 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
-
+import { Button, Input, Icon } from "@rneui/base";
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from "react-native-responsive-dimensions";
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
 import { RESET_PASSWORD } from "../constants/api";
 
 const ResetPass = ({ navigation }) => {
-  const { setUserEmail, setUserPassword, email, password , phone , setUserPhone , oldpassword , setUserOldPassword} = useUserContext();
+  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword1, setShowPassword1] = useState(true);
+  const [showPassword2, setShowPassword2] = useState(true);
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+  const handleTogglePassword1 = () => {
+    setShowPassword1(!showPassword1);
+  };
+  const handleTogglePassword2 = () => {
+    setShowPassword2(!showPassword2);
+  };
+
+  const {
+    setUserEmail,
+    setUserPassword,
+    email,
+    password,
+    phone,
+    setUserPhone,
+    oldpassword,
+    setUserOldPassword,
+  } = useUserContext();
   const toast = useToast();
-const [password1, setPassword1] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const setoldpass = (change) =>{
+  const [password1, setPassword1] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const setoldpass = (change) => {
     setUserOldPassword(change);
-    console.log("old pass",oldpassword)
-  }
-  const setnewpass = (change) =>{
-      setUserPassword(change);
-      setPassword1(change);
-      console.log(password)
-  }
-  const setconfirmpass = (change) =>{
+    console.log("old pass", oldpassword);
+  };
+  const setnewpass = (change) => {
+    setUserPassword(change);
+    setPassword1(change);
+    console.log(password);
+  };
+  const setconfirmpass = (change) => {
     setConfirmPassword(change);
-    
-  }
+  };
   const login = async () => {
-    if(password1===confirmPassword){
-const token = await AsyncStorage.getItem("token");
-const numberurl = `${RESET_PASSWORD}/${phone}`
-    try {
-      // console.log(typeof setUserEmail);
-      // console.log("email and aps5s", password);
-      const res = await axios.put(numberurl, {
-        "old_password":`${oldpassword}`,
-        "new_password": `${password}`
-        
-      },{
-        headers:{
-          Authorization:`Bearer ${token}`
-        } 
-      });
+    if (password1 === confirmPassword) {
+      const token = await AsyncStorage.getItem("token");
+      const numberurl = `${RESET_PASSWORD}/${phone}`;
+      try {
+        // console.log(typeof setUserEmail);
+        // console.log("email and aps5s", password);
+        const res = await axios.put(
+          numberurl,
+          {
+            old_password: `${oldpassword}`,
+            new_password: `${password}`,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      if (res.data.valid) {
-              console.log("isvalid",oldpassword);
+        if (res.data.valid) {
+          console.log("isvalid", oldpassword);
 
-        console.log(res.data.message);
-         toast.show("Password reset Successfully!", {
-      type: "success",
-    })
-        navigation.navigate("MainDashboard");
-      } else {
-        console.log("some error", err);
+          console.log(res.data.message);
+          toast.show("Password reset Successfully!", {
+            type: "success",
+          });
+          navigation.navigate("MainDashboard");
+        } else {
+          toast.show(res.data.message + "! ", {
+            type: "danger",
+            placement: "top",
+            animationType: "zoom-in",
+          });
+          console.log("some error", err);
+        }
+      } catch (err) {
+        toast.show("error" + err, {
+          type: "danger",
+          placement: "top",
+          animationType: "zoom-in",
+        });
+        console.log("Outside catch", err);
       }
-    } catch (err) {
-      console.log("Outside catch", err);
-    }
-    }
-    else{
+    } else {
       console.log("unsuccessfull");
       toast.show("Passwords don't match ", {
-      type: "danger",
-      placement: "top",
-      animationType: "zoom-in",
-    })
+        type: "danger",
+        placement: "top",
+        animationType: "zoom-in",
+      });
     }
-        
   };
   return (
     <View style={styles.container}>
@@ -82,9 +119,49 @@ const numberurl = `${RESET_PASSWORD}/${phone}`
         source={require("../assets/BlissQuantsTM.jpg")}
         style={styles.logo}
       />
-      
+
       <Text style={styles.font}>Enter Old Password</Text>
-      <TextInput
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: "#75706f",
+          width: responsiveWidth(90),
+          margin: 15,
+          borderRadius: 10,
+          elevation: 14, // or you can use the `shadow` property instead
+          shadowColor: "rgb(132,194,37)",
+          shadowOffset: {
+            width: 20,
+            height: 20,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 4,
+        }}
+      >
+        <Input
+          leftIcon={
+            <Icon
+              onPress={handleTogglePassword}
+              name={showPassword ? "eye-outline" : "eye-off-outline"}
+              type="ionicon"
+              backgroundColor="#75706f"
+              color="white"
+            />
+          }
+          secureTextEntry={showPassword}
+          maxLength={10}
+          style={{
+            height: 26,
+            alignSelf: "center",
+            marginLeft: 14,
+            width: 350,
+            fontSize: 24,
+            color: "white",
+          }}
+          onChangeText={setoldpass}
+        />
+      </View>
+      {/* <TextInput
               
         secureTextEntry={true}
 
@@ -99,12 +176,50 @@ const numberurl = `${RESET_PASSWORD}/${phone}`
           borderBottomColor: "#555",
         }}
         onChangeText={setoldpass}
-      />
+      /> */}
       <Text style={styles.font}>Set new Password</Text>
-      <TextInput
-              
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: "#75706f",
+          width: responsiveWidth(90),
+          margin: 15,
+          borderRadius: 10,
+          elevation: 14, // or you can use the `shadow` property instead
+          shadowColor: "rgb(132,194,37)",
+          shadowOffset: {
+            width: 20,
+            height: 20,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 4,
+        }}
+      >
+        <Input
+          leftIcon={
+            <Icon
+              onPress={handleTogglePassword1}
+              name={showPassword1 ? "eye-outline" : "eye-off-outline"}
+              type="ionicon"
+              backgroundColor="#75706f"
+              color="white"
+            />
+          }
+          secureTextEntry={showPassword1}
+          maxLength={10}
+          style={{
+            height: 26,
+            alignSelf: "center",
+            marginLeft: 14,
+            width: 350,
+            fontSize: 24,
+            color: "white",
+          }}
+          onChangeText={setnewpass}
+        />
+      </View>
+      {/* <TextInput
         secureTextEntry={true}
-
         style={{
           height: 26,
           alignSelf: "center",
@@ -116,11 +231,50 @@ const numberurl = `${RESET_PASSWORD}/${phone}`
           borderBottomColor: "#555",
         }}
         onChangeText={setnewpass}
-      />
+      /> */}
       <Text style={styles.font}>Confirm Your Password</Text>
-      <TextInput
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: "#75706f",
+          width: responsiveWidth(90),
+          margin: 15,
+          borderRadius: 10,
+          elevation: 14, // or you can use the `shadow` property instead
+          shadowColor: "rgb(132,194,37)",
+          shadowOffset: {
+            width: 20,
+            height: 20,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 4,
+        }}
+      >
+        <Input
+          leftIcon={
+            <Icon
+              onPress={handleTogglePassword2}
+              name={showPassword2 ? "eye-outline" : "eye-off-outline"}
+              type="ionicon"
+              backgroundColor="#75706f"
+              color="white"
+            />
+          }
+          secureTextEntry={showPassword2}
+          maxLength={10}
+          style={{
+            height: 26,
+            alignSelf: "center",
+            marginLeft: 14,
+            width: 350,
+            fontSize: 24,
+            color: "white",
+          }}
+          onChangeText={setconfirmpass}
+        />
+      </View>
+      {/* <TextInput
         secureTextEntry={true}
-        
         maxLength={10}
         style={{
           height: 26,
@@ -133,8 +287,8 @@ const numberurl = `${RESET_PASSWORD}/${phone}`
           borderBottomColor: "#555",
         }}
         onChangeText={setconfirmpass}
-      />
-      <TouchableOpacity
+      /> */}
+      {/* <TouchableOpacity
         onPress={login}
         style={{
           backgroundColor: "rgb(132,194,37)",
@@ -150,7 +304,23 @@ const numberurl = `${RESET_PASSWORD}/${phone}`
       <Image
         source={require("../assets/FooterLogo.png")}
         style={styles.footlogo}
-      />
+      /> */}
+      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
+        <Button
+          title="Go to dashboard"
+          color="rgb(132,194,37)"
+          onPress={login}
+          buttonStyle={{
+            marginTop: 25,
+            width: responsiveWidth(80),
+            alignSelf: "center",
+            borderRadius: 13,
+          }}
+        >
+          Go to dashboard
+          <Icon name="log-in-outline" color="white" type="ionicon" />
+        </Button>
+      </View>
     </View>
   );
 };

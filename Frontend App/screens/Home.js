@@ -12,10 +12,9 @@ import Navbar from "../components/Navbar";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
 
 const Home = ({ navigation }) => {
-  const onClickLogin = () =>{
-   
-    navigation.navigate("Login")
-  }
+  const onClickLogin = () => {
+    navigation.navigate("Login");
+  };
   const toast = useToast();
   return (
     <>
@@ -34,7 +33,7 @@ const Home = ({ navigation }) => {
         }}
       >
         <TouchableOpacity
-          onPress={ onClickLogin}
+          onPress={onClickLogin}
           style={{
             backgroundColor: "rgb(132,194,37)",
             padding: 10,

@@ -13,8 +13,15 @@ import axios from "axios";
 import { LOGIN_MOBILE } from "../constants/api";
 import { Link } from "@react-navigation/native";
 import Email from "./Email";
-
+import { Button, Input, Icon } from "@rneui/base";
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from "react-native-responsive-dimensions";
+import { useToast } from "react-native-toast-notifications";
 const ForgotPass = ({ navigation }) => {
+  const toast = useToast();
   const { setUserPhone, setUserOtp, phone } = useUserContext();
   const clickemail = () => {
     navigation.navigate("Email");
@@ -46,12 +53,27 @@ const ForgotPass = ({ navigation }) => {
       if (res.data.valid) {
         console.log("otp is :");
         console.log(res.data.data.otp);
+        toast.show(res.data.message + "! ", {
+          type: "success",
+          placement: "top",
+          animationType: "zoom-in",
+        });
         setUserOtp(res.data.data.otp);
         navigation.navigate("ForgotOtp");
       } else {
+        toast.show(res.data.message + "! ", {
+          type: "danger",
+          placement: "top",
+          animationType: "zoom-in",
+        });
         console.log(err);
       }
     } catch (err) {
+      toast.show("error:", err, {
+        type: "danger",
+        placement: "top",
+        animationType: "zoom-in",
+      });
       console.log(err);
     }
   };
@@ -71,8 +93,10 @@ const ForgotPass = ({ navigation }) => {
       >
         Welcome,
       </Text>
-      <Text style={styles.font}>Enter Your Mobile Number to recover password.</Text>
-      <TextInput
+      <Text style={styles.font}>
+        Enter Your Mobile Number to recover password.
+      </Text>
+      {/* <TextInput
         maxLength={10}
         keyboardType="phone-pad"
         style={{
@@ -86,28 +110,50 @@ const ForgotPass = ({ navigation }) => {
           borderBottomColor: "#555",
         }}
         onChangeText={(number) => setUserPhone(number)}
-      />
+      /> */}
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: "#75706f",
+          width: responsiveWidth(90),
+          margin: 15,
+          borderRadius: 10,
+          elevation: 14, // or you can use the `shadow` property instead
+          shadowColor: "rgb(132,194,37)",
+          shadowOffset: {
+            width: 20,
+            height: 20,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 4,
+        }}
+      >
+        <Input
+          keyboardType="phone-pad"
+          maxLength={10}
+          style={{ color: "white", marginLeft: 14 }}
+          leftIcon={<Icon name="phone" size={24} color="white" />}
+          onChangeText={(number) => setUserPhone(number)}
+        ></Input>
+      </View>
       <Text style={{ fontWeight: "lighter", color: "grey", marginLeft: 15 }}>
         OTP Message will be sent to your Phone Number
       </Text>
-      
-      <TouchableOpacity
-        onPress={generateOtp}
-        style={{
-          backgroundColor: "rgb(132,194,37)",
-          padding: 10,
-          marginTop: 15,
-          width: 100,
-          alignItems: "center",
-          alignSelf: "center",
-        }}
-      >
-        <Text style={{ color: "white" }}>NEXT</Text>
-      </TouchableOpacity>
-      <Image
-        source={require("../assets/FooterLogo.png")}
-        style={styles.footlogo}
-      />
+
+      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
+        <Button
+          color="rgb(132,194,37)"
+          onPress={generateOtp}
+          buttonStyle={{
+            marginTop: 25,
+            width: responsiveWidth(80),
+            alignSelf: "center",
+            borderRadius: 13,
+          }}
+        >
+          NEXT
+        </Button>
+      </View>
     </View>
   );
 };
