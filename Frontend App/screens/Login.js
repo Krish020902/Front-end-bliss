@@ -8,6 +8,16 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from "react-native-responsive-dimensions";
+
+import { Button, Input, Icon } from "@rneui/base";
+
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
 import { LOGIN_MOBILE } from "../constants/api";
@@ -20,7 +30,12 @@ const Login = ({ navigation }) => {
   const clickemail = () => {
     navigation.navigate("Email");
   };
+  const onPressSignup = () => {
+    navigation.navigate("MobileNo");
+  };
   const generateOtp = async () => {
+    const token = await AsyncStorage.getItem("token");
+
     try {
       const res = await axios.post(LOGIN_MOBILE, {
         user_id: "",
@@ -47,18 +62,27 @@ const Login = ({ navigation }) => {
       if (res.data.valid) {
         console.log("otp is :");
         console.log(res.data.data.otp);
+        toast.show("OTP generated! ", {
+          type: "success",
+          placement: "top",
+          animationType: "zoom-in",
+        });
         setUserOtp(res.data.data.otp);
         navigation.navigate("OTP_LOGIN");
       } else {
         toast.show("Sorry there is no user! ", {
-      type: "danger",
-       placement: "top",
-      animationType: "zoom-in",
-    })
+          type: "danger",
+          placement: "top",
+          animationType: "zoom-in",
+        });
         console.log(err);
       }
     } catch (err) {
-      
+      toast.show("error:", err, {
+        type: "danger",
+        placement: "top",
+        animationType: "zoom-in",
+      });
       console.log(err);
     }
   };
@@ -72,56 +96,126 @@ const Login = ({ navigation }) => {
         style={{
           fontWeight: "bold",
           color: "white",
-          marginLeft: 15,
+          marginLeft: 20,
           marginTop: 20,
+          fontSize: responsiveFontSize(3),
         }}
       >
-        Welcome,
+        Login
       </Text>
       <Text style={styles.font}>Enter Your Mobile Number</Text>
-      <TextInput
-        maxLength={10}
-        keyboardType="phone-pad"
+      <View
         style={{
-          height: 26,
-          alignSelf: "center",
+          flexDirection: "row",
+          backgroundColor: "#75706f",
+          width: responsiveWidth(90),
           margin: 15,
-          width: 350,
-          fontSize: 20,
-          color: "white",
-          borderBottomWidth: 1,
-          borderBottomColor: "#555",
+          borderRadius: 10,
+          elevation: 14, // or you can use the `shadow` property instead
+          shadowColor: "rgb(132,194,37)",
+          shadowOffset: {
+            width: 20,
+            height: 20,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 4,
         }}
-        onChangeText={(number) => setUserPhone(number)}
-      />
-      <Text style={{ fontWeight: "lighter", color: "grey", marginLeft: 15 }}>
+      >
+        <Input
+          keyboardType="phone-pad"
+          maxLength={10}
+          style={{ color: "white", marginLeft: 14 }}
+          leftIcon={<Icon name="phone" size={24} color="white" />}
+          onChangeText={(number) => setUserPhone(number)}
+        ></Input>
+        {/* <TextInput
+      
+      placeholderTextColor={"#CCCCCC"}
+      leftIcon={
+        <Icon
+          name='phone'
+          
+          size={24}
+          color='white'
+        />
+
+        
+        
+      }
+      maxLength={10}
+      keyboardType="phone-pad"
+      style={{
+        height: 26,
+        alignSelf: "center",
+        margin: 15,
+        fontSize: 18,
+        color: "white",
+      
+        
+      }}
+      onChangeText={(number) => setUserPhone(number)}
+      
+      /> */}
+      </View>
+      <Text
+        style={{
+          fontWeight: "lighter",
+          color: "grey",
+          marginLeft: 20,
+          fontSize: responsiveFontSize(1.9),
+        }}
+      >
         OTP Message will be sent to your Phone Number
       </Text>
       <View style={{ flexDirection: "row" }}>
-        <Text style={styles.font}>Use different method </Text>
+        <Text style={styles.font}>Login with password </Text>
         <TouchableOpacity onPress={clickemail}>
-          <Text style={{ color: "lightblue", paddingLeft: 4, paddingTop: 5 }}>
+          <Text
+            style={{
+              color: "lightblue",
+              paddingLeft: 4,
+              paddingTop: 5,
+              fontSize: responsiveFontSize(1.7),
+            }}
+          >
             click here
           </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        onPress={generateOtp}
-        style={{
-          backgroundColor: "rgb(132,194,37)",
-          padding: 10,
-          marginTop: 15,
-          width: 100,
-          alignItems: "center",
+
+      <View style={{ flexDirection: "row" }}>
+        <View style={styles.separator} />
+        <Text style={styles.text}>OR</Text>
+        <View style={styles.separator} />
+      </View>
+      <Button
+        title="Signup"
+        color="rgb(132,194,37)"
+        onPress={onPressSignup}
+        buttonStyle={{
+          // marginTop: 25,
+          width: responsiveWidth(90),
           alignSelf: "center",
+          borderRadius: 13,
         }}
-      >
-        <Text style={{ color: "white" }}>NEXT</Text>
-      </TouchableOpacity>
-      <Image
+      ></Button>
+      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
+        <Button
+          title="NEXT"
+          color="rgb(132,194,37)"
+          onPress={generateOtp}
+          buttonStyle={{
+            marginTop: 25,
+            width: responsiveWidth(90),
+            alignSelf: "center",
+            borderRadius: 13,
+          }}
+        ></Button>
+      </View>
+      {/* <Image
         source={require("../assets/FooterLogo.png")}
         style={styles.footlogo}
-      />
+        /> */}
     </View>
   );
 };
@@ -135,6 +229,17 @@ const styles = StyleSheet.create({
 
     // marginLeft: 2,
   },
+  separator: {
+    height: 1,
+    width: responsiveWidth(45),
+    backgroundColor: "#CCCCCC",
+    marginVertical: 40,
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "#000000",
+  },
   logo: {
     // marginLeft: 35,
     marginTop: 60,
@@ -143,15 +248,18 @@ const styles = StyleSheet.create({
     height: 80,
   },
   footlogo: {
-    marginTop: "67%",
+    // marginBottom: 30,
+
     alignSelf: "center",
     width: 350,
     height: 175,
   },
   font: {
     color: "white",
-    marginLeft: 15,
+    marginLeft: 20,
     marginTop: 5,
+
+    fontSize: responsiveFontSize(1.7),
   },
   phoneInput: {
     color: "white",
@@ -162,6 +270,13 @@ const styles = StyleSheet.create({
     margin: 15,
 
     // marginBottom: 10,
+  },
+  text: {
+    marginHorizontal: 10,
+    color: "white",
+    fontSize: 16,
+    // color: "#000000",
+    alignSelf: "center",
   },
 });
 

@@ -9,7 +9,6 @@ const MainDashboard = () => {
   const Tab = createBottomTabNavigator();
 
   return (
-    
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {

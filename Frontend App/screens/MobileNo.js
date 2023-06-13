@@ -10,13 +10,20 @@ import {
 } from "react-native";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
 
-
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
 import { REGISTER_API } from "../constants/api";
 
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from "react-native-responsive-dimensions";
+
+import { Button, Input, Icon } from "@rneui/base";
 const MobileNo = ({ navigation }) => {
+  const toast = useToast();
   const { setUserPhone, setUserOtp, phone } = useUserContext();
 
   const generateOtp = async () => {
@@ -44,11 +51,21 @@ const MobileNo = ({ navigation }) => {
       });
 
       if (res.data.valid) {
+        toast.show("OTP generated ", {
+          type: "success",
+          placement: "top",
+          animationType: "zoom-in",
+        });
         console.log("otp is :");
         console.log(res.data.data.otp);
         setUserOtp(res.data.data.otp);
         navigation.navigate("OTP_REGISTER");
       } else {
+        toast.show(res.data.message + "  ! ", {
+          type: "danger",
+          placement: "top",
+          animationType: "zoom-in",
+        });
         console.log(err);
       }
     } catch (err) {
@@ -56,9 +73,7 @@ const MobileNo = ({ navigation }) => {
     }
   };
   return (
-      
     <View style={styles.container}>
-
       <Image
         source={require("../assets/BlissQuantsTM.jpg")}
         style={styles.logo}
@@ -67,50 +82,63 @@ const MobileNo = ({ navigation }) => {
         style={{
           fontWeight: "bold",
           color: "white",
-          marginLeft: 15,
+          marginLeft: 20,
           marginTop: 20,
+          fontSize: responsiveFontSize(3),
         }}
       >
-        Welcome,
+        Signup
       </Text>
       <Text style={styles.font}>Enter Your Mobile Number</Text>
-      <TextInput
-        maxLength={10}
-        keyboardType="phone-pad"
+      <View
         style={{
-          height: 26,
-          alignSelf: "center",
+          flexDirection: "row",
+          backgroundColor: "#75706f",
+          width: responsiveWidth(90),
           margin: 15,
-          width: 350,
-          fontSize: 20,
-          color: "white",
-          borderBottomWidth: 1,
-          borderBottomColor: "#555",
-        }}
-        onChangeText={(number) => setUserPhone(number)}
-      />
-      <Text style={{ fontWeight: "lighter", color: "grey", marginLeft: 15 }}>
-        OTP Message will be sent to your Phone Number
-      </Text>
-      <TouchableOpacity
-        onPress={generateOtp}
-        style={{
-          backgroundColor: "rgb(132,194,37)",
-          padding: 10,
-          marginTop: 10,
-          width: 100,
-          alignItems: "center",
-          alignSelf: "center",
+          borderRadius: 10,
+          elevation: 14, // or you can use the `shadow` property instead
+          shadowColor: "rgb(132,194,37)",
+          shadowOffset: {
+            width: 20,
+            height: 20,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 4,
         }}
       >
-        <Text style={{ color: "white" }}>NEXT</Text>
-      </TouchableOpacity>
-      <Image
-        source={require("../assets/FooterLogo.png")}
-        style={styles.footlogo}
-        />
+        <Input
+          keyboardType="phone-pad"
+          maxLength={10}
+          style={{ color: "white", marginLeft: 14 }}
+          leftIcon={<Icon name="phone" size={24} color="white" />}
+          onChangeText={(number) => setUserPhone(number)}
+        ></Input>
+      </View>
+      <Text
+        style={{
+          fontWeight: "lighter",
+          color: "grey",
+          marginLeft: 20,
+          fontSize: responsiveFontSize(1.9),
+        }}
+      >
+        OTP Message will be sent to your Phone Number
+      </Text>
+      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
+        <Button
+          title="NEXT"
+          color="rgb(132,194,37)"
+          onPress={generateOtp}
+          buttonStyle={{
+            marginTop: 25,
+            width: responsiveWidth(90),
+            alignSelf: "center",
+            borderRadius: 13,
+          }}
+        ></Button>
+      </View>
     </View>
-        
   );
 };
 const styles = StyleSheet.create({
@@ -138,8 +166,10 @@ const styles = StyleSheet.create({
   },
   font: {
     color: "white",
-    marginLeft: 15,
+    marginLeft: 20,
     marginTop: 5,
+
+    fontSize: responsiveFontSize(1.7),
   },
   phoneInput: {
     color: "white",

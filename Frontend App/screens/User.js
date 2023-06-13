@@ -2,25 +2,28 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   SafeAreaView,
   TouchableOpacity,
   Animated,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { GET_USER_DATA } from "../constants/api";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
-
-const User = ({navigation}) => {
-    const {  name , email, phone , setUserEmail , setUserName } = useUserContext();
+import { Button, Input, Icon, Card } from "@rneui/base";
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from "react-native-responsive-dimensions";
+const User = ({ navigation }) => {
+  const { name, email, phone, setUserEmail, setUserName } = useUserContext();
 
   const toast = useToast();
   const userData = {
-    
     name: `${name}`,
     email: `${email}`,
     phone: `${phone}`,
@@ -30,41 +33,37 @@ const User = ({navigation}) => {
   const handleLogout = () => {
     toast.show("Logged out Successfully! ", {
       type: "success",
-       placement: "top",
+      placement: "top",
       animationType: "zoom-in",
-    })
+    });
     navigation.navigate("Login");
-    
   };
 
   const handleChangePassword = () => {
     navigation.navigate("ResetPass");
-    
   };
 
   const handleEditProfile = () => {
-    navigation.navigate('SetUserDetails')
+    navigation.navigate("SetUserDetails");
   };
-  const getUserdata  = async () => {
+  const getUserdata = async () => {
     const resultUrl = `${GET_USER_DATA}/${phone}`;
-    
+
     const token = await AsyncStorage.getItem("token");
     try {
       const result = await axios.get(resultUrl, {
-        headers:{
-          Authorization:`Bearer ${token}`
-        } 
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       setUserEmail(result.data.data.email);
       setUserName(result.data.data.name);
-      console.log("this is result",result.data.data.email)
-
-      
+      console.log("this is result", result.data.data.email);
     } catch (err) {
       console.log(err);
     }
   };
-useEffect(() => {
+  useEffect(() => {
     getUserdata();
   }, []);
   return (
@@ -78,10 +77,10 @@ useEffect(() => {
           style={{
             fontSize: 25,
             paddingTop: 20,
-            paddingLeft: 7,
+            paddingLeft: 20,
             fontWeight: "500",
             // margin: 5,
-            // marginTop: 20,
+            // marginLeft: 20,
             color: "white",
             backgroundColor: "#75706f",
           }}
@@ -91,7 +90,7 @@ useEffect(() => {
       </View>
       <View style={styles.profileContainer}>
         <Text style={styles.label}>Name:</Text>
-        
+
         <Text style={styles.detail}>{userData.name}</Text>
 
         <Text style={styles.label}>Email:</Text>
@@ -102,15 +101,33 @@ useEffect(() => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Animated.View
+        {/* <Animated.View
           style={[styles.buttonWrapper, { opacity: buttonOpacity }]}
         >
           <TouchableOpacity style={styles.button} onPress={handleLogout}>
             <Text style={{ color: "white" }}>Logout</Text>
           </TouchableOpacity>
-        </Animated.View>
+        </Animated.View> */}
+        <Button
+          color="rgb(132,194,37)"
+          onPress={handleLogout}
+          buttonStyle={{
+            marginTop: 25,
+            width: responsiveWidth(80),
+            alignSelf: "center",
+            borderRadius: 13,
+          }}
+        >
+          Logout
+          <Icon
+            name="log-out"
+            color="white"
+            type="ionicon"
+            style={{ marginLeft: 7 }}
+          />
+        </Button>
 
-        <Animated.View
+        {/* <Animated.View
           style={[styles.buttonWrapper, { opacity: buttonOpacity }]}
         >
           <TouchableOpacity
@@ -119,15 +136,50 @@ useEffect(() => {
           >
             <Text style={{ color: "white" }}>Change Password</Text>
           </TouchableOpacity>
-        </Animated.View>
-
-        <Animated.View
+        </Animated.View> */}
+        <Button
+          color="rgb(132,194,37)"
+          onPress={handleChangePassword}
+          buttonStyle={{
+            marginTop: 25,
+            width: responsiveWidth(80),
+            alignSelf: "center",
+            borderRadius: 13,
+          }}
+        >
+          Change Password
+          <Icon
+            name="create"
+            color="white"
+            type="ionicon"
+            style={{ marginLeft: 10 }}
+          />
+        </Button>
+        {/* <Animated.View
           style={[styles.buttonWrapper, { opacity: buttonOpacity }]}
         >
           <TouchableOpacity style={styles.button} onPress={handleEditProfile}>
             <Text style={{ color: "white" }}>Edit Profile</Text>
           </TouchableOpacity>
-        </Animated.View>
+        </Animated.View> */}
+        <Button
+          color="rgb(132,194,37)"
+          onPress={handleEditProfile}
+          buttonStyle={{
+            marginTop: 25,
+            width: responsiveWidth(80),
+            alignSelf: "center",
+            borderRadius: 13,
+          }}
+        >
+          Edit Profile
+          <Icon
+            name="create"
+            color="white"
+            type="ionicon"
+            style={{ marginLeft: 10 }}
+          />
+        </Button>
       </View>
     </SafeAreaView>
   );
@@ -145,6 +197,7 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
     padding: 20,
+    margin: 3,
   },
   label: {
     fontWeight: "bold",
@@ -157,6 +210,9 @@ const styles = StyleSheet.create({
     color: "white",
   },
   buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 30,
     // padding: 20,
   },
   buttonWrapper: {
@@ -176,4 +232,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default User
+export default User;

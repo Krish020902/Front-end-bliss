@@ -8,35 +8,71 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+// import Icon from "react-native-vector-icons/FontAwesome";
+import { useToast } from "react-native-toast-notifications";
 
+import { Button, Input, Icon } from "@rneui/base";
+import {
+  responsiveHeight,
+  responsiveWidth,
+  responsiveFontSize,
+} from "react-native-responsive-dimensions";
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
 import { LOGIN_EMAIL } from "../constants/api";
 
 const Email = ({ navigation }) => {
-  const { setUserEmail, setUserPassword, email, password  , setUserPhone,  phone} = useUserContext();
-  const forgotpass = () =>{
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+  const {
+    setUserEmail,
+    setUserPassword,
+    email,
+    password,
+    setUserPhone,
+    phone,
+  } = useUserContext();
+  const forgotpass = () => {
     navigation.navigate("ForgotPass");
-  }
+  };
+  const [showPassword, setShowPassword] = useState(true);
+
+  const toast = useToast();
   const login = async () => {
     try {
-      console.log(typeof setUserEmail);
-      console.log("email and aps5s", password);
+      // console.log(typeof setUserEmail);
+      // console.log("email and aps5s", password);
+      // console.log("💥", phone, password);
       const res = await axios.post(LOGIN_EMAIL, {
         mobile: `${phone}`,
         password: `${password}`,
       });
-
+      console.log(res.data.message);
       if (res.data.valid) {
         console.log(res.data.message);
-
+        toast.show("Logged in Successfull! ", {
+          type: "success",
+          placement: "top",
+          animationType: "zoom-in",
+        });
         navigation.navigate("MainDashboard");
       } else {
-        console.log("some error", err);
+        toast.show(res.data.message + "! ", {
+          type: "danger",
+          placement: "top",
+          animationType: "zoom-in",
+        });
+        console.log("💥💥💥some error", err);
       }
     } catch (err) {
-      console.log("Outside catch", err);
+      toast.show(res.data.message, {
+        type: "danger",
+        placement: "top",
+        animationType: "zoom-in",
+      });
+      console.log("💥💥💥Outside catch", err);
     }
   };
   return (
@@ -56,9 +92,8 @@ const Email = ({ navigation }) => {
         Welcome,
       </Text>
       <Text style={styles.font}>Enter Your Mobile Number</Text>
-      <TextInput
-              keyboardType="phone-pad"
-
+      {/* <TextInput
+        keyboardType="phone-pad"
         style={{
           height: 26,
           alignSelf: "center",
@@ -70,30 +105,79 @@ const Email = ({ navigation }) => {
           borderBottomColor: "#555",
         }}
         onChangeText={(number) => setUserPhone(number)}
-      />
-      <Text style={styles.font}>Enter Your Password</Text>
-      <TextInput
-        secureTextEntry={true}
-        
-        maxLength={10}
+      />  */}
+      <View
         style={{
-          height: 26,
-          alignSelf: "center",
+          flexDirection: "row",
+          backgroundColor: "#75706f",
+          width: responsiveWidth(90),
           margin: 15,
-          width: 350,
-          fontSize: 20,
-          color: "white",
-          borderBottomWidth: 1,
-          borderBottomColor: "#555",
+          borderRadius: 10,
+          elevation: 14, // or you can use the `shadow` property instead
+          shadowColor: "rgb(132,194,37)",
+          shadowOffset: {
+            width: 20,
+            height: 20,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 4,
         }}
-        onChangeText={(pass) => setUserPassword(pass)}
-      />
+      >
+        <Input
+          keyboardType="phone-pad"
+          maxLength={10}
+          style={{ color: "white", marginLeft: 14 }}
+          leftIcon={<Icon name="phone" size={24} color="white" />}
+          onChangeText={(number) => setUserPhone(number)}
+        ></Input>
+      </View>
+      <Text style={styles.font}>Enter Your Password</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: "#75706f",
+          width: responsiveWidth(90),
+          margin: 15,
+          borderRadius: 10,
+          elevation: 14, // or you can use the `shadow` property instead
+          shadowColor: "rgb(132,194,37)",
+          shadowOffset: {
+            width: 20,
+            height: 20,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 4,
+        }}
+      >
+        <Input
+          leftIcon={
+            <Icon
+              onPress={handleTogglePassword}
+              name={showPassword ? "eye-outline" : "eye-off-outline"}
+              type="ionicon"
+              backgroundColor="#75706f"
+              color="white"
+            />
+          }
+          secureTextEntry={showPassword}
+          maxLength={10}
+          style={{
+            height: 26,
+            alignSelf: "center",
+            marginLeft: 14,
+            width: 350,
+            fontSize: 24,
+            color: "white",
+          }}
+          onChangeText={(pass) => setUserPassword(pass)}
+        />
+      </View>
       <TouchableOpacity onPress={forgotpass}>
-          <Text style={{ color: "lightblue", paddingLeft: 17, paddingTop: 5 }}>
-            Forgot Password?
-          </Text>
-        </TouchableOpacity>
-      <TouchableOpacity
+        <Text style={{ color: "lightblue", paddingLeft: 17, paddingTop: 5 }}>
+          Forgot Password?
+        </Text>
+      </TouchableOpacity>
+      {/* <TouchableOpacity
         onPress={login}
         style={{
           backgroundColor: "rgb(132,194,37)",
@@ -105,11 +189,23 @@ const Email = ({ navigation }) => {
         }}
       >
         <Text style={{ color: "white" }}>NEXT</Text>
-      </TouchableOpacity>
-      <Image
-        source={require("../assets/FooterLogo.png")}
-        style={styles.footlogo}
-      />
+      </TouchableOpacity> */}
+      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
+        <Button
+          title="Go to dashboard"
+          color="rgb(132,194,37)"
+          onPress={login}
+          buttonStyle={{
+            marginTop: 25,
+            width: responsiveWidth(80),
+            alignSelf: "center",
+            borderRadius: 13,
+          }}
+        >
+          Go to dashboard
+          <Icon name="log-in-outline" color="white" type="ionicon" />
+        </Button>
+      </View>
     </View>
   );
 };

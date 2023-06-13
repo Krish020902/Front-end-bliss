@@ -33,33 +33,28 @@ export default function App() {
     );
   };
   return (
-    <ToastProvider
-    offsetTop={30}>
-
-    <UserProvider>
-      <DashboardProvider>
-        <NavigationContainer>
-          
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Email" component={Email} />
-            <Stack.Screen name="MainDashboard" component={MainDashboard} />
-            <Stack.Screen name="MobileNo" component={MobileNo} />
-            <Stack.Screen name="OTP_REGISTER" component={OTP_REGISTER} />
-            <Stack.Screen name="OTP_LOGIN" component={OTP_LOGIN} />
-            <Stack.Screen name="SetPassword" component={SetPassword} />
-            <Stack.Screen name="ForgotPass" component={ForgotPass} />
-            <Stack.Screen name="NewPass" component={NewPass} />
-            <Stack.Screen name="ForgotOtp" component={ForgotOtp} />
-            <Stack.Screen name="ResetPass" component={ResetPass} />
-            <Stack.Screen name="SetUserDetails" component={SetUserDetails} />
-
-            
-          </Stack.Navigator>
-        </NavigationContainer>
-      </DashboardProvider>
-    </UserProvider>
+    <ToastProvider offsetTop={30}>
+      <UserProvider>
+        <DashboardProvider>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              {/* <Stack.Screen name="Home" component={Home} /> */}
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="MobileNo" component={MobileNo} />
+              <Stack.Screen name="Email" component={Email} />
+              <Stack.Screen name="MainDashboard" component={MainDashboard} />
+              <Stack.Screen name="OTP_REGISTER" component={OTP_REGISTER} />
+              <Stack.Screen name="OTP_LOGIN" component={OTP_LOGIN} />
+              <Stack.Screen name="SetPassword" component={SetPassword} />
+              <Stack.Screen name="ForgotPass" component={ForgotPass} />
+              <Stack.Screen name="NewPass" component={NewPass} />
+              <Stack.Screen name="ForgotOtp" component={ForgotOtp} />
+              <Stack.Screen name="ResetPass" component={ResetPass} />
+              <Stack.Screen name="SetUserDetails" component={SetUserDetails} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </DashboardProvider>
+      </UserProvider>
     </ToastProvider>
   );
 }
