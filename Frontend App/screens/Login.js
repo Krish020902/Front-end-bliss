@@ -205,7 +205,7 @@ const Login = ({ navigation }) => {
           color="rgb(132,194,37)"
           onPress={generateOtp}
           buttonStyle={{
-            marginTop: 25,
+            // marginTop: 25,
             width: responsiveWidth(90),
             alignSelf: "center",
             borderRadius: 13,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     height: 1,
     width: responsiveWidth(45),
     backgroundColor: "#CCCCCC",
-    marginVertical: 40,
+    marginVertical: 30,
   },
   line: {
     flex: 1,

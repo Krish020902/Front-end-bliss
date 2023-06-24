@@ -174,7 +174,7 @@ const User = ({ navigation }) => {
         >
           Edit Profile
           <Icon
-            name="create"
+            name="pencil"
             color="white"
             type="ionicon"
             style={{ marginLeft: 10 }}
