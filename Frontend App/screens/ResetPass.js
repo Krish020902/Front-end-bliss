@@ -317,8 +317,8 @@ const ResetPass = ({ navigation }) => {
             borderRadius: 13,
           }}
         >
-          Go to dashboard
-          <Icon name="log-in-outline" color="white" type="ionicon" />
+          Update Password
+          {/* <Icon name="save" color="white" type="ionicon" /> */}
         </Button>
       </View>
     </View>

@@ -1,8 +1,33 @@
-import React, { useState } from 'react';
-import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
+import { GET_USER_DATA } from "../constants/api";
+import { useUserContext } from "../context/user_context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const PopupBox = ({navigation}) => {
+const PopupBox = ({ navigation }) => {
   const [isVisible, setIsVisible] = useState(true);
+  const { phone } = useUserContext();
+
+  const getUserData = async () => {
+    const token = await AsyncStorage.getItem("token");
+    const res = await axios.get(`${GET_USER_DATA}${phone}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log("here in useeffect of popupbox");
+    console.log(res.data.data.mobile);
+    if (res.data.data.password !== "") {
+      setIsVisible(false);
+    } else {
+      setIsVisible(true);
+    }
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const handleCancel = () => {
     setIsVisible(false);
@@ -21,7 +46,7 @@ const PopupBox = ({navigation}) => {
       {/* <TouchableOpacity onPress={() => setIsVisible(true)}>
         <Text>Show Pop-up Box</Text>
       </TouchableOpacity> */}
-      
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -31,8 +56,10 @@ const PopupBox = ({navigation}) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.title}>Set Password</Text>
-            <Text style={{color:"white"}}>Setting password would be beneficial for future use. </Text>
-            
+            <Text style={{ color: "white" }}>
+              Setting password would be beneficial for future use.{" "}
+            </Text>
+
             <View style={styles.buttonContainer}>
               <TouchableOpacity style={styles.button} onPress={handleCancel}>
                 <Text style={styles.buttonText}>Cancel</Text>
@@ -51,43 +78,41 @@ const PopupBox = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   modalContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    
+    alignItems: "center",
+    justifyContent: "center",
   },
   modalContent: {
-    opacity:0.9,
-    backgroundColor: '#3a3332',
+    opacity: 0.9,
+    backgroundColor: "#3a3332",
     padding: 20,
     borderRadius: 5,
   },
   title: {
-    color:"white",
+    color: "white",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 20,
   },
   button: {
-    backgroundColor: 'rgb(132,194,37)',
+    backgroundColor: "rgb(132,194,37)",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
     marginHorizontal: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    
   },
 });
 
