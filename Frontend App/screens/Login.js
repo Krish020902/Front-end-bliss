@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Notifications from 'expo-notifications';
 
 import {
   responsiveHeight,
@@ -33,6 +34,30 @@ const Login = ({ navigation }) => {
   const onPressSignup = () => {
     navigation.navigate("MobileNo");
   };
+
+  const sendNotification = async(title, body) => {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+      }),
+    });
+
+    const content = {
+      title: title,
+      body: body,
+    };
+  
+    const trigger = null
+  
+    await Notifications.scheduleNotificationAsync({
+      content,
+      trigger,
+    });
+  }
+
+
   const generateOtp = async () => {
     const token = await AsyncStorage.getItem("token");
 
@@ -68,6 +93,8 @@ const Login = ({ navigation }) => {
           animationType: "zoom-in",
         });
         setUserOtp(res.data.data.otp);
+        sendNotification("otp message", `Generated OTP is ${res.data.data.otp}`)
+
         navigation.navigate("OTP_LOGIN");
       } else {
         toast.show("Sorry there is no user! ", {
@@ -89,7 +116,7 @@ const Login = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../assets/BlissQuantsTM.jpg")}
+        source={require("../assets/BlissQuantsTM.png")}
         style={styles.logo}
       />
       <Text

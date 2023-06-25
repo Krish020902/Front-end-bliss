@@ -12,7 +12,7 @@ const Navbar = () => {
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image
-          source={require("../assets/BlissQuantsTM.jpg")}
+          source={require("../assets/BlissQuantsTM.png")}
           style={styles.logo}
         />
       </View>
