@@ -108,7 +108,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={{ backgroundColor: "#3a3332", height: 160 }}>
         <Image
-          source={require("../assets/BlissQuantsTM.jpg")}
+          source={require("../assets/BlissQuantsTM.png")}
           style={styles.logo}
         />
 

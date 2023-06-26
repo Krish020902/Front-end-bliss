@@ -74,7 +74,7 @@ const ForgotOtp = ({ navigation }) => {
     <ToastProvider>
       <View style={{ flex: 1, padding: 30, backgroundColor: "#3a3332" }}>
         <Image
-          source={require("../assets/BlissQuantsTM.jpg")}
+          source={require("../assets/BlissQuantsTM.png")}
           style={styles.logo}
         />
         <Text style={{ color: "white", height: 40, marginTop: 20 }}>

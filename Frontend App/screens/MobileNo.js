@@ -75,7 +75,7 @@ const MobileNo = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../assets/BlissQuantsTM.jpg")}
+        source={require("../assets/BlissQuantsTM.png")}
         style={styles.logo}
       />
       <Text

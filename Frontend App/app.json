@@ -4,10 +4,10 @@
     "slug": "bliss_front_end",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Bliss_tree.jpg",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/BlissQuantsTM.jpg",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#3a3332"
     },
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/BlissQuantsTM.jpg",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.krish_m.bliss_front_end"
@@ -30,7 +30,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "e41848af-e79f-4164-af81-5a12918ddc53"
+        "projectId": "56e2fe0e-f096-49a5-8ab6-9dfaab817c36"
       }
     }
   }
