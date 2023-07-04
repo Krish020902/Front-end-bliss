@@ -104,7 +104,7 @@ export default function DropdownCompany() {
             maxHeight={300}
             labelField="Label"
             valueField="value"
-            placeholder={!ddFocus1 ? "Select item" : "..."}
+            placeholder={!ddFocus1 ? "Select Company" : "..."}
             searchPlaceholder="Search..."
             value={ddValue1}
             onFocus={() => setDdFocus1(true)}
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
 
     color: "white",
     left: 22,
-    top: 5,
+    top: -4,
     zIndex: 999,
     paddingHorizontal: 8,
     fontSize: 14,

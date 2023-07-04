@@ -13,6 +13,7 @@
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-community/netinfo": "9.3.5",
     "@react-native-community/viewpager": "^5.0.11",
     "@react-native-picker/picker": "2.4.8",
     "@react-navigation/bottom-tabs": "^6.5.7",
@@ -25,6 +26,7 @@
     "axios": "^1.4.0",
     "eas": "^0.1.0",
     "expo": "~47.0.12",
+    "expo-notifications": "~0.17.0",
     "expo-status-bar": "~1.4.2",
     "git": "^0.1.5",
     "picker": "^0.1.4",
@@ -48,7 +50,7 @@
     "react-native-screens": "~3.18.0",
     "react-native-shadow": "^1.2.2",
     "react-native-snap-carousel": "^3.9.1",
-    "react-native-svg": "13.4.0",
+    "react-native-svg": "^13.4.0",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-swiper": "^1.6.0",
     "react-native-swiper-flatlist": "^3.0.18",
@@ -57,7 +59,7 @@
     "react-native-vector-icons": "^9.2.0",
     "rn-wave-bottom-bar": "^2.2.36",
     "victory-native": "^36.6.8",
-    "expo-notifications": "~0.17.0"
+    "expo-linear-gradient": "~12.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

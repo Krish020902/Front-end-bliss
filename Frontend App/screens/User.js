@@ -5,21 +5,45 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Animated,
+  Image,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import NetInfo from "@react-native-community/netinfo";
+import * as Animatable from "react-native-animatable";
 import React, { useState, useEffect } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { GET_USER_DATA } from "../constants/api";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
 import { Button, Input, Icon, Card } from "@rneui/base";
+// import { Svg, LinearGradient, Stop } from "react-native-svg";
+import { LinearGradient } from "expo-linear-gradient";
+
 import {
   responsiveHeight,
   responsiveWidth,
   responsiveFontSize,
 } from "react-native-responsive-dimensions";
+
 const User = ({ navigation }) => {
+  const [isConnected, setIsConnected] = useState(null);
+
+  useEffect(() => {
+    const checkConnectivity = async () => {
+      const netInfoState = await NetInfo.fetch();
+      setIsConnected(netInfoState.isConnected);
+    };
+
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsConnected(state.isConnected);
+    });
+
+    checkConnectivity();
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   const { name, email, phone, setUserEmail, setUserName } = useUserContext();
 
   const toast = useToast();
@@ -66,8 +90,8 @@ const User = ({ navigation }) => {
   useEffect(() => {
     getUserdata();
   }, []);
-  return (
-    <SafeAreaView style={styles.container}>
+  return isConnected ? (
+    <View style={styles.container}>
       <View
         style={{
           marginBottom: 3,
@@ -82,13 +106,18 @@ const User = ({ navigation }) => {
             // margin: 5,
             // marginLeft: 20,
             color: "white",
-            backgroundColor: "#75706f",
+            // backgroundColor: "#2d343c",
           }}
         >
           My Account
         </Text>
       </View>
       <View style={styles.profileContainer}>
+        <LinearGradient
+          // Background Linear Gradient
+          colors={["rgb(132,194,37)", "transparent"]}
+          style={styles.background1}
+        />
         <Text style={styles.label}>Name:</Text>
 
         <Text style={styles.detail}>{userData.name}</Text>
@@ -181,33 +210,83 @@ const User = ({ navigation }) => {
           />
         </Button>
       </View>
-    </SafeAreaView>
+    </View>
+  ) : (
+    <View style={styles.container}>
+      {/* <LinearGradient
+        // Button Linear Gradient
+        colors={["#4c669f", "#3b5998", "#192f6a"]}
+        style={styles.button}
+      >
+        <Text style={styles.text}>Sign in with Facebook</Text>
+      </LinearGradient> */}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // alignItems: "center",
+    // justifyContent: "center",
+    // backgroundColor: "#28c76f",
     backgroundColor: "#3a3332",
+    // backgroundColor: "#202830",
+    // backgroundColor: "black",
+
+    // backgroundImage: "linear-gradient(#2d343c, #FFFFFF)",
+
+    // backgroundGradient: "vertical",
+    // backgroundGradientTop: "#2d343c",
+    // backgroundGradientBottom: "#2d343c",
+  },
+  background: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 900,
+  },
+  background1: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 150,
+    borderRadius: 25,
+  },
+  gradient: {
+    flex: 1,
   },
   profileContainer: {
     // flex: 1,
-    backgroundColor: "#75706f",
-    marginBottom: "75%",
+
+    // backgroundColor: "#2d388a",
+    backgroundColor: "#d7f205",
+    // marginBottom: "95%",
     // alignItems: "center",
     // justifyContent: "center",
+    borderRadius: 25,
     padding: 20,
-    margin: 3,
+    margin: 7,
+    elevation: 50,
+    shadowColor: "white",
+    shadowOpacity: 0,
+    shadowRadius: 4,
+    shadowOffset: {
+      width: 1,
+      height: 2,
+    },
   },
   label: {
     fontWeight: "bold",
     marginBottom: 5,
-    color: "white",
+    color: "black",
   },
   detail: {
     marginBottom: 10,
     fontSize: 16,
-    color: "white",
+    color: "grey",
   },
   buttonContainer: {
     flex: 1,
@@ -221,6 +300,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "rgb(132,194,37)",
+    // backgroundColor: "#e07a5f",
     color: "white",
     paddingVertical: 12,
     alignItems: "center",
@@ -230,6 +310,29 @@ const styles = StyleSheet.create({
 
     fontWeight: "bold",
   },
+  // container: {
+  //   flex: 1,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   backgroundColor: "white",
+  // },
+  // background: {
+  //   position: "absolute",
+  //   left: 0,
+  //   right: 0,
+  //   top: 0,
+  //   height: 300,
+  // },
+  // button: {
+  //   padding: 15,
+  //   alignItems: "center",
+  //   borderRadius: 5,
+  // },
+  // text: {
+  //   backgroundColor: "transparent",
+  //   fontSize: 15,
+  //   color: "#fff",
+  // },
 });
 
 export default User;

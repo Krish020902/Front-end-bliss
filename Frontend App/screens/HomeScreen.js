@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { Button, Input, Icon } from "@rneui/base";
+import NetInfo from "@react-native-community/netinfo";
+import * as Animatable from "react-native-animatable";
 
 import React, { useState, useEffect, useRef } from "react";
 import { useToast } from "react-native-toast-notifications";
@@ -24,6 +26,25 @@ import {
 import Svg, { Path } from "react-native-svg";
 
 const HomeScreen = ({ navigation }) => {
+  const [isConnected, setIsConnected] = useState(null);
+
+  useEffect(() => {
+    const checkConnectivity = async () => {
+      const netInfoState = await NetInfo.fetch();
+      setIsConnected(netInfoState.isConnected);
+    };
+
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsConnected(state.isConnected);
+    });
+
+    checkConnectivity();
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   const [displayText, setDisplayText] = useState("");
   const [textIndex, setTextIndex] = useState(0);
   const textArray = [
@@ -89,7 +110,7 @@ const HomeScreen = ({ navigation }) => {
   };
   const IntradayIV = () => {};
   const ClickNifty = () => {};
-  return (
+  return isConnected ? (
     // <View style={styles.container}>
     //   <Svg
     //     // height="24.0215%"
@@ -144,6 +165,7 @@ const HomeScreen = ({ navigation }) => {
             containerStyle={styles.buttonContainer}
           >
             <Icon name={buttons[0].icon} size={50} color="#008000" />
+
             <Text style={styles.label}>{buttons[0].title}</Text>
           </Button>
           <Button
@@ -176,6 +198,46 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.label}>{buttons[3].title}</Text>
           </Button>
         </View>
+      </View>
+    </View>
+  ) : (
+    <View style={styles.container}>
+      <View style={{ backgroundColor: "#3a3332", height: 160 }}>
+        <Image
+          source={require("../assets/BlissQuantsTM.png")}
+          style={styles.logo}
+        />
+
+        <Svg
+          height="60%"
+          width="100%"
+          viewBox="0 0 1440 320"
+          style={{
+            position: "absolute",
+            top: 130,
+          }}
+        >
+          <Path
+            fill="#3a3332"
+            fill-opacity="1"
+            d="M0,256L60,234.7C120,213,240,171,360,160C480,149,600,171,720,192C840,213,960,235,1080,229.3C1200,224,1320,192,1380,176L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
+          ></Path>
+        </Svg>
+      </View>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Animatable.Text
+          animation="bounceIn"
+          // easing="ease-in-out"
+          iterationCount="infinite"
+          style={{
+            fontSize: 50,
+            marginBottom: 10,
+            height: 60,
+          }}
+        >
+          <Image source={require("../assets/wifi_low.png")}></Image>
+        </Animatable.Text>
+        <Text>No Internet</Text>
       </View>
     </View>
   );

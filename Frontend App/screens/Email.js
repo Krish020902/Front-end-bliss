@@ -190,7 +190,7 @@ const Email = ({ navigation }) => {
       >
         <Text style={{ color: "white" }}>NEXT</Text>
       </TouchableOpacity> */}
-      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
+      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 20 }}>
         <Button
           title="Go to dashboard"
           color="rgb(132,194,37)"
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     // marginLeft: 35,
-    marginTop: 60,
+    marginTop: 25,
     alignSelf: "center",
     width: 300,
     height: 80,

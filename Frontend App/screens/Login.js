@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Notifications from 'expo-notifications';
+import * as Notifications from "expo-notifications";
 
 import {
   responsiveHeight,
@@ -35,7 +35,7 @@ const Login = ({ navigation }) => {
     navigation.navigate("MobileNo");
   };
 
-  const sendNotification = async(title, body) => {
+  const sendNotification = async (title, body) => {
     Notifications.setNotificationHandler({
       handleNotification: async () => ({
         shouldShowAlert: true,
@@ -48,15 +48,14 @@ const Login = ({ navigation }) => {
       title: title,
       body: body,
     };
-  
-    const trigger = null
-  
+
+    const trigger = null;
+
     await Notifications.scheduleNotificationAsync({
       content,
       trigger,
     });
-  }
-
+  };
 
   const generateOtp = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -93,7 +92,10 @@ const Login = ({ navigation }) => {
           animationType: "zoom-in",
         });
         setUserOtp(res.data.data.otp);
-        sendNotification("otp message", `Generated OTP is ${res.data.data.otp}`)
+        sendNotification(
+          "otp message",
+          `Generated OTP is ${res.data.data.otp}`
+        );
 
         navigation.navigate("OTP_LOGIN");
       } else {
@@ -269,7 +271,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     // marginLeft: 35,
-    marginTop: 60,
+    marginTop: 30,
     alignSelf: "center",
     width: 300,
     height: 80,

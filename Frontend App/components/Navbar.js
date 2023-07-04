@@ -7,6 +7,7 @@ import {
   Touchable,
   TouchableOpacity,
 } from "react-native";
+import { responsiveWidth } from "react-native-responsive-dimensions";
 const Navbar = () => {
   return (
     <View style={styles.container}>
@@ -23,7 +24,7 @@ const Navbar = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 45,
-    width: 390,
+    width: responsiveWidth(100),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
