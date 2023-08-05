@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
+    "@mohamadkh75/react-native-jalali-datepicker": "^1.1.1",
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-community/clipboard": "^1.5.1",
+    "@react-native-community/datetimepicker": "6.5.2",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/netinfo": "9.3.5",
     "@react-native-community/viewpager": "^5.0.11",
@@ -26,9 +28,11 @@
     "axios": "^1.4.0",
     "eas": "^0.1.0",
     "expo": "~47.0.12",
+    "expo-linear-gradient": "~12.0.1",
     "expo-notifications": "~0.17.0",
     "expo-status-bar": "~1.4.2",
     "git": "^0.1.5",
+    "moment": "^2.29.4",
     "picker": "^0.1.4",
     "react": "18.1.0",
     "react-native": "0.70.8",
@@ -36,6 +40,8 @@
     "react-native-carousel": "^0.12.0",
     "react-native-chart-kit": "^6.12.0",
     "react-native-countdown-component": "^2.7.1",
+    "react-native-date-picker": "^4.2.13",
+    "react-native-datepicker": "^1.7.2",
     "react-native-dropdown-picker": "^5.4.4",
     "react-native-echarts-wrapper": "^2.0.0",
     "react-native-element-dropdown": "^2.6.0",
@@ -43,6 +49,7 @@
     "react-native-gifted-charts": "^1.2.42",
     "react-native-linear-gradient": "^2.7.3",
     "react-native-loading-spinner-overlay": "^3.0.1",
+    "react-native-modal-datetime-picker": "^17.0.0",
     "react-native-picker-select": "^8.0.4",
     "react-native-reanimated": "~2.12.0",
     "react-native-responsive-dimensions": "^3.1.1",
@@ -58,8 +65,7 @@
     "react-native-toast-notifications": "^3.3.1",
     "react-native-vector-icons": "^9.2.0",
     "rn-wave-bottom-bar": "^2.2.36",
-    "victory-native": "^36.6.8",
-    "expo-linear-gradient": "~12.0.1"
+    "victory-native": "^36.6.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

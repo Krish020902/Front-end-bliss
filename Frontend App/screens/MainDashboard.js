@@ -2,6 +2,8 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import Dashboard from "./Dashboard";
 import HomeScreen from "./HomeScreen";
+// import Notify from "./Notify";
+import Notify from "../screens/Notify";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import { createBottomTabNavigator } from "@rn-wave-bottom-bar";
@@ -30,6 +32,10 @@ const MainDashboard = () => {
             iconName = "home";
             size = focused ? 25 : 20;
             color = focused ? "rgb(132,194,37)" : "black";
+          } else if (route.name === "Notification") {
+            iconName = "bell";
+            size = focused ? 25 : 20;
+            color = focused ? "rgb(132,194,37)" : "black";
           }
 
           return <Icon name={iconName} size={size} color={color} />;
@@ -45,6 +51,7 @@ const MainDashboard = () => {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Analysis" component={Dashboard} />
+      <Tab.Screen name="Notification" component={Notify} />
       <Tab.Screen name="Profile" component={User} />
     </Tab.Navigator>
   );

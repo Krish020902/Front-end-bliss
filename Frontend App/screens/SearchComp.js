@@ -9,10 +9,12 @@ import axios from "axios";
 import { API_GET_ALL_COMPANIES } from "../constants/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay";
+import { responsiveHeight } from "react-native-responsive-dimensions";
 
-export default function DropdownCompany({ companyname }) {
+var temp = {};
+export default function SearchComp() {
   const [loading, setLoading] = useState(false);
-  console.log("inside dropdown", companyname);
+  //   console.log("inside dropdown", companyname);
   const {
     ddValue1,
     ddValue2,
@@ -21,6 +23,7 @@ export default function DropdownCompany({ companyname }) {
     companies,
     currCompany,
     currTypeOfGraph,
+    selectedIVcompany,
     typeOfGraph,
     setDdValue1,
     setDdValue2,
@@ -33,7 +36,7 @@ export default function DropdownCompany({ companyname }) {
   } = useDashboardContext();
 
   const renderLabel1 = () => {
-    console.log("this is valuue of dd1", ddValue1, ddFocus1);
+    // console.log("this is valuue of dd1", ddValue1, ddFocus1);
     if (ddValue1 || ddFocus1) {
       return (
         <Text style={[styles.label, ddFocus1 && { color: "rgb(132,194,37)" }]}>
@@ -54,7 +57,32 @@ export default function DropdownCompany({ companyname }) {
     }
     return null;
   };
+  const GetSearchResult = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      setLoading(true);
+      const res = await axios.get(API_GET_ALL_COMPANIES, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
+      res.data.data.forEach((item, index) => {
+        if (item.c_name == selectedIVcompany) {
+          temp = { Label: item.c_name, value: index };
+        }
+      });
+
+      console.log("temp : ", temp);
+      setDdValue1(temp.value);
+      console.log("before company : ", currCompany);
+      setCurrCompany(temp.Label.toLowerCase());
+      console.log("after company : ", currCompany);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const getAllCompanies = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
@@ -65,11 +93,11 @@ export default function DropdownCompany({ companyname }) {
         },
       });
       const newData = res.data.data.map((item, index) => {
+        // console.log(index);
         return { Label: item.c_name, value: index };
       });
-
+      //   console.log("new data", newData);
       setCompanies(newData);
-
       setLoading(false);
       // setTypeOfGraph([
       //   { name: "intraDay", value: "1" },
@@ -81,9 +109,17 @@ export default function DropdownCompany({ companyname }) {
   };
 
   useEffect(() => {
-    // setCurrCompany(companyname);
     getAllCompanies();
+    GetSearchResult();
+
+    // setDdValue1(temp.value);
+    // setCurrCompany(companies[parseInt(temp.value)]?.Label?.toLowerCase());
   }, []);
+
+  useEffect(() => {
+    // setCurrCompany()
+    // console.log("currrrrrr", currCompany);
+  }, [currCompany]);
 
   // useEffect(() => {
   //   // console.log();
@@ -114,10 +150,7 @@ export default function DropdownCompany({ companyname }) {
             onBlur={() => setDdFocus1(false)}
             onChange={(item) => {
               setDdValue1(item.value);
-              // console.log(ddValue1);
-              // console.log(
-              //   companies[parseInt(item.value)]?.Label?.toLowerCase()
-              // );
+
               setCurrCompany(
                 companies[parseInt(item.value)]?.Label?.toLowerCase()
               );
@@ -153,9 +186,10 @@ export default function DropdownCompany({ companyname }) {
             onFocus={() => setDdFocus2(true)}
             onBlur={() => setDdFocus2(false)}
             onChange={(item) => {
+              //   console.log("checkpoint");
               setDdValue2(item.value);
               // console.log("here in type of graph changed");
-              // console.log(item.value);
+
               // console.log(typeOfGraph[(item.value) - 1].name);
               // console.log(typeOfGraph[typeOfGraph[toString(item.value) - 1]?.name]);
               setCurrTypeOfGraph(typeOfGraph[item.value - 1]?.name);
@@ -178,6 +212,7 @@ export default function DropdownCompany({ companyname }) {
 
 const styles = StyleSheet.create({
   container: {
+    // height: responsiveHeight(100),
     marginTop: 20,
     flexDirection: "row",
     backgroundColor: "#3a3332",

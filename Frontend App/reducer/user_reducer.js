@@ -5,6 +5,10 @@ import {
   SET_USER_PASSWORD,
   SET_USER_OLD_PASSWORD,
   SET_USER_NAME,
+  SET_USER_BIRTHYEAR,
+  SET_USER_PLAN,
+  SET_USER_COUNTRY,
+  SET_USER_PINCODE,
 } from "../action";
 
 const user_reducer = (state, action) => {
@@ -26,8 +30,18 @@ const user_reducer = (state, action) => {
   if (action.type === SET_USER_NAME) {
     return { ...state, name: action.payload };
   }
-
-
+  if (action.type === SET_USER_BIRTHYEAR) {
+    return { ...state, birthyear: action.payload };
+  }
+  if (action.type === SET_USER_PLAN) {
+    return { ...state, plan: action.payload };
+  }
+  if (action.type === SET_USER_COUNTRY) {
+    return { ...state, country: action.payload };
+  }
+  if (action.type === SET_USER_PINCODE) {
+    return { ...state, pincode: action.payload };
+  }
   return state;
   throw new Error(`No Matching "${action.type}" - action type`);
 };

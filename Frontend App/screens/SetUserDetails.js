@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StatusBar,
@@ -6,12 +6,19 @@ import {
   Text,
   StyleSheet,
   Image,
+  Platform,
   TouchableOpacity,
+  Pressable,
+  Modal,
+  TouchableWithoutFeedback,
+  TouchableHighlight,
+  FlatList,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
-
-import { Button, Input, Icon } from "@rneui/base";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { Button, Input } from "@rneui/base";
 import {
   responsiveHeight,
   responsiveWidth,
@@ -21,10 +28,27 @@ import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
 import { UPDATE_USER_DATA } from "../constants/api";
+import moment from "moment";
+import { ScrollView } from "react-native-gesture-handler";
 
 const SetUserDetails = ({ navigation }) => {
-  const { setUserEmail, setUserName, email, name, phone, setUserPhone } =
-    useUserContext();
+  const {
+    setUserEmail,
+    setUserName,
+    email,
+    name,
+    phone,
+    setUserPhone,
+    birthyear,
+    setUserBirthYear,
+    pincode,
+    setUserPinCode,
+    country,
+    setUserCountry,
+    plan,
+
+    setUserPlan,
+  } = useUserContext();
   const toast = useToast();
 
   const login = async () => {
@@ -32,13 +56,13 @@ const SetUserDetails = ({ navigation }) => {
     const infourl = `${UPDATE_USER_DATA}/${phone}`;
     try {
       // console.log(typeof setUserEmail);
-      // console.log("email and aps5s", password);
+      // console.log("birthyear and plan", birthyear, " ", plan);
       const res = await axios.put(
         infourl,
         {
-          birthyear: "",
+          birthyear: birthyear,
           company: "",
-          country: "",
+          country: country,
           email: email,
           email_org: "",
           first_date: "",
@@ -48,8 +72,8 @@ const SetUserDetails = ({ navigation }) => {
           name: name,
           passreset: "",
           password: "",
-          pincode: "",
-          plan: "",
+          pincode: pincode,
+          plan: plan,
           register_date: "",
           role: "",
           session_id: "",
@@ -64,6 +88,7 @@ const SetUserDetails = ({ navigation }) => {
 
       if (res.data.valid) {
         console.log(res.data.message);
+        console.log(birthyear);
         toast.show("Details updated Successfully" + "! ", {
           type: "success",
         });
@@ -80,145 +105,214 @@ const SetUserDetails = ({ navigation }) => {
       });
       console.log("Outside catch", err);
     }
+  }; //here
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+
+  const [yearSelected, setYearSelected] = useState(true);
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 100 }, (_, index) => currentYear - index);
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!isDropdownVisible);
   };
+
+  const selectYear = (year) => {
+    setYearSelected(false);
+
+    setUserBirthYear(year);
+
+    toggleDropdown();
+  };
+
   return (
     <View style={styles.container}>
       <Image
         source={require("../assets/BlissQuantsTM.png")}
         style={styles.logo}
       />
+      <ScrollView>
+        <Text style={styles.font}>Name</Text>
 
-      <Text style={styles.font}>Name</Text>
-      {/* <TextInput
-        value={name}
-        style={{
-          height: 26,
-          alignSelf: "center",
-          margin: 15,
-          width: 350,
-          fontSize: 20,
-          color: "white",
-          borderBottomWidth: 1,
-          borderBottomColor: "#555",
-        }}
-        onChangeText={(change) => {
-          setUserName(change);
-        }}
-      /> */}
-      <View
-        style={{
-          flexDirection: "row",
-          backgroundColor: "#75706f",
-          width: responsiveWidth(90),
-          margin: 15,
-          borderRadius: 10,
-          elevation: 14, // or you can use the `shadow` property instead
-          shadowColor: "rgb(132,194,37)",
-          shadowOffset: {
-            width: 20,
-            height: 20,
-          },
-          shadowOpacity: 1,
-          shadowRadius: 4,
-        }}
-      >
-        <Input
-          value={name}
-          style={{
-            height: 26,
-            alignSelf: "center",
-            marginLeft: 14,
-            width: 350,
-            fontSize: 18,
-            color: "white",
-          }}
-          onChangeText={(change) => {
-            setUserName(change);
-          }}
-        />
-      </View>
+        <View style={styles.Viewbox}>
+          <Input
+            value={name}
+            style={styles.TextBox}
+            onChangeText={(change) => {
+              setUserName(change);
+            }}
+          />
+        </View>
+        <Text style={styles.font}>Email</Text>
 
-      <Text style={styles.font}>Email</Text>
-      {/* <TextInput
-        value={email}
-        style={{
-          height: 26,
-          alignSelf: "center",
-          margin: 15,
-          width: 350,
-          fontSize: 20,
-          color: "white",
-          borderBottomWidth: 1,
-          borderBottomColor: "#555",
-        }}
-        onChangeText={(change) => {
-          setUserEmail(change);
-        }}
-      /> */}
-      <View
-        style={{
-          flexDirection: "row",
-          backgroundColor: "#75706f",
-          width: responsiveWidth(90),
-          margin: 15,
-          borderRadius: 10,
-          elevation: 14, // or you can use the `shadow` property instead
-          shadowColor: "rgb(132,194,37)",
-          shadowOffset: {
-            width: 20,
-            height: 20,
-          },
-          shadowOpacity: 1,
-          shadowRadius: 4,
-        }}
-      >
-        <Input
-          value={email}
-          style={{
-            height: 26,
-            alignSelf: "center",
-            marginLeft: 14,
-            width: 350,
-            fontSize: 18,
-            color: "white",
-          }}
-          onChangeText={(change) => {
-            setUserEmail(change);
-          }}
-        />
-      </View>
-      {/* <TouchableOpacity
-        onPress={login}
-        style={{
-          backgroundColor: "rgb(132,194,37)",
-          padding: 10,
-          marginTop: 10,
-          width: 100,
-          alignItems: "center",
-          alignSelf: "center",
-        }}
-      >
-        <Text style={{ color: "white" }}>NEXT</Text>
-      </TouchableOpacity> */}
-      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
-        <Button
-          title="Go to dashboard"
-          color="rgb(132,194,37)"
-          onPress={login}
-          buttonStyle={{
-            marginTop: 25,
-            width: responsiveWidth(80),
-            alignSelf: "center",
-            borderRadius: 13,
-          }}
+        <View style={styles.Viewbox}>
+          <Input
+            value={email}
+            style={styles.TextBox}
+            onChangeText={(change) => {
+              setUserEmail(change);
+            }}
+          />
+        </View>
+        <Text style={styles.font}>Birth Year</Text>
+        <View style={styles.Viewbox}>
+          <TouchableOpacity
+            style={styles.dropdownButton}
+            onPress={toggleDropdown}
+          >
+            <Text
+              style={{
+                // height: 40,
+
+                fontSize: 18,
+                color: "white",
+              }}
+            >
+              {birthyear == "" ? "Select Birth Year" : birthyear}
+              {yearSelected && (
+                <Icon
+                  style={{ width: 30, size: 20 }}
+                  name="chevron-down"
+                ></Icon>
+              )}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isDropdownVisible}
+          onRequestClose={toggleDropdown}
         >
-          Save changes
-        </Button>
-      </View>
+          <ScrollView>
+            <View style={styles.modalContainer}>
+              {years.map((year) => (
+                <TouchableOpacity
+                  key={year}
+                  style={styles.yearItem}
+                  onPress={() => selectYear(year)}
+                >
+                  <Text
+                    style={{
+                      height: 40,
+
+                      fontSize: 18,
+                      color: "white",
+                    }}
+                  >
+                    {year}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </ScrollView>
+        </Modal>
+
+        <Text style={styles.font}>Plan</Text>
+
+        <View style={styles.Viewbox}>
+          <Input
+            value={plan}
+            style={styles.TextBox}
+            onChangeText={(change) => {
+              setUserPlan(change);
+            }}
+          />
+        </View>
+        <Text style={styles.font}>Pin-Code</Text>
+
+        <View style={styles.Viewbox}>
+          <Input
+            value={pincode}
+            style={styles.TextBox}
+            onChangeText={(change) => {
+              setUserPinCode(change);
+            }}
+          />
+        </View>
+        <Text style={styles.font}>Country</Text>
+
+        <View style={styles.Viewbox}>
+          <Input
+            value={country}
+            style={styles.TextBox}
+            onChangeText={(change) => {
+              setUserCountry(change);
+            }}
+          />
+        </View>
+
+        <View style={styles.Viewbox}></View>
+
+        <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
+          <Button
+            title="Go to dashboard"
+            color="rgb(132,194,37)"
+            onPress={login}
+            buttonStyle={{
+              marginTop: 25,
+              width: responsiveWidth(80),
+              alignSelf: "center",
+              borderRadius: 13,
+            }}
+          >
+            Save changes
+          </Button>
+        </View>
+      </ScrollView>
     </View>
   );
 };
 const styles = StyleSheet.create({
+  dropdownButton: {
+    flex: 1,
+    padding: 10,
+
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  yearItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "white",
+    width: 200,
+    alignItems: "center",
+  },
+  TextBox: {
+    height: 40,
+    alignSelf: "center",
+    marginLeft: 14,
+    width: 350,
+    fontSize: 18,
+    color: "white",
+  },
+  Viewbox: {
+    flexDirection: "row",
+    backgroundColor: "#75706f",
+    width: responsiveWidth(90),
+    margin: 15,
+    borderRadius: 10,
+    elevation: 14, // or you can use the `shadow` property instead
+    shadowColor: "rgb(132,194,37)",
+    shadowOffset: {
+      width: 20,
+      height: 20,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+  },
+  countryItem: {
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
+    paddingVertical: 10,
+  },
   container: {
     flex: 1,
     // padding: 10,
@@ -230,7 +324,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     // marginLeft: 35,
-    marginTop: 60,
+    marginTop: 40,
     alignSelf: "center",
     width: 300,
     height: 80,

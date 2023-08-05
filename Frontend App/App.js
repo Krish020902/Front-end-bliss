@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { UserProvider } from "./context/user_context";
-import Dashboard from "./screens/Dashboard";
+import SearchComp from "./screens/SearchComp";
 import { DashboardProvider } from "./context/dashboard_context";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -18,11 +18,14 @@ import SetPassword from "./screens/SetPassword";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
 import NewPass from "./screens/NewPass";
 import ForgotPass from "./screens/ForgotPass";
+import Notify from "./screens/Notify";
 import ForgotOtp from "./screens/ForgotOtp";
 import ResetPass from "./screens/ResetPass";
 import SetUserDetails from "./screens/SetUserDetails";
-import HighIV from "./screens/HighIV";
-import LowIV from "./screens/LowIV";
+import HighIV from "./components/HighIV";
+import LowIV from "./components/LowIV";
+import NotificationBar from "./components/Notificationbar";
+import CompScreen from "./screens/CompScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -56,6 +59,14 @@ export default function App() {
               <Stack.Screen name="ForgotOtp" component={ForgotOtp} />
               <Stack.Screen name="ResetPass" component={ResetPass} />
               <Stack.Screen name="SetUserDetails" component={SetUserDetails} />
+              <Stack.Screen name="Notify" component={Notify} />
+              <Stack.Screen name="Dashboard" component={CompScreen} />
+
+              {/* <Stack.Screen name="SearchComp" component={SearchComp} /> */}
+              <Stack.Screen
+                name="NotificationBar"
+                component={NotificationBar}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </DashboardProvider>

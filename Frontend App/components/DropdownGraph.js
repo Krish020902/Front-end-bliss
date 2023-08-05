@@ -68,6 +68,9 @@ export default function DropdownGraph() {
   useEffect(() => {
     getGraphData();
   }, [currCompany, currTypeOfGraph]);
+  useEffect(() => {
+    getGraphData();
+  }, []);
 
   const handleZoom = (domain) => {
     setZoomDomain(domain);

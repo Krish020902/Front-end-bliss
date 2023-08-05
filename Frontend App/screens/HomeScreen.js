@@ -6,6 +6,7 @@ import {
   Animated,
   Image,
 } from "react-native";
+import PopupBox from "../components/PopupBox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { Button, Input, Icon } from "@rneui/base";
 import NetInfo from "@react-native-community/netinfo";
@@ -125,81 +126,87 @@ const HomeScreen = ({ navigation }) => {
     //     ></Path>
     //   </Svg>
     // </View>
-
-    <View style={styles.container}>
-      <View style={{ backgroundColor: "#3a3332", height: 160 }}>
-        <Image
-          source={require("../assets/BlissQuantsTM.png")}
-          style={styles.logo}
-        />
-
-        <Svg
-          height="60%"
-          width="100%"
-          viewBox="0 0 1440 320"
+    <>
+      <View style={styles.container}>
+        <View
           style={{
-            position: "absolute",
-            top: 130,
+            backgroundColor: "#3a3332",
+            height: 160,
           }}
         >
-          <Path
-            fill="#3a3332"
-            fill-opacity="1"
-            d="M0,256L60,234.7C120,213,240,171,360,160C480,149,600,171,720,192C840,213,960,235,1080,229.3C1200,224,1320,192,1380,176L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
-          ></Path>
-        </Svg>
-      </View>
-      <Text style={styles.text}>{displayText}</Text>
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 50,
-          //   width: responsiveWidth(100),
-        }}
-      >
-        <View style={styles.buttonGroup}>
-          <Button
-            key={0}
-            onPress={ClickHighIV}
-            buttonStyle={styles.button}
-            containerStyle={styles.buttonContainer}
-          >
-            <Icon name={buttons[0].icon} size={50} color="#008000" />
+          <Image
+            source={require("../assets/BlissQuantsTM.png")}
+            style={styles.logo}
+          />
 
-            <Text style={styles.label}>{buttons[0].title}</Text>
-          </Button>
-          <Button
-            key={1}
-            onPress={IntradayIV}
-            buttonStyle={styles.button}
-            containerStyle={styles.buttonContainer}
+          <Svg
+            height="60%"
+            width="100%"
+            viewBox="0 0 1440 320"
+            style={{
+              position: "absolute",
+              top: 130,
+            }}
           >
-            <Icon name={buttons[1].icon} size={50} color="#0000FF" />
-            <Text style={styles.label}>{buttons[1].title}</Text>
-          </Button>
+            <Path
+              fill="#3a3332"
+              fill-opacity="1"
+              d="M0,256L60,234.7C120,213,240,171,360,160C480,149,600,171,720,192C840,213,960,235,1080,229.3C1200,224,1320,192,1380,176L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
+            ></Path>
+          </Svg>
         </View>
-        <View style={styles.buttonGroup}>
-          <Button
-            key={2}
-            onPress={ClickLowIV}
-            buttonStyle={styles.button}
-            containerStyle={styles.buttonContainer}
-          >
-            <Icon name={buttons[2].icon} size={50} color="#8B0000" />
-            <Text style={styles.label}>{buttons[2].title}</Text>
-          </Button>
-          <Button
-            key={3}
-            onPress={ClickNifty}
-            buttonStyle={styles.button}
-            containerStyle={styles.buttonContainer}
-          >
-            <Icon name={buttons[3].icon} size={50} color="#FFC300" />
-            <Text style={styles.label}>{buttons[3].title}</Text>
-          </Button>
+        <Text style={styles.text}>{displayText}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 50,
+            //   width: responsiveWidth(100),
+          }}
+        >
+          <View style={styles.buttonGroup}>
+            <Button
+              key={0}
+              onPress={ClickHighIV}
+              buttonStyle={styles.button}
+              containerStyle={styles.buttonContainer}
+            >
+              <Icon name={buttons[0].icon} size={50} color="#008000" />
+
+              <Text style={styles.label}>{buttons[0].title}</Text>
+            </Button>
+            <Button
+              key={1}
+              onPress={IntradayIV}
+              buttonStyle={styles.button}
+              containerStyle={styles.buttonContainer}
+            >
+              <Icon name={buttons[1].icon} size={50} color="#0000FF" />
+              <Text style={styles.label}>{buttons[1].title}</Text>
+            </Button>
+          </View>
+          <View style={styles.buttonGroup}>
+            <Button
+              key={2}
+              onPress={ClickLowIV}
+              buttonStyle={styles.button}
+              containerStyle={styles.buttonContainer}
+            >
+              <Icon name={buttons[2].icon} size={50} color="#8B0000" />
+              <Text style={styles.label}>{buttons[2].title}</Text>
+            </Button>
+            <Button
+              key={3}
+              onPress={ClickNifty}
+              buttonStyle={styles.button}
+              containerStyle={styles.buttonContainer}
+            >
+              <Icon name={buttons[3].icon} size={50} color="#FFC300" />
+              <Text style={styles.label}>{buttons[3].title}</Text>
+            </Button>
+          </View>
         </View>
       </View>
-    </View>
+    </>
   ) : (
     <View style={styles.container}>
       <View style={{ backgroundColor: "#3a3332", height: 160 }}>
@@ -224,6 +231,7 @@ const HomeScreen = ({ navigation }) => {
           ></Path>
         </Svg>
       </View>
+
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Animatable.Text
           animation="bounceIn"

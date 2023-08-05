@@ -10,16 +10,18 @@ import {
   CHANGE_GRAPH_DATA,
   CHANGE_TABLE_DATA,
   CHANGE_TYPEOFGRAPH,
+  CHANGE_SELECTED_IV_COMPANY,
 } from "../action";
 import dashboard_reducer from "../reducer/dashboard_reducer";
 
 const initialState = {
+  selectedIVcompany: "",
   ddValue1: "",
   ddValue2: "",
   ddFocus1: false,
   ddFocus2: false,
   companies: [],
-  currCompany: "acc",
+  currCompany: "alkem",
   currTypeOfGraph: "Daily",
   typeOfGraph: [
     { name: "intraDay", value: "1" },
@@ -53,17 +55,20 @@ export const DashboardProvider = ({ children }) => {
     dispath({ type: CHANGE_TYPEOFGRAPH, payload: val });
   };
   const setCurrCompany = (val) => {
-    dispath({type: CHANGE_CURR_COMPANY, payload: val});
-  }
+    dispath({ type: CHANGE_CURR_COMPANY, payload: val });
+  };
   const setCurrTypeOfGraph = (val) => {
-    dispath({type: CHANGE_CURR_TYPE_OF_GRAPH, payload: val});
-  }
+    dispath({ type: CHANGE_CURR_TYPE_OF_GRAPH, payload: val });
+  };
   const setGraphData = (val) => {
-    dispath({type: CHANGE_GRAPH_DATA, payload: val})
-  }
+    dispath({ type: CHANGE_GRAPH_DATA, payload: val });
+  };
   const setTableData = (val) => {
-    dispath({type: CHANGE_TABLE_DATA, payload: val})
-  }
+    dispath({ type: CHANGE_TABLE_DATA, payload: val });
+  };
+  const setSelectedIVcompany = (val) => {
+    dispath({ type: CHANGE_SELECTED_IV_COMPANY, payload: val });
+  };
 
   return (
     <DashboardContext.Provider
@@ -78,7 +83,8 @@ export const DashboardProvider = ({ children }) => {
         setCurrCompany,
         setCurrTypeOfGraph,
         setGraphData,
-        setTableData
+        setTableData,
+        setSelectedIVcompany,
       }}
     >
       {children}

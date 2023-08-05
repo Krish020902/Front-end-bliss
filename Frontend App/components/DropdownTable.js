@@ -18,7 +18,9 @@ const DropdownTable = () => {
   const { tableData, setTableData, currCompany } = useDashboardContext();
 
   const getTableData = async () => {
+    console.log("babby", currCompany);
     const resultUrl = `${API}/result/${currCompany}`;
+    console.log("result url", resultUrl);
     const movementUrl = `${API}/movement/${currCompany}`;
     const token = await AsyncStorage.getItem("token");
     try {
@@ -82,6 +84,10 @@ const DropdownTable = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    getTableData();
+  }, []);
 
   useEffect(() => {
     getTableData();

@@ -6,7 +6,11 @@ import {
   SET_USER_PHONE,
   SET_USER_PASSWORD,
   SET_USER_OLD_PASSWORD,
-  SET_USER_NAME
+  SET_USER_NAME,
+  SET_USER_BIRTHYEAR,
+  SET_USER_PLAN,
+  SET_USER_COUNTRY,
+  SET_USER_PINCODE,
 } from "../action";
 
 const initialState = {
@@ -14,8 +18,12 @@ const initialState = {
   phone: "",
   otp: "",
   password: "",
-  oldpassword:"",
-  name:""
+  oldpassword: "",
+  name: "",
+  birthyear: "",
+  pincode: "",
+  country: "India",
+  plan: "",
 };
 
 const UserContext = React.createContext();
@@ -41,7 +49,18 @@ export const UserProvider = ({ children }) => {
   const setUserName = (val) => {
     dispath({ type: SET_USER_NAME, payload: val });
   };
-
+  const setUserBirthYear = (val) => {
+    dispath({ type: SET_USER_BIRTHYEAR, payload: val });
+  };
+  const setUserPlan = (val) => {
+    dispath({ type: SET_USER_PLAN, payload: val });
+  };
+  const setUserCountry = (val) => {
+    dispath({ type: SET_USER_COUNTRY, payload: val });
+  };
+  const setUserPinCode = (val) => {
+    dispath({ type: SET_USER_PINCODE, payload: val });
+  };
   return (
     <UserContext.Provider
       value={{
@@ -51,7 +70,11 @@ export const UserProvider = ({ children }) => {
         setUserOtp,
         setUserPassword,
         setUserOldPassword,
-        setUserName
+        setUserName,
+        setUserBirthYear,
+        setUserPlan,
+        setUserCountry,
+        setUserPinCode,
       }}
     >
       {children}

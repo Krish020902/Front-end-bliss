@@ -1,25 +1,26 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDashboardContext } from "../context/dashboard_context";
-import DropdownCompany from "../components/DropdownCompany";
+// import DropdownCompany from "../components/DropdownCompany";
 import DropdownGraph from "../components/DropdownGraph";
 import DropdownTable from "../components/DropdownTable";
 import Navbar from "../components/Navbar";
 import PopupBox from "../components/PopupBox";
 import SetPassword from "./SetPassword";
 import { Button } from "@rneui/base";
+import SearchComp from "./SearchComp";
 import { responsiveHeight } from "react-native-responsive-dimensions";
-const Dashboard = ({ navigation }) => {
+// import { CHANGE_SELECTED_IV_COMPANY } from "../action";
+const CompScreen = ({ navigation }) => {
   // const companyname = route.params;
   // console.log("recieving success", companyname);
-
   return (
     <View style={styles.container}>
       <PopupBox navigation={navigation} />
       <Navbar />
       {/* <Button title="Solid" type="solid"  /> */}
       {/* <Button title="Solid" type="solid" loading={false} />; */}
-      <DropdownCompany />
+      <SearchComp />
       <DropdownGraph />
       <DropdownTable />
       {/* <Text>hello</Text> */}
@@ -27,11 +28,11 @@ const Dashboard = ({ navigation }) => {
   );
 };
 
-export default Dashboard;
+export default CompScreen;
 
 const styles = StyleSheet.create({
   container: {
-    height: responsiveHeight(94.5),
+    height: responsiveHeight(100),
     backgroundColor: "#3a3332",
   },
 });
