@@ -31,7 +31,8 @@ export default Dashboard;
 
 const styles = StyleSheet.create({
   container: {
-    height: responsiveHeight(94.5),
+    // height: responsiveHeight(100),
+    flex: 1,
     backgroundColor: "#3a3332",
   },
 });

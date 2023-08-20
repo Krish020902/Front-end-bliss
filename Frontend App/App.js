@@ -27,8 +27,11 @@ import LowIV from "./components/LowIV";
 import NotificationBar from "./components/Notificationbar";
 import CompScreen from "./screens/CompScreen";
 const Stack = createStackNavigator();
+import registerNNPushToken from 'native-notify';
 
 export default function App() {
+  
+  registerNNPushToken(10536, 'VbOlb9uQLyJKJsVilsiAZY');
   const Tab = createBottomTabNavigator();
   const Check = () => {
     return (

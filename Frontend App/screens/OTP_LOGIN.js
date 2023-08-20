@@ -12,6 +12,7 @@ import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
 import { Button, Input, Icon } from "@rneui/base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { registerIndieID } from 'native-notify';
 
 import {
   responsiveHeight,
@@ -46,6 +47,19 @@ const OTP_LOGIN = ({ navigation }) => {
 
       if (res.data.valid) {
         await AsyncStorage.setItem("token", res.data.access_token);
+        registerIndieID(`${phone}`, 10536, 'VbOlb9uQLyJKJsVilsiAZY');
+        const noti = await axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+              subID: `${phone}`,
+              appId: 10536,
+              appToken: 'VbOlb9uQLyJKJsVilsiAZY',
+              title: 'testing bliss 123',
+              message: 'testing bliss 123'
+        });
+
+        console.log("after notification adasdasda");
+
+
+
         toast.show("Logged in Successfull! ", {
           type: "success",
           placement: "top",

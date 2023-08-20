@@ -32,7 +32,8 @@ export default CompScreen;
 
 const styles = StyleSheet.create({
   container: {
-    height: responsiveHeight(100),
+    // height: responsiveHeight(100),
+    flex: 1,
     backgroundColor: "#3a3332",
   },
 });

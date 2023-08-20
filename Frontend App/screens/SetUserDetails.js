@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
-import DateTimePicker from "@react-native-community/datetimepicker";
+
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button, Input } from "@rneui/base";
 import {

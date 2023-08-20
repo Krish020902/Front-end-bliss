@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "448610345146",
+    "project_id": "blissquantstest",
+    "storage_bucket": "blissquantstest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448610345146:android:ce69022c97fa01bf5ba283",
+        "android_client_info": {
+          "package_name": "com.krish_m.bliss_front_end"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448610345146-h6e54a436eu06hegq0htsfqgrqg75r69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4zKi3GJBJWM2v3qc74lOPDVKOS93-P9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448610345146-h6e54a436eu06hegq0htsfqgrqg75r69.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

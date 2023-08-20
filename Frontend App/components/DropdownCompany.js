@@ -10,9 +10,9 @@ import { API_GET_ALL_COMPANIES } from "../constants/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay";
 
-export default function DropdownCompany({ companyname }) {
+export default function DropdownCompany() {
   const [loading, setLoading] = useState(false);
-  console.log("inside dropdown", companyname);
+
   const {
     ddValue1,
     ddValue2,
@@ -33,7 +33,6 @@ export default function DropdownCompany({ companyname }) {
   } = useDashboardContext();
 
   const renderLabel1 = () => {
-    console.log("this is valuue of dd1", ddValue1, ddFocus1);
     if (ddValue1 || ddFocus1) {
       return (
         <Text style={[styles.label, ddFocus1 && { color: "rgb(132,194,37)" }]}>
@@ -69,7 +68,6 @@ export default function DropdownCompany({ companyname }) {
       });
 
       setCompanies(newData);
-
       setLoading(false);
       // setTypeOfGraph([
       //   { name: "intraDay", value: "1" },
@@ -81,7 +79,6 @@ export default function DropdownCompany({ companyname }) {
   };
 
   useEffect(() => {
-    // setCurrCompany(companyname);
     getAllCompanies();
   }, []);
 
@@ -187,7 +184,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderColor: "white",
     height: 50,
-
     // borderColor: "#474545",
     borderWidth: 0.5,
     borderRadius: 8,

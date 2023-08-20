@@ -23,7 +23,8 @@
         "foregroundImage": "./assets/BlissQuantsTM.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.krish_m.bliss_front_end"
+      "package": "com.krish_m.bliss_front_end",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
