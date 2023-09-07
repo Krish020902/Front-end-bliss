@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import axios from "axios";
+import { useDashboardContext } from "../context/dashboard_context";
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -19,8 +20,10 @@ import { LOWIV } from "../constants/api";
 // import Icon from "react-native-vector-icons/MaterialIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import styles from "./LowIVStyles";
-const LowIV = () => {
+const LowIV = ({ navigation }) => {
   // let newstockdata;
+  const { setSelectedIVcompany } = useDashboardContext();
+
   const [stockData, setStockData] = useState([
     {
       name: "AARTIIND",
@@ -54,7 +57,11 @@ const LowIV = () => {
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
-
+  const handleRedirection = (company) => {
+    // console.log(company.name);
+    setSelectedIVcompany(company.name);
+    navigation.navigate("Dashboard");
+  };
   const handleOptionSelect = async (value) => {
     console.log(value.value);
 
@@ -151,6 +158,7 @@ const LowIV = () => {
               borderColor: "#FFFFFF",
               position: "relative",
             }}
+            onPress={() => handleRedirection(stock)}
           >
             <Text style={styles.stockName}>{stock.name}</Text>
             <Text style={styles.stockPrice}>{stock.price}</Text>

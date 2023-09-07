@@ -25,7 +25,7 @@ import { HUGE_GAP } from "../constants/api";
 // import styles from "./HugeGapUpStyles";
 const HugeGapUp = ({ navigation }) => {
   // Sample data for demonstration
-
+  const { setSelectedIVcompany } = useDashboardContext();
   const [stockData, setStockData] = useState([
     {
       name: "AARTIIND",
@@ -59,7 +59,11 @@ const HugeGapUp = ({ navigation }) => {
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
-
+  const handleRedirection = (company) => {
+    // console.log(company.name);
+    setSelectedIVcompany(company.name);
+    navigation.navigate("Dashboard");
+  };
   const handleOptionSelect = async (value) => {
     // console.log(value.value);
     // console.log("value is ", value.value);
