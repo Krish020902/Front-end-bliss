@@ -26,12 +26,12 @@ import HighIV from "./components/HighIV";
 import LowIV from "./components/LowIV";
 import NotificationBar from "./components/Notificationbar";
 import CompScreen from "./screens/CompScreen";
+import HugeGapUp from "./components/HugeGapUp";
 const Stack = createStackNavigator();
-import registerNNPushToken from 'native-notify';
+import registerNNPushToken from "native-notify";
 
 export default function App() {
-  
-  registerNNPushToken(10536, 'VbOlb9uQLyJKJsVilsiAZY');
+  registerNNPushToken(10536, "VbOlb9uQLyJKJsVilsiAZY");
   const Tab = createBottomTabNavigator();
   const Check = () => {
     return (
@@ -53,6 +53,7 @@ export default function App() {
               <Stack.Screen name="MainDashboard" component={MainDashboard} />
               <Stack.Screen name="HighIV" component={HighIV} />
               <Stack.Screen name="LowIV" component={LowIV} />
+              <Stack.Screen name="HugeGapUp" component={HugeGapUp} />
 
               <Stack.Screen name="OTP_REGISTER" component={OTP_REGISTER} />
               <Stack.Screen name="OTP_LOGIN" component={OTP_LOGIN} />

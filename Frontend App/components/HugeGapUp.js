@@ -21,9 +21,9 @@ import {
 } from "react-native-responsive-dimensions";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { HIGHIV } from "../constants/api";
-// import styles from "./HighIVStyles";
-const HighIV = ({ navigation }) => {
+import { HUGE_GAP } from "../constants/api";
+// import styles from "./HugeGapUpStyles";
+const HugeGapUp = ({ navigation }) => {
   // Sample data for demonstration
 
   const [stockData, setStockData] = useState([
@@ -46,12 +46,15 @@ const HighIV = ({ navigation }) => {
   // Sample data for demonstration
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("9");
+  const [selectedOption, setSelectedOption] = useState("12");
 
   const [options, setOptions] = useState([
     { label: "Top 3", value: "3" },
     { label: "Top 6", value: "6" },
     { label: "Top 9", value: "9" },
+    { label: "Top 12", value: "12" },
+    { label: "Top 15", value: "15" },
+    { label: "Top 18", value: "18" },
   ]);
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -68,7 +71,7 @@ const HighIV = ({ navigation }) => {
     // console.log("this is all companies");
     try {
       const token = await AsyncStorage.getItem("token");
-      const res = await axios.get(`${HIGHIV}/${selectedOption}`, {
+      const res = await axios.get(`${HUGE_GAP}/${selectedOption}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -162,7 +165,6 @@ const HighIV = ({ navigation }) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   modalContainer: {
     position: "absolute",
@@ -230,5 +232,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
-export default HighIV;
+export default HugeGapUp;

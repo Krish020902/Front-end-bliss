@@ -36,8 +36,11 @@ const Notify = () => {
     const day = dateParts[1];
     const month = months.indexOf(dateParts[2]) + 1;
     const year = dateParts[3];
+    const totaltime = dateParts[4].split(":");
+    const hour = totaltime[0];
+    const min = totaltime[1];
 
-    return `${day}/${month}/${year}`;
+    return `${day}/${month}/${year}      ${hour}:${min}`;
   }
 
   const [isConnected, setIsConnected] = useState(null);
@@ -55,10 +58,11 @@ const Notify = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log("date", notification.data.data[0].created_at);
         const formattedDate = convertDateFormat(
           notification.data.data[0].created_at
         );
-        console.log(formattedDate);
+        // console.log(formattedDate);
         setNotifications(notification.data.data);
         // notifications1 = notification.data.data;
         console.log(notification.data.data[0].message_title);

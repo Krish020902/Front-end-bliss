@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -8,17 +8,20 @@ import {
   FlatList,
   TouchableWithoutFeedback,
 } from "react-native";
+import axios from "axios";
 import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
 } from "react-native-responsive-dimensions";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { LOWIV } from "../constants/api";
 // import Icon from "react-native-vector-icons/MaterialIcons";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import styles from "./LowIVStyles";
 const LowIV = () => {
-  // Sample data for demonstration
-  const stockData = [
+  // let newstockdata;
+  const [stockData, setStockData] = useState([
     {
       name: "AARTIIND",
       price: 100,
@@ -34,28 +37,59 @@ const LowIV = () => {
     { name: "CUB", price: 180 },
     { name: "DABUR", price: 180 },
     { name: "DLF", price: 180 },
-  ];
+  ]);
+  // Sample data for demonstration
+
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Select Schemas");
+  const [selectedOption, setSelectedOption] = useState("12");
 
-  const options = [
-    { label: "Option 1", value: "Option1" },
-    { label: "Option 2", value: "Option2" },
-    { label: "Option 3", value: "Option3" },
-    { label: "Option 4", value: "Option4" },
-    { label: "Option 5", value: "Option5" },
-    { label: "Option 6", value: "Option6" },
-  ];
-
+  const [options, setOptions] = useState([
+    { label: "Top 3 ", value: "3" },
+    { label: "Top 6 ", value: "6" },
+    { label: "Top 9 ", value: "9" },
+    { label: "Top 12", value: "12" },
+    { label: "Top 15", value: "15" },
+    { label: "Top 18", value: "18" },
+  ]);
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
-  const handleOptionSelect = (value) => {
-    setSelectedOption(value);
-    setDropdownOpen(false);
-  };
+  const handleOptionSelect = async (value) => {
+    console.log(value.value);
 
+    setSelectedOption(value.value);
+    setDropdownOpen(!isDropdownOpen);
+    getAllCompanies();
+  };
+  const getAllCompanies = async () => {
+    // console.log("this is all companies");
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const res = await axios.get(`${LOWIV}/${selectedOption}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // console.log("res is", res.data);
+      const newstockdata = res?.data?.data?.map((item) => {
+        return { name: item.name, price: item.atm_vol };
+      });
+      // console.log("new stock data", newstockdata);
+      setStockData(newstockdata);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    // setStockData(newstockdata);
+    // setCurrCompany(companyname);
+    getAllCompanies();
+  }, []);
+
+  useEffect(() => {
+    getAllCompanies();
+  }, [stockData]);
   return (
     <View>
       <View style={styles.selectedbar}>
@@ -70,9 +104,11 @@ const LowIV = () => {
           visible={isDropdownOpen}
           transparent={true}
           animationType="fade"
-          onRequestClose={() => setDropdownOpen(false)}
+          onRequestClose={() => setDropdownOpen(!isDropdownOpen)}
         >
-          <TouchableWithoutFeedback onPress={() => setDropdownOpen(false)}>
+          <TouchableWithoutFeedback
+            onPress={() => setDropdownOpen(!isDropdownOpen)}
+          >
             <View style={styles.modalOverlay} />
           </TouchableWithoutFeedback>
 
@@ -83,7 +119,7 @@ const LowIV = () => {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   style={styles.optionItem}
-                  onPress={() => handleOptionSelect(item.value)}
+                  onPress={() => handleOptionSelect(item)}
                 >
                   <Text style={{ color: "black" }}>{item.label}</Text>
                 </TouchableOpacity>
@@ -164,7 +200,7 @@ const styles = StyleSheet.create({
   container: {
     // marginTop: 100,
     height: responsiveHeight(100),
-    backgroundColor: "black",
+    // backgroundColor: "black",
     flexDirection: "row",
     flexWrap: "wrap",
   },

@@ -98,7 +98,7 @@ const HomeScreen = ({ navigation }) => {
 
   const buttons = [
     { title: "High IV", icon: "trending-up" },
-    { title: "Intraday IV", icon: "bar-chart" },
+    { title: "Huge Gap Up", icon: "bar-chart" },
     { title: "Low IV", icon: "trending-down" },
     { title: "Nifty strategies", icon: "lightbulb-outline" },
   ];
@@ -109,7 +109,9 @@ const HomeScreen = ({ navigation }) => {
   const ClickLowIV = () => {
     navigation.navigate("LowIV");
   };
-  const IntradayIV = () => {};
+  const HugeGapUp = () => {
+    navigation.navigate("HugeGapUp");
+  };
   const ClickNifty = () => {};
   return isConnected ? (
     // <View style={styles.container}>
@@ -176,7 +178,7 @@ const HomeScreen = ({ navigation }) => {
             </Button>
             <Button
               key={1}
-              onPress={IntradayIV}
+              onPress={HugeGapUp}
               buttonStyle={styles.button}
               containerStyle={styles.buttonContainer}
             >

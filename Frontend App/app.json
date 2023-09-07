@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "bliss_front_end",
-    "slug": "bliss_front_end",
+    "name": "BlissQuants",
+    "slug": "BlissQuants",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/Bliss_tree.png",
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/BlissQuantsTM.png",
+        "foregroundImage": "./assets/Bliss_tree.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.krish_m.bliss_front_end",

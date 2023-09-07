@@ -50,7 +50,7 @@ const NotificationBar = ({ title, message, date, onClose }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#888",
     position: "absolute",
-    right: 120,
+    right: 70,
     top: 4,
   },
   closeButton: {
