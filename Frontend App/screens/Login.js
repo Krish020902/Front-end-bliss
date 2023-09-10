@@ -25,17 +25,14 @@ import { useUserContext } from "../context/user_context";
 import axios from "axios";
 import { LOGIN_MOBILE } from "../constants/api";
 import { Link } from "@react-navigation/native";
-import Email from "./Email";
+import Email from "./Login_Pass";
 import { useToast } from "react-native-toast-notifications";
 const Login = ({ navigation }) => {
   const toast = useToast();
   const { setUserPhone, setUserOtp, phone } = useUserContext();
 
   const clickemail = () => {
-    navigation.navigate("Email");
-  };
-  const onPressSignup = () => {
-    navigation.navigate("MobileNo");
+    navigation.navigate("Login_Pass");
   };
 
   const sendNotification = async (title, body) => {
@@ -216,22 +213,6 @@ const Login = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ flexDirection: "row" }}>
-        <View style={styles.separator} />
-        <Text style={styles.text}>OR</Text>
-        <View style={styles.separator} />
-      </View>
-      <Button
-        title="Signup"
-        color="rgb(132,194,37)"
-        onPress={onPressSignup}
-        buttonStyle={{
-          // marginTop: 25,
-          width: responsiveWidth(90),
-          alignSelf: "center",
-          borderRadius: 13,
-        }}
-      ></Button>
       <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
         <Button
           title="NEXT"
@@ -263,17 +244,7 @@ const styles = StyleSheet.create({
 
     // marginLeft: 2,
   },
-  separator: {
-    height: 1,
-    width: responsiveWidth(45),
-    backgroundColor: "#CCCCCC",
-    marginVertical: 30,
-  },
-  line: {
-    flex: 1,
-    height: 1,
-    backgroundColor: "#000000",
-  },
+
   logo: {
     // marginLeft: 35,
     marginTop: 30,
@@ -304,13 +275,6 @@ const styles = StyleSheet.create({
     margin: 15,
 
     // marginBottom: 10,
-  },
-  text: {
-    marginHorizontal: 10,
-    color: "white",
-    fontSize: 16,
-    // color: "#000000",
-    alignSelf: "center",
   },
 });
 

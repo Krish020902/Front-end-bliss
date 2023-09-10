@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StatusBar,
   TextInput,
   Text,
+  Keyboard,
   StyleSheet,
   Image,
   TouchableOpacity,
@@ -23,8 +24,16 @@ import axios from "axios";
 import { LOGIN_EMAIL } from "../constants/api";
 
 const Email = ({ navigation }) => {
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
+  };
+  const clickotp = () => {
+    navigation.navigate("Login");
+  };
+  const onPressSignup = () => {
+    navigation.navigate("MobileNo");
   };
   const {
     setUserEmail,
@@ -75,6 +84,23 @@ const Email = ({ navigation }) => {
       console.log("💥💥💥Outside catch", err);
     }
   };
+  useEffect(() => {
+    // Listen for keyboard events
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => setIsKeyboardOpen(true)
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => setIsKeyboardOpen(false)
+    );
+
+    // Cleanup listeners when the component unmounts
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
   return (
     <View style={styles.container}>
       <Image
@@ -85,27 +111,25 @@ const Email = ({ navigation }) => {
         style={{
           fontWeight: "bold",
           color: "white",
+          marginLeft: 20,
+          marginTop: 20,
+          fontSize: responsiveFontSize(3),
+        }}
+      >
+        Login
+      </Text>
+      {/* <Text
+        style={{
+          fontWeight: "bold",
+          color: "white",
           marginLeft: 15,
           marginTop: 20,
         }}
       >
         Welcome,
-      </Text>
+      </Text> */}
       <Text style={styles.font}>Enter Your Mobile Number</Text>
-      {/* <TextInput
-        keyboardType="phone-pad"
-        style={{
-          height: 26,
-          alignSelf: "center",
-          margin: 15,
-          width: 350,
-          fontSize: 20,
-          color: "white",
-          borderBottomWidth: 1,
-          borderBottomColor: "#555",
-        }}
-        onChangeText={(number) => setUserPhone(number)}
-      />  */}
+
       <View
         style={{
           flexDirection: "row",
@@ -173,10 +197,47 @@ const Email = ({ navigation }) => {
         />
       </View>
       <TouchableOpacity onPress={forgotpass}>
-        <Text style={{ color: "lightblue", paddingLeft: 17, paddingTop: 5 }}>
+        <Text style={{ color: "lightblue", marginLeft: 20, marginTop: 5 }}>
           Forgot Password?
         </Text>
       </TouchableOpacity>
+      <View style={{ flexDirection: "row" }}>
+        <Text style={styles.font}>Login with OTP </Text>
+        <TouchableOpacity onPress={clickotp}>
+          <Text
+            style={{
+              color: "lightblue",
+              paddingLeft: 4,
+              paddingTop: 5,
+              fontSize: responsiveFontSize(1.7),
+            }}
+          >
+            click here
+          </Text>
+        </TouchableOpacity>
+        {isKeyboardOpen && (
+          <TouchableOpacity style={styles.roundButton} onPress={login}>
+            <Icon name="chevron-right" size={32} color="white" />
+          </TouchableOpacity>
+        )}
+      </View>
+
+      <View style={{ flexDirection: "row" }}>
+        <View style={styles.separator} />
+        <Text style={styles.text}>OR</Text>
+        <View style={styles.separator} />
+      </View>
+      <Button
+        title="Signup"
+        color="rgb(132,194,37)"
+        onPress={onPressSignup}
+        buttonStyle={{
+          // marginTop: 25,
+          width: responsiveWidth(90),
+          alignSelf: "center",
+          borderRadius: 13,
+        }}
+      ></Button>
       {/* <TouchableOpacity
         onPress={login}
         style={{
@@ -219,6 +280,33 @@ const styles = StyleSheet.create({
 
     // marginLeft: 2,
   },
+  roundButton: {
+    position: "absolute",
+    right: 30,
+    bottom: -7,
+
+    backgroundColor: "rgb(132,194,37)",
+    borderRadius: 50,
+    padding: 10,
+  },
+  separator: {
+    height: 1,
+    width: responsiveWidth(45),
+    backgroundColor: "#CCCCCC",
+    marginVertical: 30,
+  },
+  text: {
+    marginHorizontal: 10,
+    color: "white",
+    fontSize: 16,
+    // color: "#000000",
+    alignSelf: "center",
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "#000000",
+  },
   logo: {
     // marginLeft: 35,
     marginTop: 25,
@@ -234,8 +322,10 @@ const styles = StyleSheet.create({
   },
   font: {
     color: "white",
-    marginLeft: 15,
+    marginLeft: 20,
     marginTop: 5,
+
+    fontSize: responsiveFontSize(1.7),
   },
   phoneInput: {
     color: "white",

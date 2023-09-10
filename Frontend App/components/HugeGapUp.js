@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Animated,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { useDashboardContext } from "../context/dashboard_context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -22,9 +23,11 @@ import {
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { HUGE_GAP } from "../constants/api";
+import Spinner from "react-native-loading-spinner-overlay";
 // import styles from "./HugeGapUpStyles";
 const HugeGapUp = ({ navigation }) => {
   // Sample data for demonstration
+  const [loading, setLoading] = useState(true);
   const { setSelectedIVcompany } = useDashboardContext();
   const [stockData, setStockData] = useState([
     {
@@ -74,6 +77,7 @@ const HugeGapUp = ({ navigation }) => {
   const getAllCompanies = async () => {
     // console.log("this is all companies");
     try {
+      // setLoading(true);
       const token = await AsyncStorage.getItem("token");
       const res = await axios.get(`${HUGE_GAP}/${selectedOption}`, {
         headers: {
@@ -88,6 +92,7 @@ const HugeGapUp = ({ navigation }) => {
       // console.log("selected option ", selectedOption);
       // console.log("stock data is ", stockData);
       setStockData(newstockdata);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -98,10 +103,13 @@ const HugeGapUp = ({ navigation }) => {
     getAllCompanies();
   }, []);
   useEffect(() => {
+    // setLoading(true);
     getAllCompanies();
+    // setLoading(false);
   }, [stockData]);
   return (
     <View>
+      {/* <Spinner visible={loading} color="green" /> */}
       <View style={styles.selectedbar}>
         <TouchableOpacity onPress={toggleDropdown}>
           <Text style={styles.barfont}>
@@ -156,13 +164,19 @@ const HugeGapUp = ({ navigation }) => {
             }}
             onPress={() => handleRedirection(stock)}
           >
-            <View>
-              <Text style={styles.stockName}>{stock.name}</Text>
-              <Text style={styles.stockPrice}>{stock.price}</Text>
-            </View>
-            <View style={styles.chartIconContainer}>
-              <Icon name="arrow-up" color="#FFFFFF" />
-            </View>
+            {loading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <>
+                <View>
+                  <Text style={styles.stockName}>{stock.name}</Text>
+                  <Text style={styles.stockPrice}>{stock.price}</Text>
+                </View>
+                <View style={styles.chartIconContainer}>
+                  <Icon name="arrow-up" color="#FFFFFF" />
+                </View>
+              </>
+            )}
           </TouchableOpacity>
         ))}
       </View>

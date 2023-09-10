@@ -97,9 +97,9 @@ const DropdownTable = () => {
       <Spinner visible={loading} color="green" />
       {tableData.length !== 0 && (
         <SwiperFlatList
-          autoplay
-          autoplayDelay={2}
-          autoplayLoop
+          // autoplay
+          // autoplayDelay={2}
+          // autoplayLoop
           index={0}
           showPagination={true}
           paginationStyle={{

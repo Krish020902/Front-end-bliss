@@ -13,7 +13,7 @@ import MainDashboard from "./screens/MainDashboard";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Email from "./screens/Email";
+import Login_Pass from "./screens/Login_Pass";
 import SetPassword from "./screens/SetPassword";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
 import NewPass from "./screens/NewPass";
@@ -47,9 +47,9 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
               {/* <Stack.Screen name="Home" component={Home} /> */}
+              <Stack.Screen name="Login_Pass" component={Login_Pass} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="MobileNo" component={MobileNo} />
-              <Stack.Screen name="Email" component={Email} />
               <Stack.Screen name="MainDashboard" component={MainDashboard} />
               <Stack.Screen name="HighIV" component={HighIV} />
               <Stack.Screen name="LowIV" component={LowIV} />

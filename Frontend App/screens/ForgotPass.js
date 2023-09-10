@@ -12,7 +12,7 @@ import { useUserContext } from "../context/user_context";
 import axios from "axios";
 import { LOGIN_MOBILE } from "../constants/api";
 import { Link } from "@react-navigation/native";
-import Email from "./Email";
+import Email from "./Login_Pass";
 import { Button, Input, Icon } from "@rneui/base";
 import {
   responsiveHeight,

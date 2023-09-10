@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Animated,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from "@react-native-community/netinfo";
@@ -26,6 +27,7 @@ import {
 } from "react-native-responsive-dimensions";
 
 const User = ({ navigation }) => {
+  const [loading, setLoading] = useState(true);
   const [isConnected, setIsConnected] = useState(null);
 
   useEffect(() => {
@@ -77,7 +79,7 @@ const User = ({ navigation }) => {
       placement: "top",
       animationType: "zoom-in",
     });
-    navigation.navigate("Login");
+    navigation.navigate("Login_Pass");
   };
 
   const handleChangePassword = () => {
@@ -107,7 +109,8 @@ const User = ({ navigation }) => {
         ? "India"
         : setUserCountry(result.data.data.country);
       setUserPlan(result.data.data.plan);
-      console.log("this is result", result.data.data.email);
+      // setLoading(false);
+      // console.log("this is result", result.data.data.email);
     } catch (err) {
       console.log(err);
     }
@@ -144,27 +147,58 @@ const User = ({ navigation }) => {
           style={styles.background1}
         />
         <Text style={styles.label}>Name:</Text>
-
-        <Text style={styles.detail}>{userData.name}</Text>
+        {!userData.name ? (
+          <ActivityIndicator
+            style={{ alignSelf: "flex-start", marginBottom: 10 }}
+            size="small"
+            color="black"
+          />
+        ) : (
+          <Text style={styles.detail}>{userData.name}</Text>
+        )}
 
         <Text style={styles.label}>Email:</Text>
-        <Text style={styles.detail}>{userData.email}</Text>
+        {!userData.email ? (
+          <ActivityIndicator
+            style={{ alignSelf: "flex-start", marginBottom: 10 }}
+            size="small"
+            color="black"
+          />
+        ) : (
+          <Text style={styles.detail}>{userData.email}</Text>
+        )}
 
         <Text style={styles.label}>Phone Number:</Text>
-        <Text style={styles.detail}>{userData.phone}</Text>
+        {!userData.phone ? (
+          <ActivityIndicator
+            size="small"
+            color="black"
+            style={{ alignSelf: "flex-start", marginBottom: 10 }}
+          />
+        ) : (
+          <Text style={styles.detail}>{userData.phone}</Text>
+        )}
 
         {/* here */}
         <View style={styles.row}>
           <View style={styles.gridItem}>
             <View style={styles.row}>
               <Text style={styles.labelDown}>Birth Year:</Text>
-              <Text style={styles.detail}>{userData.birthyear}</Text>
+              {!userData.birthyear ? (
+                <ActivityIndicator size="small" color="black" />
+              ) : (
+                <Text style={styles.detail}>{userData.birthyear}</Text>
+              )}
             </View>
           </View>
           <View style={styles.gridItem}>
             <View style={styles.row}>
               <Text style={styles.labelDown}>Plan:</Text>
-              <Text style={styles.detail}>{userData.plan}</Text>
+              {!userData.plan ? (
+                <ActivityIndicator size="small" color="black" />
+              ) : (
+                <Text style={styles.detail}>{userData.plan}</Text>
+              )}
             </View>
           </View>
         </View>

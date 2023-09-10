@@ -7,6 +7,7 @@ import {
   Modal,
   FlatList,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import { useDashboardContext } from "../context/dashboard_context";
@@ -19,9 +20,11 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { LOWIV } from "../constants/api";
 // import Icon from "react-native-vector-icons/MaterialIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Spinner from "react-native-loading-spinner-overlay";
 // import styles from "./LowIVStyles";
 const LowIV = ({ navigation }) => {
   // let newstockdata;
+  const [loading, setLoading] = useState(true);
   const { setSelectedIVcompany } = useDashboardContext();
 
   const [stockData, setStockData] = useState([
@@ -63,7 +66,7 @@ const LowIV = ({ navigation }) => {
     navigation.navigate("Dashboard");
   };
   const handleOptionSelect = async (value) => {
-    console.log(value.value);
+    // console.log(value.value);
 
     setSelectedOption(value.value);
     setDropdownOpen(!isDropdownOpen);
@@ -72,6 +75,7 @@ const LowIV = ({ navigation }) => {
   const getAllCompanies = async () => {
     // console.log("this is all companies");
     try {
+      // setLoading(true);
       const token = await AsyncStorage.getItem("token");
       const res = await axios.get(`${LOWIV}/${selectedOption}`, {
         headers: {
@@ -84,6 +88,7 @@ const LowIV = ({ navigation }) => {
       });
       // console.log("new stock data", newstockdata);
       setStockData(newstockdata);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -95,7 +100,9 @@ const LowIV = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
+    // setLoading(true);
     getAllCompanies();
+    // setLoading(false);
   }, [stockData]);
   return (
     <View>
@@ -160,11 +167,17 @@ const LowIV = ({ navigation }) => {
             }}
             onPress={() => handleRedirection(stock)}
           >
-            <Text style={styles.stockName}>{stock.name}</Text>
-            <Text style={styles.stockPrice}>{stock.price}</Text>
-            <View style={styles.chartIconContainer}>
-              <Icon name="arrow-down" size={12} color="#FFFFFF" />
-            </View>
+            {loading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <>
+                <Text style={styles.stockName}>{stock.name}</Text>
+                <Text style={styles.stockPrice}>{stock.price}</Text>
+                <View style={styles.chartIconContainer}>
+                  <Icon name="arrow-down" size={12} color="white" />
+                </View>
+              </>
+            )}
           </TouchableOpacity>
         ))}
       </View>
