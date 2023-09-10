@@ -19,7 +19,7 @@ import { useUserContext } from "../context/user_context";
 import { Button, Input, Icon, Card } from "@rneui/base";
 // import { Svg, LinearGradient, Stop } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
-
+import color from "../theme/Colour";
 import {
   responsiveHeight,
   responsiveWidth,
@@ -143,7 +143,7 @@ const User = ({ navigation }) => {
       <View style={styles.profileContainer}>
         <LinearGradient
           // Background Linear Gradient
-          colors={["rgb(132,194,37)", "transparent"]}
+          colors={[color.btn_clr, "transparent"]}
           style={styles.background1}
         />
         <Text style={styles.label}>Name:</Text>
@@ -221,7 +221,7 @@ const User = ({ navigation }) => {
 
       <View style={styles.buttonContainer}>
         <Button
-          color="rgb(132,194,37)"
+          color={color.btn_clr}
           onPress={handleLogout}
           buttonStyle={{
             marginTop: 25,
@@ -239,7 +239,7 @@ const User = ({ navigation }) => {
           />
         </Button>
         <Button
-          color="rgb(132,194,37)"
+          color={color.btn_clr}
           onPress={handleChangePassword}
           buttonStyle={{
             marginTop: 25,
@@ -257,7 +257,7 @@ const User = ({ navigation }) => {
           />
         </Button>
         <Button
-          color="rgb(132,194,37)"
+          color={color.btn_clr}
           onPress={handleEditProfile}
           buttonStyle={{
             marginTop: 25,
@@ -298,7 +298,7 @@ const User = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
   },
   gridItem: {
     width: responsiveWidth(45),
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileContainer: {
-    backgroundColor: "#d7f205",
+    backgroundColor: color.card_secondary_clr,
     borderRadius: 25,
     padding: 20,
     margin: 7,
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   button: {
-    backgroundColor: "rgb(132,194,37)",
+    backgroundColor: color.btn_clr,
 
     color: "white",
     paddingVertical: 12,

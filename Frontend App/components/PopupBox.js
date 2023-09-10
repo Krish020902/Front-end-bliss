@@ -4,7 +4,7 @@ import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import { GET_USER_DATA } from "../constants/api";
 import { useUserContext } from "../context/user_context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import color from "../theme/Colour";
 const PopupBox = ({ navigation }) => {
   const [isVisible, setIsVisible] = useState(true);
   const { phone } = useUserContext();
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     opacity: 0.9,
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
     padding: 20,
     borderRadius: 5,
   },
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: "rgb(132,194,37)",
+    backgroundColor: color.btn_clr,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,

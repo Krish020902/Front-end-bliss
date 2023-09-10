@@ -25,7 +25,7 @@ import {
   responsiveFontSize,
 } from "react-native-responsive-dimensions";
 import Svg, { Path } from "react-native-svg";
-
+import color from "../theme/Colour";
 const HomeScreen = ({ navigation }) => {
   const [isConnected, setIsConnected] = useState(null);
 
@@ -132,7 +132,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.container}>
         <View
           style={{
-            backgroundColor: "#3a3332",
+            backgroundColor: color.bg_clr,
             height: 160,
           }}
         >
@@ -211,7 +211,7 @@ const HomeScreen = ({ navigation }) => {
     </>
   ) : (
     <View style={styles.container}>
-      <View style={{ backgroundColor: "#3a3332", height: 160 }}>
+      <View style={{ backgroundColor: color.bg_clr, height: 160 }}>
         <Image
           source={require("../assets/BlissQuantsTM.png")}
           style={styles.logo}
@@ -290,16 +290,16 @@ const styles = StyleSheet.create({
   label: {
     // fontWeight: "bold",
     marginBottom: 5,
-    color: "#3a3332",
+    color: color.bg_clr,
   },
   buttonContainer: {
     borderWidth: 1,
-    borderColor: "#3a3332",
+    borderColor: color.bg_clr,
     borderRadius: 15,
 
     // backgroundColor: "black",
     elevation: 10,
-    shadowColor: "#3a3332",
+    shadowColor: color.bg_clr,
     shadowOpacity: 0,
     shadowRadius: 4,
     shadowOffset: {

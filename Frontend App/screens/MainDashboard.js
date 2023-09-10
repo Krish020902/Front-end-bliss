@@ -7,7 +7,7 @@ import Notify from "../screens/Notify";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // import { createBottomTabNavigator } from "@rn-wave-bottom-bar";
-
+import color from "../theme/Colour";
 import DropdownCompany from "../components/DropdownCompany";
 import User from "./User";
 
@@ -17,33 +17,33 @@ const MainDashboard = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused, colorname, size }) => {
           let iconName;
 
           if (route.name === "Analysis") {
             iconName = "line-chart";
             size = focused ? 25 : 20;
-            color = focused ? "rgb(132,194,37)" : "black";
+            colorname = focused ? color.btn_clr : "black";
           } else if (route.name === "Profile") {
             iconName = "user";
             size = focused ? 25 : 20;
-            color = focused ? "rgb(132,194,37)" : "black";
+            colorname = focused ? color.btn_clr : "black";
           } else if (route.name === "Home") {
             iconName = "home";
             size = focused ? 25 : 20;
-            color = focused ? "rgb(132,194,37)" : "black";
+            colorname = focused ? color.btn_clr : "black";
           } else if (route.name === "Notification") {
             iconName = "bell";
             size = focused ? 25 : 20;
-            color = focused ? "rgb(132,194,37)" : "black";
+            colorname = focused ? color.btn_clr : "black";
           }
 
-          return <Icon name={iconName} size={size} color={color} />;
+          return <Icon name={iconName} size={size} color={colorname} />;
         },
         headerShown: false,
       })}
       tabBarOptions={{
-        activeTintColor: "rgb(132,194,37)",
+        activeTintColor: color.btn_clr,
         inactiveTintColor: "gray",
         activeBackgroundColor: "grey",
         inactiveBackgroundColor: "white",

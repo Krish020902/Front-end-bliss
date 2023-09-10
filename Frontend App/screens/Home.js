@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Navbar from "../components/Navbar";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
-
+import color from "../theme/Colour";
 const Home = ({ navigation }) => {
   const onClickLogin = () => {
     navigation.navigate("Login");
@@ -29,13 +29,13 @@ const Home = ({ navigation }) => {
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#3a3332",
+          backgroundColor: color.bg_clr,
         }}
       >
         <TouchableOpacity
           onPress={onClickLogin}
           style={{
-            backgroundColor: "rgb(132,194,37)",
+            backgroundColor: color.btn_clr,
             padding: 10,
             margin: 10,
           }}
@@ -44,7 +44,7 @@ const Home = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("MobileNo")}
-          style={{ backgroundColor: "rgb(132,194,37)", padding: 10 }}
+          style={{ backgroundColor: color.btn_clr, padding: 10 }}
         >
           <Text style={{ color: "white" }}>Signup</Text>
         </TouchableOpacity>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     color: "white",
     height: 40,
     width: 350,
-    borderColor: "rgb(132,194,37)",
+    borderColor: color.btn_clr,
     borderWidth: 1,
     margin: 15,
   },
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     height: 80,
   },
   logoContainer: {
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
   },
   footlogo: {
     marginTop: "94%",

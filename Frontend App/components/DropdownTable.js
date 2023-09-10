@@ -11,7 +11,7 @@ import {
   responsiveFontSize,
 } from "react-native-responsive-dimensions";
 import Spinner from "react-native-loading-spinner-overlay";
-
+import color from "../theme/Colour";
 const DropdownTable = () => {
   const [loading, setLoading] = useState(false);
 
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     // padding: 10,
     // position: "absolute",
     marginTop: 270,
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
     width: responsiveWidth(100),
     // marginLeft: 2,
     height: 258,
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
 
     // margin: 0.5,
-    backgroundColor: "rgb(132, 194, 37)",
+    backgroundColor: color.btn_clr,
     flex: 1,
     fontWeight: "bold",
     textAlign: "center",

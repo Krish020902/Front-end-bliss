@@ -10,6 +10,7 @@ import SetPassword from "./SetPassword";
 import { Button } from "@rneui/base";
 import SearchComp from "./SearchComp";
 import { responsiveHeight } from "react-native-responsive-dimensions";
+import color from "../theme/Colour";
 // import { CHANGE_SELECTED_IV_COMPANY } from "../action";
 const CompScreen = ({ navigation }) => {
   // const companyname = route.params;
@@ -34,6 +35,6 @@ const styles = StyleSheet.create({
   container: {
     // height: responsiveHeight(100),
     flex: 1,
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
   },
 });

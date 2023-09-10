@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
-
+import color from "../theme/Colour";
 const Timer = () => {
   const [time, setTime] = useState(120);
 

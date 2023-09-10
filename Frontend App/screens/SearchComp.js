@@ -10,7 +10,7 @@ import { API_GET_ALL_COMPANIES } from "../constants/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay";
 import { responsiveHeight } from "react-native-responsive-dimensions";
-
+import color from "../theme/Colour";
 var temp = {};
 export default function SearchComp() {
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function SearchComp() {
     // console.log("this is valuue of dd1", ddValue1, ddFocus1);
     if (ddValue1 || ddFocus1) {
       return (
-        <Text style={[styles.label, ddFocus1 && { color: "rgb(132,194,37)" }]}>
+        <Text style={[styles.label, ddFocus1 && { color: color.btn_clr }]}>
           Company
         </Text>
       );
@@ -50,7 +50,7 @@ export default function SearchComp() {
   const renderLabel2 = () => {
     if (ddValue2 || ddFocus2) {
       return (
-        <Text style={[styles.label, ddFocus2 && { color: "rgb(132,194,37)" }]}>
+        <Text style={[styles.label, ddFocus2 && { color: color.btn_clr }]}>
           Type
         </Text>
       );
@@ -132,7 +132,7 @@ export default function SearchComp() {
           {/* <Spinner visible={loading} color="green" /> */}
           <Dropdown
             iconColor="white"
-            style={[styles.dropdown, { borderColor: "rgb(132,194,37)" }]}
+            style={[styles.dropdown, { borderColor: color.btn_clr }]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
@@ -159,7 +159,7 @@ export default function SearchComp() {
             renderLeftIcon={() => (
               <AntDesign
                 style={styles.icon}
-                color={ddFocus1 ? "rgb(132,194,37)" : "white"}
+                color={ddFocus1 ? color.btn_clr : "white"}
                 name="Safety"
                 size={20}
               />
@@ -169,7 +169,7 @@ export default function SearchComp() {
           {/* {renderLabel2()} */}
           <Dropdown
             iconColor="white"
-            style={[styles.dropdown, { borderColor: "rgb(132,194,37)" }]}
+            style={[styles.dropdown, { borderColor: color.btn_clr }]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
@@ -198,7 +198,7 @@ export default function SearchComp() {
             renderLeftIcon={() => (
               <AntDesign
                 style={styles.icon}
-                color={ddFocus2 ? "rgb(132,194,37)" : "white"}
+                color={ddFocus2 ? color.btn_clr : "white"}
                 name="Safety"
                 size={20}
               />
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     // height: responsiveHeight(100),
     marginTop: 20,
     flexDirection: "row",
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
     padding: 16,
   },
   dropdown: {

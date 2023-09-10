@@ -24,7 +24,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { HIGHIV } from "../constants/api";
 import Spinner from "react-native-loading-spinner-overlay";
-
+import color from "../theme/Colour";
 // import styles from "./HighIVStyles";
 const HighIV = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     color: "white",
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
-    borderBottomColor: "#3a3332",
+    borderBottomColor: color.bg_clr,
   },
   container: {
     flex: 1,

@@ -9,6 +9,7 @@ import PopupBox from "../components/PopupBox";
 import SetPassword from "./SetPassword";
 import { Button } from "@rneui/base";
 import { responsiveHeight } from "react-native-responsive-dimensions";
+import color from "../theme/Colour";
 const Dashboard = ({ navigation }) => {
   // const companyname = route.params;
   // console.log("recieving success", companyname);
@@ -33,6 +34,6 @@ const styles = StyleSheet.create({
   container: {
     // height: responsiveHeight(100),
     flex: 1,
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
   },
 });

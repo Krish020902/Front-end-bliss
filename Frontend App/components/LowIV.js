@@ -21,6 +21,7 @@ import { LOWIV } from "../constants/api";
 // import Icon from "react-native-vector-icons/MaterialIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay";
+import color from "../theme/Colour";
 // import styles from "./LowIVStyles";
 const LowIV = ({ navigation }) => {
   // let newstockdata;
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
     color: "white",
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
-    borderBottomColor: "#3a3332",
+    borderBottomColor: color.bg_clr,
   },
   selectedbar: {
     fontSize: 20,

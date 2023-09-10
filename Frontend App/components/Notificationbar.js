@@ -4,7 +4,7 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from "react-native-responsive-dimensions";
-
+import color from "../theme/Colour";
 const NotificationBar = ({ title, message, date, onClose }) => {
   const shortmessage = message.substring(0, 100);
   const [more, setMore] = useState(true);

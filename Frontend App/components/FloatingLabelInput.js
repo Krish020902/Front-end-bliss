@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, StatusBar, TextInput, Animated } from "react-native";
-
+import color from "../theme/Colour";
 function FloatingLabelInput(props) {
   const [isFocused, setIsFocused] = useState(false);
   const animatedIsFocused = useRef(new Animated.Value(0)).current;
@@ -29,7 +29,7 @@ function FloatingLabelInput(props) {
     }),
     color: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: ["white", "rgb(132,194,37)"],
+      outputRange: ["white", color.btn_clr],
     }),
     margin: 15,
   };

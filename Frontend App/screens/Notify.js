@@ -13,6 +13,7 @@ import {
   responsiveHeight,
   responsiveScreenWidth,
 } from "react-native-responsive-dimensions";
+import color from "../theme/Colour";
 const Notify = () => {
   const [loading, setLoading] = useState(false);
 
@@ -106,7 +107,7 @@ const Notify = () => {
           // margin: 5,
           // marginLeft: 20,
           color: "white",
-          backgroundColor: "#3a3332",
+          backgroundColor: color.bg_clr,
           // backgroundColor: "#2d343c",
         }}
       >
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     // alignItems: "center",
     // padding: 100,
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
   },
 });
 

@@ -15,6 +15,7 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from "react-native-responsive-dimensions";
+import color from "../theme/Colour";
 
 import { Button, Input, Icon } from "@rneui/base";
 
@@ -72,7 +73,7 @@ const ForgotOtp = ({ navigation }) => {
   };
   return (
     <ToastProvider>
-      <View style={{ flex: 1, padding: 30, backgroundColor: "#3a3332" }}>
+      <View style={{ flex: 1, padding: 30, backgroundColor: color.bg_clr }}>
         <Image
           source={require("../assets/BlissQuantsTM.png")}
           style={styles.logo}
@@ -121,7 +122,7 @@ const ForgotOtp = ({ navigation }) => {
         <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
           <Button
             title="Go to dashboard"
-            color="rgb(132,194,37)"
+            color={color.btn_clr}
             onPress={handleOtp}
             buttonStyle={{
               marginTop: 25,
@@ -165,11 +166,11 @@ const styles = StyleSheet.create({
     height: 45,
     borderWidth: 0,
     borderBottomWidth: 1,
-    backgroundColor: "#75706f",
+    backgroundColor: color.bg_secondary_clr,
   },
 
   underlineStyleHighLighted: {
-    borderColor: "rgb(132,194,37)",
+    borderColor: color.btn_clr,
   },
 });
 

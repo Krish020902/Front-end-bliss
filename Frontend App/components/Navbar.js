@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { responsiveWidth } from "react-native-responsive-dimensions";
+import color from "../theme/Colour";
 const Navbar = () => {
   return (
     <View style={styles.container}>
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
     height: 50,
     paddingHorizontal: 10,
   },

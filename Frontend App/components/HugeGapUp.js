@@ -24,6 +24,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { HUGE_GAP } from "../constants/api";
 import Spinner from "react-native-loading-spinner-overlay";
+import color from "../theme/Colour";
 // import styles from "./HugeGapUpStyles";
 const HugeGapUp = ({ navigation }) => {
   // Sample data for demonstration
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
     color: "white",
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
-    borderBottomColor: "#3a3332",
+    borderBottomColor: color.bg_clr,
   },
   container: {
     flex: 1,

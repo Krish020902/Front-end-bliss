@@ -21,8 +21,8 @@ import {
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
-import { LOGIN_EMAIL } from "../constants/api";
-
+import { LOGIN_PASS } from "../constants/api";
+import color from "../theme/Colour";
 const Email = ({ navigation }) => {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
@@ -54,7 +54,7 @@ const Email = ({ navigation }) => {
       // console.log(typeof setUserEmail);
       // console.log("email and aps5s", password);
       // console.log("💥", phone, password);
-      const res = await axios.post(LOGIN_EMAIL, {
+      const res = await axios.post(LOGIN_PASS, {
         mobile: `${phone}`,
         password: `${password}`,
       });
@@ -118,27 +118,18 @@ const Email = ({ navigation }) => {
       >
         Login
       </Text>
-      {/* <Text
-        style={{
-          fontWeight: "bold",
-          color: "white",
-          marginLeft: 15,
-          marginTop: 20,
-        }}
-      >
-        Welcome,
-      </Text> */}
+
       <Text style={styles.font}>Enter Your Mobile Number</Text>
 
       <View
         style={{
           flexDirection: "row",
-          backgroundColor: "#75706f",
+          backgroundColor: color.bg_secondary_clr,
           width: responsiveWidth(90),
           margin: 15,
           borderRadius: 10,
           elevation: 14, // or you can use the `shadow` property instead
-          shadowColor: "rgb(132,194,37)",
+          shadowColor: color.btn_clr,
           shadowOffset: {
             width: 20,
             height: 20,
@@ -159,12 +150,12 @@ const Email = ({ navigation }) => {
       <View
         style={{
           flexDirection: "row",
-          backgroundColor: "#75706f",
+          backgroundColor: color.bg_secondary_clr,
           width: responsiveWidth(90),
           margin: 15,
           borderRadius: 10,
           elevation: 14, // or you can use the `shadow` property instead
-          shadowColor: "rgb(132,194,37)",
+          shadowColor: color.btn_clr,
           shadowOffset: {
             width: 20,
             height: 20,
@@ -179,7 +170,7 @@ const Email = ({ navigation }) => {
               onPress={handleTogglePassword}
               name={showPassword ? "eye-outline" : "eye-off-outline"}
               type="ionicon"
-              backgroundColor="#75706f"
+              backgroundColor={color.bg_secondary_clr}
               color="white"
             />
           }
@@ -221,52 +212,45 @@ const Email = ({ navigation }) => {
           </TouchableOpacity>
         )}
       </View>
+      {!isKeyboardOpen && (
+        <>
+          <View style={{ flexDirection: "row" }}>
+            <View style={styles.separator} />
+            <Text style={styles.text}>OR</Text>
+            <View style={styles.separator} />
+          </View>
+          <Button
+            title="Signup"
+            color={color.btn_clr}
+            onPress={onPressSignup}
+            buttonStyle={{
+              // marginTop: 25,
+              width: responsiveWidth(90),
+              alignSelf: "center",
+              borderRadius: 13,
+            }}
+          ></Button>
 
-      <View style={{ flexDirection: "row" }}>
-        <View style={styles.separator} />
-        <Text style={styles.text}>OR</Text>
-        <View style={styles.separator} />
-      </View>
-      <Button
-        title="Signup"
-        color="rgb(132,194,37)"
-        onPress={onPressSignup}
-        buttonStyle={{
-          // marginTop: 25,
-          width: responsiveWidth(90),
-          alignSelf: "center",
-          borderRadius: 13,
-        }}
-      ></Button>
-      {/* <TouchableOpacity
-        onPress={login}
-        style={{
-          backgroundColor: "rgb(132,194,37)",
-          padding: 10,
-          marginTop: 10,
-          width: 100,
-          alignItems: "center",
-          alignSelf: "center",
-        }}
-      >
-        <Text style={{ color: "white" }}>NEXT</Text>
-      </TouchableOpacity> */}
-      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 20 }}>
-        <Button
-          title="Go to dashboard"
-          color="rgb(132,194,37)"
-          onPress={login}
-          buttonStyle={{
-            marginTop: 25,
-            width: responsiveWidth(80),
-            alignSelf: "center",
-            borderRadius: 13,
-          }}
-        >
-          Go to dashboard
-          <Icon name="log-in-outline" color="white" type="ionicon" />
-        </Button>
-      </View>
+          <View
+            style={{ flex: 1, justifyContent: "flex-end", marginBottom: 20 }}
+          >
+            <Button
+              title="Go to dashboard"
+              color={color.btn_clr}
+              onPress={login}
+              buttonStyle={{
+                marginTop: 25,
+                width: responsiveWidth(80),
+                alignSelf: "center",
+                borderRadius: 13,
+              }}
+            >
+              Go to dashboard
+              <Icon name="log-in-outline" color="white" type="ionicon" />
+            </Button>
+          </View>
+        </>
+      )}
     </View>
   );
 };
@@ -275,7 +259,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // padding: 10,
     // position: "absolute",
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
     color: "white",
 
     // marginLeft: 2,
@@ -285,7 +269,7 @@ const styles = StyleSheet.create({
     right: 30,
     bottom: -7,
 
-    backgroundColor: "rgb(132,194,37)",
+    backgroundColor: color.btn_clr,
     borderRadius: 50,
     padding: 10,
   },
@@ -331,7 +315,7 @@ const styles = StyleSheet.create({
     color: "white",
     height: 40,
     width: 350,
-    borderColor: "rgb(132,194,37)",
+    borderColor: color.btn_clr,
     borderWidth: 1,
     margin: 15,
 

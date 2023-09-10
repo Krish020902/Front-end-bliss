@@ -16,7 +16,7 @@ import {
 } from "react-native-responsive-dimensions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
-
+import color from "../theme/Colour";
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
@@ -132,12 +132,12 @@ const SetPassword = ({ navigation }) => {
       <View
         style={{
           flexDirection: "row",
-          backgroundColor: "#75706f",
+          backgroundColor: color.bg_secondary_clr,
           width: responsiveWidth(90),
           margin: 15,
           borderRadius: 10,
           elevation: 14, // or you can use the `shadow` property instead
-          shadowColor: "rgb(132,194,37)",
+          shadowColor: color.btn_clr,
           shadowOffset: {
             width: 20,
             height: 20,
@@ -152,7 +152,7 @@ const SetPassword = ({ navigation }) => {
               onPress={handleTogglePassword}
               name={showPassword ? "eye-outline" : "eye-off-outline"}
               type="ionicon"
-              backgroundColor="#75706f"
+              backgroundColor={color.bg_secondary_clr}
               color="white"
             />
           }
@@ -188,12 +188,12 @@ const SetPassword = ({ navigation }) => {
       <View
         style={{
           flexDirection: "row",
-          backgroundColor: "#75706f",
+          backgroundColor: color.bg_secondary_clr,
           width: responsiveWidth(90),
           margin: 15,
           borderRadius: 10,
           elevation: 14, // or you can use the `shadow` property instead
-          shadowColor: "rgb(132,194,37)",
+          shadowColor: color.btn_clr,
           shadowOffset: {
             width: 20,
             height: 20,
@@ -208,7 +208,7 @@ const SetPassword = ({ navigation }) => {
               onPress={handleTogglePassword}
               name={showPassword ? "eye-outline" : "eye-off-outline"}
               type="ionicon"
-              backgroundColor="#75706f"
+              backgroundColor={color.bg_secondary_clr}
               color="white"
             />
           }
@@ -228,7 +228,7 @@ const SetPassword = ({ navigation }) => {
       {/* <TouchableOpacity
         onPress={login}
         style={{
-          backgroundColor: "rgb(132,194,37)",
+          backgroundColor: {color.btn_clr},
           padding: 10,
           marginTop: 10,
           width: 100,
@@ -245,7 +245,7 @@ const SetPassword = ({ navigation }) => {
       <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
         <Button
           title="NEXT"
-          color="rgb(132,194,37)"
+          color={color.btn_clr}
           onPress={login}
           buttonStyle={{
             marginTop: 25,
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // padding: 10,
     // position: "absolute",
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
     color: "white",
 
     // marginLeft: 2,
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     color: "white",
     height: 40,
     width: 350,
-    borderColor: "rgb(132,194,37)",
+    borderColor: color.btn_clr,
     borderWidth: 1,
     margin: 15,
 

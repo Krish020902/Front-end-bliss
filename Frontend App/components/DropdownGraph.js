@@ -15,7 +15,7 @@ import { useDashboardContext } from "../context/dashboard_context";
 import { API } from "../constants/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Spinner from "react-native-loading-spinner-overlay";
-
+import color from "../theme/Colour";
 export default function DropdownGraph() {
   const [loading, setLoading] = useState(false);
 
@@ -99,7 +99,7 @@ export default function DropdownGraph() {
           >
             <VictoryLine
               style={{
-                data: { stroke: "rgb(132,194,37)" },
+                data: { stroke: color.btn_clr },
               }}
               data={graphData}
             />
@@ -107,9 +107,9 @@ export default function DropdownGraph() {
               data={graphData}
               style={{
                 data: {
-                  fill: "rgb(132,194,37)",
+                  fill: color.btn_clr,
                   fillOpacity: 0.4,
-                  stroke: "rgb(132,194,37)",
+                  stroke: color.btn_clr,
                 },
               }}
             />
@@ -136,7 +136,7 @@ export default function DropdownGraph() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#3a3332",
+    backgroundColor: color.bg_clr,
     //   alignItems: 'center',
     //   justifyContent: "center",
     //   borderColor:"black",
