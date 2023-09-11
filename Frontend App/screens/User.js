@@ -27,7 +27,6 @@ import {
 } from "react-native-responsive-dimensions";
 
 const User = ({ navigation }) => {
-  const [loading, setLoading] = useState(true);
   const [isConnected, setIsConnected] = useState(null);
 
   useEffect(() => {
@@ -85,6 +84,14 @@ const User = ({ navigation }) => {
   const handleChangePassword = () => {
     navigation.navigate("ResetPass");
   };
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setUserName(" ");
+  //     setUserBirthYear(" ");
+  //     setUserPlan(" ");
+  //     setUserPinCode(" ");
+  //   }, 3500);
+  // }, []);
 
   const handleEditProfile = () => {
     navigation.navigate("SetUserDetails");
@@ -99,25 +106,35 @@ const User = ({ navigation }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
       setUserEmail(result.data.data.email);
-      setUserName(result.data.data.name);
+      // console.log("name", result.data.data.name);
+      result.data.data.name == ""
+        ? setUserName(" ")
+        : setUserName(result.data.data.name);
+
       result.data.data.birthyear == 0
-        ? ""
+        ? setUserBirthYear(" ")
         : setUserBirthYear(result.data.data.birthyear);
-      setUserPinCode(result.data.data.pincode);
+      result.data.data.pincode == ""
+        ? setUserPinCode(" ")
+        : setUserPinCode(result.data.data.pincode);
       result.data.data.country == ""
         ? "India"
         : setUserCountry(result.data.data.country);
-      setUserPlan(result.data.data.plan);
+      result.data.data.plan == ""
+        ? setUserPlan(" ")
+        : setUserPlan(result.data.data.plan);
       // setLoading(false);
       // console.log("this is result", result.data.data.email);
     } catch (err) {
       console.log(err);
     }
   };
+
   useEffect(() => {
     getUserdata();
-  }, []);
+  }, [isConnected]);
   return isConnected ? (
     <View style={styles.container}>
       <View
@@ -148,6 +165,7 @@ const User = ({ navigation }) => {
         />
         <Text style={styles.label}>Name:</Text>
         {!userData.name ? (
+          // getname()
           <ActivityIndicator
             style={{ alignSelf: "flex-start", marginBottom: 10 }}
             size="small"
@@ -185,7 +203,11 @@ const User = ({ navigation }) => {
             <View style={styles.row}>
               <Text style={styles.labelDown}>Birth Year:</Text>
               {!userData.birthyear ? (
-                <ActivityIndicator size="small" color="black" />
+                <ActivityIndicator
+                  style={{ alignSelf: "flex-start", marginBottom: 10 }}
+                  size="small"
+                  color="black"
+                />
               ) : (
                 <Text style={styles.detail}>{userData.birthyear}</Text>
               )}
@@ -195,7 +217,11 @@ const User = ({ navigation }) => {
             <View style={styles.row}>
               <Text style={styles.labelDown}>Plan:</Text>
               {!userData.plan ? (
-                <ActivityIndicator size="small" color="black" />
+                <ActivityIndicator
+                  style={{ alignSelf: "flex-start", marginBottom: 10 }}
+                  size="small"
+                  color="black"
+                />
               ) : (
                 <Text style={styles.detail}>{userData.plan}</Text>
               )}
@@ -212,7 +238,15 @@ const User = ({ navigation }) => {
           <View style={styles.gridItem}>
             <View style={styles.row}>
               <Text style={styles.labelDown}>Pin Code:</Text>
-              <Text style={styles.detail}>{userData.pincode}</Text>
+              {!userData.pincode ? (
+                <ActivityIndicator
+                  style={{ alignSelf: "flex-start", marginBottom: 10 }}
+                  size="small"
+                  color="black"
+                />
+              ) : (
+                <Text style={styles.detail}>{userData.pincode}</Text>
+              )}
             </View>
           </View>
         </View>

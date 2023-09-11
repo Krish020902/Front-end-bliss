@@ -87,7 +87,7 @@ const Notify = () => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [isConnected]);
   const [notifications, setNotifications] = useState([]);
 
   const handleClose = (id) => {
