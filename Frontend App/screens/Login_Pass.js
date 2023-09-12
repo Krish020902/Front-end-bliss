@@ -18,6 +18,7 @@ import {
   responsiveWidth,
   responsiveFontSize,
 } from "react-native-responsive-dimensions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
@@ -60,7 +61,8 @@ const Email = ({ navigation }) => {
       });
       console.log(res.data.message);
       if (res.data.valid) {
-        console.log(res.data.message);
+        console.log("this is token", res.data.access_token);
+        await AsyncStorage.setItem("token", res.data.access_token);
         toast.show("Logged in Successfull! ", {
           type: "success",
           placement: "top",

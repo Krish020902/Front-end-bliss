@@ -98,8 +98,8 @@ const User = ({ navigation }) => {
   };
   const getUserdata = async () => {
     const resultUrl = `${GET_USER_DATA}/${phone}`;
-
     const token = await AsyncStorage.getItem("token");
+    console.log("token", token);
     try {
       const result = await axios.get(resultUrl, {
         headers: {
