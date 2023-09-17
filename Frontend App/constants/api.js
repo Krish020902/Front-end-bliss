@@ -1,0 +1,15 @@
+export const API_GET_ALL_COMPANIES = "http://13.230.41.37:80/getCompanies";
+export const API = "http://13.230.41.37:80";
+export const REGISTER_API = "http://13.230.41.37:80/quick_register";
+export const VERIFY_REGISTER_API = "http://13.230.41.37:80/verify_register";
+export const VERIFY_LOGIN = "http://13.230.41.37:80/verify_login";
+export const LOGIN_PASS = "http://13.230.41.37:80/quick_login_password";
+export const LOGIN_MOBILE = "http://13.230.41.37:80/quick_login_mobile";
+export const SET_PASSWORD = "http://13.230.41.37:80/set_password/";
+export const RESET_PASSWORD = "http://13.230.41.37:80/reset_password/";
+export const GET_USER_DATA = "http://13.230.41.37:80/user_data/";
+export const UPDATE_USER_DATA = "http://13.230.41.37:80/update_user/";
+export const GET_USER_NOTIFICATION = "http://13.230.41.37:80/notification/";
+export const LOWIV = "http://13.230.41.37:80/lowIV";
+export const HIGHIV = "http://13.230.41.37:80/highIV";
+export const HUGE_GAP = "http://13.230.41.37:80/huge_gap";
