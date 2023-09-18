@@ -51,6 +51,7 @@ const NewPass = ({ navigation }) => {
     if (password1 === confirmPassword) {
       const token = await AsyncStorage.getItem("token");
       const numberurl = `${SET_PASSWORD}/${phone}`;
+      console.log("token", token);
       try {
         // console.log(typeof setUserEmail);
         // console.log("email and aps5s", password);

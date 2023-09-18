@@ -29,7 +29,7 @@ import CompScreen from "./screens/CompScreen";
 import HugeGapUp from "./components/HugeGapUp";
 const Stack = createStackNavigator();
 import registerNNPushToken from "native-notify";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function App() {
   registerNNPushToken(10536, "VbOlb9uQLyJKJsVilsiAZY");
   const Tab = createBottomTabNavigator();
@@ -47,10 +47,10 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
               {/* <Stack.Screen name="Home" component={Home} /> */}
+              <Stack.Screen name="MainDashboard" component={MainDashboard} />
               <Stack.Screen name="Login_Pass" component={Login_Pass} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="MobileNo" component={MobileNo} />
-              <Stack.Screen name="MainDashboard" component={MainDashboard} />
               <Stack.Screen name="HighIV" component={HighIV} />
               <Stack.Screen name="LowIV" component={LowIV} />
               <Stack.Screen name="HugeGapUp" component={HugeGapUp} />

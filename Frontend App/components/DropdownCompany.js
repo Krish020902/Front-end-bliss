@@ -57,6 +57,7 @@ export default function DropdownCompany() {
   const getAllCompanies = async () => {
     try {
       const token = await AsyncStorage.getItem("token");
+      console.log("this is token of all company", token);
       setLoading(true);
       const res = await axios.get(API_GET_ALL_COMPANIES, {
         headers: {
@@ -104,7 +105,7 @@ export default function DropdownCompany() {
             maxHeight={300}
             labelField="Label"
             valueField="value"
-            placeholder={!ddFocus1 ? "Select Company" : "..."}
+            placeholder={!ddFocus1 ? "Alkem" : "..."}
             searchPlaceholder="Search..."
             value={ddValue1}
             onFocus={() => setDdFocus1(true)}

@@ -22,8 +22,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { useUserContext } from "../context/user_context";
 import axios from "axios";
-import { LOGIN_PASS } from "../constants/api";
+import {
+  LOGIN_PASS,
+  GET_USER_DATA,
+  GET_USER_NOTIFICATION,
+} from "../constants/api";
 import color from "../theme/Colour";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 const Email = ({ navigation }) => {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
@@ -37,6 +42,11 @@ const Email = ({ navigation }) => {
     navigation.navigate("MobileNo");
   };
   const {
+    setUserName,
+    setUserBirthYear,
+    setUserPlan,
+    setUserPinCode,
+    setUserCountry,
     setUserEmail,
     setUserPassword,
     email,
@@ -46,6 +56,51 @@ const Email = ({ navigation }) => {
   } = useUserContext();
   const forgotpass = () => {
     navigation.navigate("ForgotPass");
+  };
+
+  const getUserdata = async () => {
+    token = await AsyncStorage.getItem("token");
+    console.log("inside user ");
+    // data = jwtdecode(token);
+    // setUserPhone(data.mobile);
+    // const data = jwtdecode(token);
+    const resultUrl = `${GET_USER_DATA}${phone}`;
+    console.log("data in user", resultUrl);
+
+    // console.log("token in user", token);
+    try {
+      const result = await axios.get(resultUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // console.log("this is result", result);
+      // console.log("before", phone);
+      // setUserPhone(phone);
+      // console.log("after", phone);
+      setUserEmail(result.data.data.email);
+      // console.log("name", result.data.data.name);
+      result.data.data.name == ""
+        ? setUserName(" ")
+        : setUserName(result.data.data.name);
+
+      result.data.data.birthyear == 0
+        ? setUserBirthYear(" ")
+        : setUserBirthYear(result.data.data.birthyear);
+      result.data.data.pincode == ""
+        ? setUserPinCode(" ")
+        : setUserPinCode(result.data.data.pincode);
+      result.data.data.country == ""
+        ? "India"
+        : setUserCountry(result.data.data.country);
+      result.data.data.plan == ""
+        ? setUserPlan(" ")
+        : setUserPlan(result.data.data.plan);
+      // setLoading(false);
+      // console.log("this is result", result.data.data.email);
+    } catch (err) {
+      console.log("error ", err);
+    }
   };
   const [showPassword, setShowPassword] = useState(true);
 
@@ -68,6 +123,8 @@ const Email = ({ navigation }) => {
           placement: "top",
           animationType: "zoom-in",
         });
+        getUserdata();
+
         navigation.navigate("MainDashboard");
       } else {
         toast.show(res.data.message + "! ", {
@@ -75,7 +132,7 @@ const Email = ({ navigation }) => {
           placement: "top",
           animationType: "zoom-in",
         });
-        console.log("💥💥💥some error", err);
+        console.log("some error", err);
       }
     } catch (err) {
       toast.show(res.data.message, {
@@ -83,7 +140,7 @@ const Email = ({ navigation }) => {
         placement: "top",
         animationType: "zoom-in",
       });
-      console.log("💥💥💥Outside catch", err);
+      console.log("Outside catch", err);
     }
   };
   useEffect(() => {

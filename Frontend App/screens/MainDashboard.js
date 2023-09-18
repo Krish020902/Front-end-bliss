@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import Dashboard from "./Dashboard";
 import HomeScreen from "./HomeScreen";
 // import Notify from "./Notify";
@@ -10,9 +10,25 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import color from "../theme/Colour";
 import DropdownCompany from "../components/DropdownCompany";
 import User from "./User";
-
-const MainDashboard = () => {
+import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { SET_USER_PHONE } from "../action";
+import { useUserContext } from "../context/user_context";
+import { GET_USER_DATA } from "../constants/api";
+const MainDashboard = ({ navigation }) => {
+  const { setUserPhone } = useUserContext();
+  var jwtdecode = require("jwt-decode");
   const Tab = createBottomTabNavigator();
+  let token;
+  let data;
+
+  useEffect(async () => {
+    token = await AsyncStorage.getItem("token");
+    if (!token) {
+      navigation.navigate("Login_Pass");
+    }
+    data = jwtdecode(token);
+    setUserPhone(data.mobile);
+  }, []);
 
   return (
     <Tab.Navigator

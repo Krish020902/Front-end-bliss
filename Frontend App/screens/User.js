@@ -27,9 +27,20 @@ import {
 } from "react-native-responsive-dimensions";
 
 const User = ({ navigation }) => {
+  let token;
+  let count = 0;
+  const { setUserPhone } = useUserContext();
+
+  var jwtdecode = require("jwt-decode");
   const [isConnected, setIsConnected] = useState(null);
 
   useEffect(() => {
+    // navigation.addListener("focus", () => {
+    //   console.log("inside focus");
+    // });
+    console.log("phone in user!!!!!", phone);
+    console.log("here in user useeffect");
+    getUserdata();
     const checkConnectivity = async () => {
       const netInfoState = await NetInfo.fetch();
       setIsConnected(netInfoState.isConnected);
@@ -44,7 +55,8 @@ const User = ({ navigation }) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+    // });
+  }, [isConnected]);
   const {
     name,
     email,
@@ -72,7 +84,15 @@ const User = ({ navigation }) => {
     birthyear: `${birthyear}`,
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("token");
+    setUserName("");
+    setUserEmail("");
+    setUserBirthYear("");
+    setUserBirthYear("");
+    setUserPinCode("");
+    setUserPlan("");
+    setUserPhone("");
     toast.show("Logged out Successfully! ", {
       type: "success",
       placement: "top",
@@ -96,17 +116,25 @@ const User = ({ navigation }) => {
   const handleEditProfile = () => {
     navigation.navigate("SetUserDetails");
   };
+
   const getUserdata = async () => {
-    const resultUrl = `${GET_USER_DATA}/${phone}`;
-    const token = await AsyncStorage.getItem("token");
-    console.log("token", token);
+    token = await AsyncStorage.getItem("token");
+    // count++;
+    // console.log(count);
+    data = jwtdecode(token);
+    setUserPhone(data.mobile);
+    // const data = jwtdecode(token);
+    const resultUrl = `${GET_USER_DATA}${phone}`;
+    // console.log("data in user", data.mobile);
+
+    // console.log("token in user", token);
     try {
       const result = await axios.get(resultUrl, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      // console.log("this is result", result);
       setUserEmail(result.data.data.email);
       // console.log("name", result.data.data.name);
       result.data.data.name == ""
@@ -128,13 +156,26 @@ const User = ({ navigation }) => {
       // setLoading(false);
       // console.log("this is result", result.data.data.email);
     } catch (err) {
-      console.log(err);
+      console.log("error ", err);
     }
   };
 
-  useEffect(() => {
-    getUserdata();
-  }, [isConnected]);
+  // useEffect(() => {
+  //   getUserdata();
+  // }, [isConnected]);
+  // useEffect(() => {
+  //   navigation.addListener("focus", () => {
+  //     // console.log("count");
+  //     getUserdata();
+  //   });
+  // }, []);
+  // useEffect(() => {
+  //   getUserdata();
+  // }, [phone]);
+  // useEffect(() => {
+  //   getUserdata();
+  // }, [token]);
+
   return isConnected ? (
     <View style={styles.container}>
       <View

@@ -16,7 +16,7 @@ import {
   responsiveFontSize,
 } from "react-native-responsive-dimensions";
 import color from "../theme/Colour";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button, Input, Icon } from "@rneui/base";
 
 import axios from "axios";
@@ -46,6 +46,8 @@ const ForgotOtp = ({ navigation }) => {
       });
 
       if (res.data.valid) {
+        await AsyncStorage.setItem("token", res.data.access_token);
+
         toast.show("Correct Otp ", {
           type: "success",
           placement: "top",

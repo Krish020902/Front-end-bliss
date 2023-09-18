@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 import NotificationBar from "../components/Notificationbar";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, RefreshControl } from "react-native-gesture-handler";
 import NetInfo from "@react-native-community/netinfo";
 import { GET_USER_NOTIFICATION } from "../constants/api";
 import axios from "axios";
@@ -14,8 +14,12 @@ import {
   responsiveScreenWidth,
 } from "react-native-responsive-dimensions";
 import color from "../theme/Colour";
-const Notify = () => {
-  const [loading, setLoading] = useState(false);
+const Notify = ({ navigation }) => {
+  // var jwtdecode = require("jwt-decode");
+  // var data;
+  const { setUserPhone } = useUserContext();
+
+  const [loading, setLoading] = useState(true);
 
   function convertDateFormat(inputDate) {
     const months = [
@@ -45,32 +49,40 @@ const Notify = () => {
   }
 
   const [isConnected, setIsConnected] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   const { phone } = useUserContext();
+  const GetUserNotification = async () => {
+    const token = await AsyncStorage.getItem("token");
+    // data = jwtdecode(token);
+    // setUserPhone(data.mobile);
+    // console.log("phone is ", phone);
+    const NotificationUrl = `${GET_USER_NOTIFICATION}${phone}`;
+
+    // console.log("url is ", NotificationUrl);
+    try {
+      const notification = await axios.get(NotificationUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // console.log("date", notification.data.data[0].created_at);
+      const formattedDate = convertDateFormat(
+        notification.data.data[0].created_at
+      );
+      // console.log(formattedDate);
+      setNotifications(notification.data.data);
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 2000);
+      // setLoading(false);
+      // notifications1 = notification.data.data;
+      // console.log(notification.data.data[0].message_title);
+    } catch (err) {
+      console.log("this is error", err);
+    }
+  };
   useEffect(() => {
-    const GetUserNotification = async () => {
-      const NotificationUrl = `${GET_USER_NOTIFICATION}/${phone}`;
-      const token = await AsyncStorage.getItem("token");
-      console.log("inside in noti");
-      try {
-        setLoading(false);
-        const notification = await axios.get(NotificationUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log("date", notification.data.data[0].created_at);
-        const formattedDate = convertDateFormat(
-          notification.data.data[0].created_at
-        );
-        // console.log(formattedDate);
-        setNotifications(notification.data.data);
-        // notifications1 = notification.data.data;
-        console.log(notification.data.data[0].message_title);
-      } catch (err) {
-        console.log("this is error", err);
-      }
-    };
     const checkConnectivity = async () => {
       const netInfoState = await NetInfo.fetch();
       setIsConnected(netInfoState.isConnected);
@@ -88,6 +100,13 @@ const Notify = () => {
       unsubscribe();
     };
   }, [isConnected]);
+  useEffect(() => {
+    if (refreshing) {
+      // console.log("get data");
+
+      GetUserNotification();
+    }
+  }, [refreshing]);
   const [notifications, setNotifications] = useState([]);
 
   const handleClose = (id) => {
@@ -114,7 +133,16 @@ const Notify = () => {
         Notification
       </Text>
       <Spinner visible={loading} color="green" />
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => setRefreshing(true)}
+            tintColor="#FF5733"
+          />
+        }
+      >
         {notifications.map((notification) => {
           const newDate = convertDateFormat(notification.created_at);
           return (
