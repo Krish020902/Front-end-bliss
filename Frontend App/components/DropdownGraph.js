@@ -45,7 +45,7 @@ export default function DropdownGraph() {
         },
       });
       const tempData = res.data.iv_data.map((item, i) => {
-        // console.log(item.date);
+        console.log("date", item.date);
         const dateArray = item.date.split("-");
         console.log(dateArray[0] + " : " + dateArray[1] + " : " + dateArray[2]);
         return {

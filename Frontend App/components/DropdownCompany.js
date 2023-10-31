@@ -145,7 +145,7 @@ export default function DropdownCompany() {
             maxHeight={300}
             labelField="name"
             valueField="value"
-            placeholder={!ddFocus2 ? "Select Type" : "..."}
+            placeholder={!ddFocus2 ? "Intraday" : "..."}
             searchPlaceholder="Search..."
             value={ddValue2}
             onFocus={() => setDdFocus2(true)}

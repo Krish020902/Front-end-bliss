@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from "@react-native-community/netinfo";
+
 import * as Animatable from "react-native-animatable";
 import React, { useState, useEffect } from "react";
 import { useToast } from "react-native-toast-notifications";
@@ -33,6 +34,7 @@ const User = ({ navigation }) => {
 
   var jwtdecode = require("jwt-decode");
   const [isConnected, setIsConnected] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     // navigation.addListener("focus", () => {
@@ -153,6 +155,9 @@ const User = ({ navigation }) => {
       result.data.data.plan == ""
         ? setUserPlan(" ")
         : setUserPlan(result.data.data.plan);
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 2000);
       // setLoading(false);
       // console.log("this is result", result.data.data.email);
     } catch (err) {

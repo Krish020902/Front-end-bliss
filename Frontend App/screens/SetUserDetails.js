@@ -45,6 +45,8 @@ const SetUserDetails = ({ navigation }) => {
     setUserPinCode,
     country,
     setUserCountry,
+    setUserPassword,
+    password,
     plan,
 
     setUserPlan,
@@ -71,7 +73,7 @@ const SetUserDetails = ({ navigation }) => {
           mobile: phone,
           name: name,
           passreset: "",
-          password: "",
+          password: password,
           pincode: pincode,
           plan: plan,
           register_date: "",

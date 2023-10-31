@@ -1,5 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
-import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import React, { useEffect, useRef } from "react";
 import { useDashboardContext } from "../context/dashboard_context";
 import DropdownCompany from "../components/DropdownCompany";
 import DropdownGraph from "../components/DropdownGraph";
@@ -8,22 +14,49 @@ import Navbar from "../components/Navbar";
 import PopupBox from "../components/PopupBox";
 import SetPassword from "./SetPassword";
 import { Button } from "@rneui/base";
-import { responsiveHeight } from "react-native-responsive-dimensions";
+import {
+  responsiveHeight,
+  responsiveWidth,
+} from "react-native-responsive-dimensions";
 import color from "../theme/Colour";
+import TradingChart from "../components/Linegraph";
+import WebView from "react-native-webview";
+
+import WebViewGraph from "../components/WebViewGraph";
+// import { ScreenOrientation } from "expo-screen-orientation";
 const Dashboard = ({ navigation }) => {
   // const companyname = route.params;
   // console.log("recieving success", companyname);
+  const webViewRef = useRef(null);
+  // useEffect(() => {
+  //   Orientation.lockToPortrait(); // or Orientation.lockToLandscape()
+
+  //   const handleOrientationChange = (orientation) => {
+  //     console.log("oreintation", orientation);
+  //     if (orientation === "LANDSCAPE") {
+  //       // Lock WebView to landscape mode
+  //       Orientation.lockToLandscape();
+  //     } else {
+  //       // Lock WebView to portrait mode
+  //       Orientation.lockToPortrait();
+  //     }
+  //   };
+
+  //   Orientation.addOrientationListener(handleOrientationChange);
+
+  //   return () => {
+  //     Orientation.removeOrientationListener(handleOrientationChange);
+  //   };
+  // }, []);
 
   return (
     <View style={styles.container}>
       <PopupBox navigation={navigation} />
       <Navbar />
-      {/* <Button title="Solid" type="solid"  /> */}
-      {/* <Button title="Solid" type="solid" loading={false} />; */}
+
       <DropdownCompany />
-      <DropdownGraph />
+      <WebViewGraph navigation={navigation} />
       <DropdownTable />
-      {/* <Text>hello</Text> */}
     </View>
   );
 };

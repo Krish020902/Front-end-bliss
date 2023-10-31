@@ -24,7 +24,7 @@ const Navbar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // marginTop: 45,
+    marginTop: 37,
     width: responsiveWidth(100),
     flexDirection: "row",
     alignItems: "center",

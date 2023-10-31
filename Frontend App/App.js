@@ -27,9 +27,11 @@ import LowIV from "./components/LowIV";
 import NotificationBar from "./components/Notificationbar";
 import CompScreen from "./screens/CompScreen";
 import HugeGapUp from "./components/HugeGapUp";
+import NotificationScreen from "./components/NotificationScreen";
 const Stack = createStackNavigator();
 import registerNNPushToken from "native-notify";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import GraphMax from "./components/GraphMax";
 export default function App() {
   registerNNPushToken(10536, "VbOlb9uQLyJKJsVilsiAZY");
   const Tab = createBottomTabNavigator();
@@ -54,7 +56,6 @@ export default function App() {
               <Stack.Screen name="HighIV" component={HighIV} />
               <Stack.Screen name="LowIV" component={LowIV} />
               <Stack.Screen name="HugeGapUp" component={HugeGapUp} />
-
               <Stack.Screen name="OTP_REGISTER" component={OTP_REGISTER} />
               <Stack.Screen name="OTP_LOGIN" component={OTP_LOGIN} />
               <Stack.Screen name="SetPassword" component={SetPassword} />
@@ -65,7 +66,11 @@ export default function App() {
               <Stack.Screen name="SetUserDetails" component={SetUserDetails} />
               <Stack.Screen name="Notify" component={Notify} />
               <Stack.Screen name="Dashboard" component={CompScreen} />
-
+              <Stack.Screen name="GraphMax" component={GraphMax} />
+              <Stack.Screen
+                name="NotificationScreen"
+                component={NotificationScreen}
+              />
               {/* <Stack.Screen name="SearchComp" component={SearchComp} /> */}
               <Stack.Screen
                 name="NotificationBar"

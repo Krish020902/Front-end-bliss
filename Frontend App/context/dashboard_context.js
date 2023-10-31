@@ -22,7 +22,7 @@ const initialState = {
   ddFocus2: false,
   companies: [],
   currCompany: "alkem",
-  currTypeOfGraph: "Daily",
+  currTypeOfGraph: "intraday",
   typeOfGraph: [
     { name: "intraDay", value: "1" },
     { name: "Daily", value: "2" },

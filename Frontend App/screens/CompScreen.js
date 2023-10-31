@@ -11,6 +11,7 @@ import { Button } from "@rneui/base";
 import SearchComp from "./SearchComp";
 import { responsiveHeight } from "react-native-responsive-dimensions";
 import color from "../theme/Colour";
+import WebViewGraph from "../components/WebViewGraph";
 // import { CHANGE_SELECTED_IV_COMPANY } from "../action";
 const CompScreen = ({ navigation }) => {
   // const companyname = route.params;
@@ -22,7 +23,8 @@ const CompScreen = ({ navigation }) => {
       {/* <Button title="Solid" type="solid"  /> */}
       {/* <Button title="Solid" type="solid" loading={false} />; */}
       <SearchComp />
-      <DropdownGraph />
+      <WebViewGraph navigation={navigation} />
+      {/* <DropdownGraph /> */}
       <DropdownTable />
       {/* <Text>hello</Text> */}
     </View>

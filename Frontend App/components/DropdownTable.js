@@ -18,9 +18,7 @@ const DropdownTable = () => {
   const { tableData, setTableData, currCompany } = useDashboardContext();
 
   const getTableData = async () => {
-    console.log("babby", currCompany);
     const resultUrl = `${API}/result/${currCompany}`;
-    console.log("result url", resultUrl);
     const movementUrl = `${API}/movement/${currCompany}`;
     const token = await AsyncStorage.getItem("token");
     try {
@@ -150,7 +148,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // padding: 10,
     // position: "absolute",
-    marginTop: 270,
+    // marginTop: 20,
     backgroundColor: color.bg_clr,
     width: responsiveWidth(100),
     // marginLeft: 2,
@@ -160,12 +158,15 @@ const styles = StyleSheet.create({
   },
   headerRow: {
     // padding: 10,
+
     flexDirection: "row",
     borderWidth: 0.4,
     borderColor: "black",
   },
   header: {
-    padding: 10,
+    // padding: 10,
+    paddingBottom: 10,
+    paddingTop: 10,
     borderWidth: 0.2,
     borderColor: "black",
 
@@ -190,10 +191,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#8c8787",
   },
   cell: {
-    // borderLeftWidth: 1,
     // padding: 1,
-
-    // borderColor: "black",
+    borderRightWidth: 1,
+    borderColor: "grey",
+    // height: "100%",
     // marginLeft: 3,
     color: "white",
     flex: 1,

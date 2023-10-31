@@ -152,6 +152,7 @@ const Notify = ({ navigation }) => {
               message={notification.notification_message}
               date={newDate}
               onClose={() => handleClose(notification.id)}
+              navigation={navigation}
             />
           );
         })}

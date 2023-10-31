@@ -5,11 +5,17 @@ import {
   responsiveWidth,
 } from "react-native-responsive-dimensions";
 import color from "../theme/Colour";
-const NotificationBar = ({ title, message, date, onClose }) => {
+
+const NotificationBar = ({ title, message, date, onClose, navigation }) => {
   const shortmessage = message.substring(0, 100);
   const [more, setMore] = useState(true);
   const ClickMore = () => {
-    setMore(!more);
+    // console.log(title, " ", message);
+    const Notificationdata = {
+      title: title,
+      message: message,
+    };
+    navigation.navigate("NotificationScreen", Notificationdata);
   };
   return (
     <View
@@ -31,9 +37,9 @@ const NotificationBar = ({ title, message, date, onClose }) => {
               <TouchableOpacity onPress={() => ClickMore()}>
                 {more && <Text style={styles.clickmore}>Read more</Text>}
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => ClickMore()}>
+              {/* <TouchableOpacity onPress={() => ClickMore()}>
                 {!more && <Text style={styles.clickclose}>close</Text>}
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </>
           ) : null}
         </View>
