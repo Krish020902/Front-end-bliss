@@ -10,10 +10,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import color from "../theme/Colour";
 import DropdownCompany from "../components/DropdownCompany";
 import User from "./User";
+import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { SET_USER_PHONE } from "../action";
 import { useUserContext } from "../context/user_context";
 import { GET_USER_DATA } from "../constants/api";
+import SetPassword from "./SetPassword";
 const MainDashboard = ({ navigation }) => {
   const { setUserPhone } = useUserContext();
   var jwtdecode = require("jwt-decode");
@@ -26,7 +28,9 @@ const MainDashboard = ({ navigation }) => {
     if (!token) {
       navigation.navigate("Login_Pass");
     }
+
     data = jwtdecode(token);
+
     setUserPhone(data.mobile);
   }, []);
 

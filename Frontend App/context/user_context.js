@@ -11,6 +11,7 @@ import {
   SET_USER_PLAN,
   SET_USER_COUNTRY,
   SET_USER_PINCODE,
+  SET_PASSWORD_POPUP,
 } from "../action";
 
 const initialState = {
@@ -61,6 +62,7 @@ export const UserProvider = ({ children }) => {
   const setUserPinCode = (val) => {
     dispath({ type: SET_USER_PINCODE, payload: val });
   };
+
   return (
     <UserContext.Provider
       value={{

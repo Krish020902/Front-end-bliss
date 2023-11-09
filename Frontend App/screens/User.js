@@ -18,6 +18,8 @@ import { GET_USER_DATA } from "../constants/api";
 import axios from "axios";
 import { useUserContext } from "../context/user_context";
 import { Button, Input, Icon, Card } from "@rneui/base";
+import { CommonActions } from "@react-navigation/native";
+
 // import { Svg, LinearGradient, Stop } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
 import color from "../theme/Colour";
@@ -100,7 +102,19 @@ const User = ({ navigation }) => {
       placement: "top",
       animationType: "zoom-in",
     });
-    navigation.navigate("Login_Pass");
+    const resetAction = CommonActions.reset({
+      index: 0,
+      routes: [
+        {
+          name: "Login_Pass", // the name of the screen to navigate to
+          // you can also pass params if needed, like: params: { someParam: 'value' }
+        },
+      ],
+    });
+
+    navigation.dispatch(resetAction);
+
+    // navigation.navigate("Login_Pass");
   };
 
   const handleChangePassword = () => {

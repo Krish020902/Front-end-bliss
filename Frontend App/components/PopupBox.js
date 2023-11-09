@@ -6,8 +6,8 @@ import { useUserContext } from "../context/user_context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import color from "../theme/Colour";
 const PopupBox = ({ navigation }) => {
-  const [isVisible, setIsVisible] = useState(true);
-  const { phone } = useUserContext();
+  const [isVisible, setIsVisible] = useState(false);
+  const { phone, passwordpopup } = useUserContext();
 
   const getUserData = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -43,10 +43,6 @@ const PopupBox = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* <TouchableOpacity onPress={() => setIsVisible(true)}>
-        <Text>Show Pop-up Box</Text>
-      </TouchableOpacity> */}
-
       <Modal
         animationType="slide"
         transparent={true}

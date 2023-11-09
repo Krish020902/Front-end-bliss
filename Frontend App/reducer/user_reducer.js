@@ -42,6 +42,7 @@ const user_reducer = (state, action) => {
   if (action.type === SET_USER_PINCODE) {
     return { ...state, pincode: action.payload };
   }
+
   return state;
   throw new Error(`No Matching "${action.type}" - action type`);
 };
