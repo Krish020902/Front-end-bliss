@@ -9,6 +9,7 @@ import {
   Animated,
   FlatList,
   ActivityIndicator,
+  ImageBackground,
 } from "react-native";
 import { useDashboardContext } from "../context/dashboard_context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -109,7 +110,7 @@ const HugeGapUp = ({ navigation }) => {
     // setLoading(false);
   }, [stockData]);
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: color.bg_clr }}>
       {/* <Spinner visible={loading} color="green" /> */}
       <View style={styles.selectedbar}>
         <TouchableOpacity onPress={toggleDropdown}>
@@ -149,42 +150,58 @@ const HugeGapUp = ({ navigation }) => {
       </View>
 
       <View style={styles.container}>
-        {stockData.map((stock, index) => (
-          <TouchableOpacity
-            key={index}
-            style={{
-              width: "33.33%",
-              height: 100,
-              backgroundColor:
-                "#00" + String(index < 6 ? index * 1000 + 3000 : 9000),
-              alignItems: "center",
-              justifyContent: "center",
-              borderWidth: 1,
-              borderColor: "#FFFFFF",
-              position: "relative",
-            }}
-            onPress={() => handleRedirection(stock)}
-          >
-            {loading ? (
-              <ActivityIndicator size="small" color="white" />
-            ) : (
-              <>
-                <View>
-                  <Text style={styles.stockName}>{stock.name}</Text>
-                  <Text style={styles.stockPrice}>{stock.price}</Text>
-                </View>
-                <View style={styles.chartIconContainer}>
-                  <Icon name="arrow-up" color="#FFFFFF" />
-                </View>
-              </>
-            )}
-          </TouchableOpacity>
-        ))}
+        {stockData &&
+          stockData.map((stock, index) => (
+            <TouchableOpacity
+              key={index}
+              style={{
+                width: "33.33%",
+                height: 100,
+                backgroundColor:
+                  "#00" + String(index < 6 ? index * 1000 + 3000 : 9000),
+                alignItems: "center",
+                justifyContent: "center",
+                borderWidth: 1,
+                borderColor: "#FFFFFF",
+                position: "relative",
+              }}
+              onPress={() => handleRedirection(stock)}
+            >
+              {loading ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : (
+                <>
+                  <View>
+                    <Text style={styles.stockName}>{stock.name}</Text>
+                    <Text style={styles.stockPrice}>{stock.price}</Text>
+                  </View>
+                  <View style={styles.chartIconContainer}>
+                    <Icon name="arrow-up" color="#FFFFFF" />
+                  </View>
+                </>
+              )}
+            </TouchableOpacity>
+          ))}
+        <ImageBackground
+          source={require("../assets/FooterLogo.png")}
+          style={styles.watermark}
+          blurRadius={8}
+        ></ImageBackground>
       </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
+  watermark: {
+    // marginTop: 80,
+
+    position: "absolute",
+    top: 300,
+    height: 270,
+    width: 500,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   modalContainer: {
     position: "absolute",
     // right: 0,
@@ -212,8 +229,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     // height: responsiveHeight(100),
-    backgroundColor: "#bbbbbb",
-    justifyContent: "flex-end",
+
+    backgroundColor: color.bg_clr,
+    justifyContent: "flex-start",
     // marginTop: 300,
   },
 
@@ -249,6 +267,7 @@ const styles = StyleSheet.create({
   barfont: {
     fontSize: responsiveFontSize(2.5),
     fontWeight: "bold",
+    color: color.txt_clr,
   },
 });
 export default HugeGapUp;

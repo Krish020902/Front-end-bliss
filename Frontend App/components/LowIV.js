@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableWithoutFeedback,
   ActivityIndicator,
+  ImageBackground,
 } from "react-native";
 import axios from "axios";
 import { useDashboardContext } from "../context/dashboard_context";
@@ -106,7 +107,7 @@ const LowIV = ({ navigation }) => {
     // setLoading(false);
   }, [stockData]);
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: color.bg_clr }}>
       <View style={styles.selectedbar}>
         <TouchableOpacity onPress={toggleDropdown}>
           <Text style={styles.barfont}>
@@ -145,48 +146,64 @@ const LowIV = ({ navigation }) => {
       </View>
 
       <View style={styles.container}>
-        {stockData.map((stock, index) => (
-          <TouchableOpacity
-            key={index}
-            style={{
-              width: "33.33%",
-              height: 100,
-              // backgroundColor: "#5e0c" + String(index + 1 * 10 + 2 * index),
-              backgroundColor:
-                "rgb(" +
-                String(120 + index * 10) +
-                "," +
-                String(index + index * 5) +
-                "," +
-                String(index + index * 5) +
-                ")",
-              alignItems: "center",
-              justifyContent: "center",
-              borderWidth: 1,
-              borderColor: "#FFFFFF",
-              position: "relative",
-            }}
-            onPress={() => handleRedirection(stock)}
-          >
-            {loading ? (
-              <ActivityIndicator size="small" color="white" />
-            ) : (
-              <>
-                <Text style={styles.stockName}>{stock.name}</Text>
-                <Text style={styles.stockPrice}>{stock.price}</Text>
-                <View style={styles.chartIconContainer}>
-                  <Icon name="arrow-down" size={12} color="white" />
-                </View>
-              </>
-            )}
-          </TouchableOpacity>
-        ))}
+        {stockData &&
+          stockData.map((stock, index) => (
+            <TouchableOpacity
+              key={index}
+              style={{
+                width: "33.33%",
+                height: 100,
+                // backgroundColor: "#5e0c" + String(index + 1 * 10 + 2 * index),
+                backgroundColor:
+                  "rgb(" +
+                  String(120 + index * 10) +
+                  "," +
+                  String(index + index * 5) +
+                  "," +
+                  String(index + index * 5) +
+                  ")",
+                alignItems: "center",
+                justifyContent: "center",
+                borderWidth: 1,
+                borderColor: "#FFFFFF",
+                position: "relative",
+              }}
+              onPress={() => handleRedirection(stock)}
+            >
+              {loading ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : (
+                <>
+                  <Text style={styles.stockName}>{stock.name}</Text>
+                  <Text style={styles.stockPrice}>{stock.price}</Text>
+                  <View style={styles.chartIconContainer}>
+                    <Icon name="arrow-down" size={12} color="white" />
+                  </View>
+                </>
+              )}
+            </TouchableOpacity>
+          ))}
+        <ImageBackground
+          source={require("../assets/FooterLogo.png")}
+          style={styles.watermark}
+          blurRadius={8}
+        ></ImageBackground>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  watermark: {
+    // marginTop: 80,
+
+    position: "absolute",
+    top: 300,
+    height: 270,
+    width: 500,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   modalContainer: {
     position: "absolute",
     // right: 0,
@@ -218,13 +235,15 @@ const styles = StyleSheet.create({
   barfont: {
     fontSize: responsiveFontSize(2.5),
     fontWeight: "bold",
+    color: color.txt_clr,
   },
   container: {
     // marginTop: 100,
     height: responsiveHeight(100),
-    // backgroundColor: "black",
+    backgroundColor: color.bg_clr,
     flexDirection: "row",
     flexWrap: "wrap",
+    justifyContent: "flex-start",
   },
   gridItem: {
     width: "33.33%",

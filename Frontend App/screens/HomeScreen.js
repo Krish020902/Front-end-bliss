@@ -112,7 +112,9 @@ const HomeScreen = ({ navigation }) => {
   const HugeGapUp = () => {
     navigation.navigate("HugeGapUp");
   };
-  const ClickNifty = () => {};
+  const ClickNifty = () => {
+    navigation.navigate("NiftyStrategies");
+  };
   return isConnected ? (
     // <View style={styles.container}>
     //   <Svg

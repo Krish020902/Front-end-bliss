@@ -28,6 +28,7 @@ import NotificationBar from "./components/Notificationbar";
 import CompScreen from "./screens/CompScreen";
 import HugeGapUp from "./components/HugeGapUp";
 import NotificationScreen from "./components/NotificationScreen";
+import NiftyStrategies from "./components/NiftyStrategies";
 const Stack = createStackNavigator();
 import registerNNPushToken from "native-notify";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -67,6 +68,10 @@ export default function App() {
               <Stack.Screen name="Notify" component={Notify} />
               <Stack.Screen name="Dashboard" component={CompScreen} />
               <Stack.Screen name="GraphMax" component={GraphMax} />
+              <Stack.Screen
+                name="NiftyStrategies"
+                component={NiftyStrategies}
+              />
               <Stack.Screen
                 name="NotificationScreen"
                 component={NotificationScreen}
