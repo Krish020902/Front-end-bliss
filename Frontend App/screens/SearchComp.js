@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     flex: 1,
+    marginHorizontal: 3,
     borderColor: "white",
     height: 50,
 

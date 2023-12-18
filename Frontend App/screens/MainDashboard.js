@@ -16,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUserContext } from "../context/user_context";
 import { GET_USER_DATA } from "../constants/api";
 import SetPassword from "./SetPassword";
+import SubscribePage from "./SubscribePage";
 const MainDashboard = ({ navigation }) => {
   const { setUserPhone } = useUserContext();
   var jwtdecode = require("jwt-decode");
@@ -52,6 +53,10 @@ const MainDashboard = ({ navigation }) => {
             iconName = "home";
             size = focused ? 25 : 20;
             colorname = focused ? color.btn_clr : "black";
+          } else if (route.name === "Subscribe") {
+            iconName = "star";
+            size = focused ? 25 : 20;
+            colorname = focused ? color.btn_clr : "black";
           } else if (route.name === "Notification") {
             iconName = "bell";
             size = focused ? 25 : 20;
@@ -72,6 +77,7 @@ const MainDashboard = ({ navigation }) => {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Analysis" component={Dashboard} />
       <Tab.Screen name="Notification" component={Notify} />
+      <Tab.Screen name="Subscribe" component={SubscribePage} />
       <Tab.Screen name="Profile" component={User} />
     </Tab.Navigator>
   );
