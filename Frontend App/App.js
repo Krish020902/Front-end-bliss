@@ -33,6 +33,7 @@ const Stack = createStackNavigator();
 import registerNNPushToken from "native-notify";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GraphMax from "./components/GraphMax";
+import SubscribePage from "./screens/SubscribePage";
 export default function App() {
   registerNNPushToken(10536, "VbOlb9uQLyJKJsVilsiAZY");
   const Tab = createBottomTabNavigator();
@@ -81,6 +82,7 @@ export default function App() {
                 name="NotificationBar"
                 component={NotificationBar}
               />
+              <Stack.Screen name="SubscribePage" component={SubscribePage} />
             </Stack.Navigator>
           </NavigationContainer>
         </DashboardProvider>

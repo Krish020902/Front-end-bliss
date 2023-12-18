@@ -59,6 +59,7 @@ export default function DropdownCompany() {
       const token = await AsyncStorage.getItem("token");
       console.log("this is token of all company", token);
       setLoading(true);
+      console.log("hello ***", API_GET_ALL_COMPANIES);
       const res = await axios.get(API_GET_ALL_COMPANIES, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -182,6 +183,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   dropdown: {
+    marginHorizontal: 3,
     flex: 1,
     borderColor: "white",
     height: 50,
