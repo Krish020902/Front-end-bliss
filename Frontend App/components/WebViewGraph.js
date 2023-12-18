@@ -36,9 +36,9 @@ export default function WebViewGraph({ navigation }) {
     <>
       <WebView
         ref={(ref) => (webViewRef.current = ref)}
-        key={currCompany}
+        key={currCompany - currTypeOfGraph}
         source={{
-          uri: `https://www.blissquants.com/BlissDeltaChart?%20search1=${currCompany.toUpperCase()}&chart_type=${currTypeOfGraph}`,
+          uri: `https://www.blissquants.com/BlissDeltaChart?%20search1=${currCompany.toUpperCase()}&chart_type=${currTypeOfGraph.toLowerCase()}`,
         }}
         injectedJavaScript={INJECTEDJAVASCRIPT}
         style={[styles.webview]}
