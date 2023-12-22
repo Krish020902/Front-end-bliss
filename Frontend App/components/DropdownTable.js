@@ -28,7 +28,7 @@ const DropdownTable = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const genResultData = result.data.result.map((element) => {
+      const genResultData = result?.data?.result?.map((element) => {
         return {
           col1: element.date,
           col2: element.time,
@@ -54,7 +54,7 @@ const DropdownTable = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const genMovementData = movement.data.movement.map((element) => {
+      const genMovementData = movement?.data?.movement?.map((element) => {
         return {
           col1: element.col_name,
           col2: element.high,
@@ -116,7 +116,7 @@ const DropdownTable = () => {
                   return <Text style={styles.header}>{header}</Text>;
                 })}
               </View>
-              {item.data.map((i, index) => {
+              {item?.data?.map((i, index) => {
                 return (
                   <View
                     key={index}

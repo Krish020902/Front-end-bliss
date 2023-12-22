@@ -11,6 +11,7 @@ import {
   CHANGE_TABLE_DATA,
   CHANGE_TYPEOFGRAPH,
   CHANGE_SELECTED_IV_COMPANY,
+  FILTEREDCOMPANY,
 } from "../action";
 import dashboard_reducer from "../reducer/dashboard_reducer";
 
@@ -29,6 +30,7 @@ const initialState = {
   ],
   graphData: [],
   tableData: [],
+  filteredCompany: [],
 };
 
 const DashboardContext = React.createContext();
@@ -69,6 +71,9 @@ export const DashboardProvider = ({ children }) => {
   const setSelectedIVcompany = (val) => {
     dispath({ type: CHANGE_SELECTED_IV_COMPANY, payload: val });
   };
+  const setFilteredCompany = (val) => {
+    dispath({ type: FILTEREDCOMPANY, payload: val });
+  };
 
   return (
     <DashboardContext.Provider
@@ -85,6 +90,7 @@ export const DashboardProvider = ({ children }) => {
         setGraphData,
         setTableData,
         setSelectedIVcompany,
+        setFilteredCompany,
       }}
     >
       {children}

@@ -10,6 +10,7 @@ import {
   CHANGE_TABLE_DATA,
   CHANGE_TYPEOFGRAPH,
   CHANGE_SELECTED_IV_COMPANY,
+  FILTEREDCOMPANY,
 } from "../action";
 
 const dashboard_reducer = (state, action) => {
@@ -45,6 +46,9 @@ const dashboard_reducer = (state, action) => {
   }
   if (action.type === CHANGE_SELECTED_IV_COMPANY) {
     return { ...state, selectedIVcompany: action.payload };
+  }
+  if (action.type === FILTEREDCOMPANY) {
+    return { ...state, filteredCompany: action.payload };
   }
 
   return state;

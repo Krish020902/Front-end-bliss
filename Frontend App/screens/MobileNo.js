@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StatusBar,
@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
   Image,
+  Keyboard,
   TouchableOpacity,
 } from "react-native";
 import { ToastProvider, useToast } from "react-native-toast-notifications";
@@ -25,6 +26,7 @@ import { Button, Input, Icon } from "@rneui/base";
 const MobileNo = ({ navigation }) => {
   const toast = useToast();
   const { setUserPhone, setUserOtp, phone } = useUserContext();
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   const generateOtp = async () => {
     try {
@@ -72,6 +74,23 @@ const MobileNo = ({ navigation }) => {
       console.log(err);
     }
   };
+  useEffect(() => {
+    // Listen for keyboard events
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => setIsKeyboardOpen(true)
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => setIsKeyboardOpen(false)
+    );
+
+    // Cleanup listeners when the component unmounts
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
   return (
     <View style={styles.container}>
       <Image
@@ -125,19 +144,35 @@ const MobileNo = ({ navigation }) => {
       >
         OTP Message will be sent to your Phone Number
       </Text>
-      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
-        <Button
-          title="NEXT"
-          color={color.btn_clr}
-          onPress={generateOtp}
-          buttonStyle={{
-            marginTop: 25,
-            width: responsiveWidth(90),
-            alignSelf: "center",
-            borderRadius: 13,
-          }}
-        ></Button>
-      </View>
+      {isKeyboardOpen && (
+        <TouchableOpacity style={styles.roundButton} onPress={generateOtp}>
+          <Text
+            style={{
+              color: "white",
+
+              fontSize: 18,
+            }}
+          >
+            Get OTP
+          </Text>
+          <Icon name="chevron-right" size={32} color="white" />
+        </TouchableOpacity>
+      )}
+      {!isKeyboardOpen && (
+        <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
+          <Button
+            title="NEXT"
+            color={color.btn_clr}
+            onPress={generateOtp}
+            buttonStyle={{
+              marginTop: 25,
+              width: responsiveWidth(90),
+              alignSelf: "center",
+              borderRadius: 13,
+            }}
+          ></Button>
+        </View>
+      )}
     </View>
   );
 };
@@ -150,6 +185,18 @@ const styles = StyleSheet.create({
     color: "white",
 
     // marginLeft: 2,
+  },
+  roundButton: {
+    flexDirection: "row",
+    position: "absolute",
+    right: 30,
+    bottom: 140,
+    justifyContent: "center",
+    alignItems: "center",
+
+    backgroundColor: color.btn_clr,
+    borderRadius: 50,
+    padding: 10,
   },
   logo: {
     // marginLeft: 35,

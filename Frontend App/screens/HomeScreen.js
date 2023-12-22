@@ -98,9 +98,9 @@ const HomeScreen = ({ navigation }) => {
 
   const buttons = [
     { title: "High IV", icon: "trending-up" },
-    { title: "Huge Gap Up", icon: "bar-chart" },
+    { title: "Huge IV Gap Up", icon: "bar-chart" },
     { title: "Low IV", icon: "trending-down" },
-    { title: "Nifty strategies", icon: "lightbulb-outline" },
+    { title: "Index Spreads", icon: "lightbulb-outline" },
   ];
   const [button, setButton] = useState(0);
   const ClickHighIV = () => {

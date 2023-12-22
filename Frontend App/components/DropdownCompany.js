@@ -65,7 +65,7 @@ export default function DropdownCompany() {
           Authorization: `Bearer ${token}`,
         },
       });
-      const newData = res.data.data.map((item, index) => {
+      const newData = res?.data?.data?.map((item, index) => {
         return { Label: item.c_name, value: index };
       });
 

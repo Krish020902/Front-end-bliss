@@ -113,12 +113,16 @@ const HugeGapUp = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: color.bg_clr }}>
       {/* <Spinner visible={loading} color="green" /> */}
       <View style={styles.selectedbar}>
-        <TouchableOpacity onPress={toggleDropdown}>
-          <Text style={styles.barfont}>
-            {selectedOption}
-            <Icon name="chevron-down" />
-          </Text>
-        </TouchableOpacity>
+        <Text style={styles.barfont1}>Huge IV GapUp Stocks</Text>
+        <View style={styles.TopCompany}>
+          <TouchableOpacity
+            onPress={toggleDropdown}
+            style={{ flexDirection: "row", alignItems: "center" }}
+          >
+            <Text style={styles.barfont}>Top {selectedOption}</Text>
+            <Icon name="chevron-down" color={color.bg_clr} />
+          </TouchableOpacity>
+        </View>
 
         <Modal
           visible={isDropdownOpen}
@@ -147,6 +151,13 @@ const HugeGapUp = ({ navigation }) => {
             />
           </View>
         </Modal>
+      </View>
+      <View style={styles.resultContainer}>
+        <View style={styles.line} />
+        <Text style={styles.resultText}>
+          Total {stockData?.length} results found
+        </Text>
+        <View style={styles.line} />
       </View>
 
       <View style={styles.container}>
@@ -182,16 +193,20 @@ const HugeGapUp = ({ navigation }) => {
               )}
             </TouchableOpacity>
           ))}
-        <ImageBackground
+        {/* <ImageBackground
           source={require("../assets/FooterLogo.png")}
           style={styles.watermark}
           blurRadius={8}
-        ></ImageBackground>
+        ></ImageBackground> */}
       </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
   watermark: {
     // marginTop: 80,
 
@@ -204,15 +219,31 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     position: "absolute",
-    // right: 0,
-    top: 30,
-    width: 200,
-    left: 7,
+    justifyContent: "flex-end",
+    right: 0,
+    top: 50,
+    width: responsiveWidth(40),
+    // left: 7,
 
     opacity: 0.93,
     backgroundColor: "#CCCCCC",
     borderRadius: 8,
     elevation: 4,
+  },
+  resultContainer: {
+    paddingTop: 24,
+    padding: 20,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  line: {
+    flex: 1,
+    height: 2,
+    backgroundColor: color.txt_clr, // Adjust the color as needed
+  },
+  resultText: {
+    marginHorizontal: 10,
+    color: color.txt_clr,
   },
 
   optionItem: {
@@ -259,14 +290,40 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   selectedbar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+
+    // justifyContent: "space-between",
     fontSize: 20,
-    marginTop: 20,
-    width: responsiveWidth(100),
+    marginTop: 40,
+
+    width: responsiveWidth(90),
     left: 17,
+
+    // backgroundColor: color.bg_clr,
   },
   barfont: {
+    // marginRight: 40,
     fontSize: responsiveFontSize(2.5),
-    fontWeight: "bold",
+    // fontWeight: "bold",
+
+    borderRadius: 30,
+    paddingHorizontal: 10,
+    backgroundColor: "white",
+  },
+  TopCompany: {
+    // flexDirection: "row",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: color.txt_clr,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+  },
+  barfont1: {
+    // marginRight: 40,
+    fontSize: responsiveFontSize(2.5),
+    // fontWeight: "bold",
+    backgroundColor: color.bg_clr,
     color: color.txt_clr,
   },
 });

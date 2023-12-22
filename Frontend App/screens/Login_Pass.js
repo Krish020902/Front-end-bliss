@@ -290,24 +290,26 @@ const Email = ({ navigation }) => {
             }}
           ></Button>
 
-          <View
-            style={{ flex: 1, justifyContent: "flex-end", marginBottom: 20 }}
-          >
-            <Button
-              title="Go to dashboard"
-              color={color.btn_clr}
-              onPress={login}
-              buttonStyle={{
-                marginTop: 25,
-                width: responsiveWidth(80),
-                alignSelf: "center",
-                borderRadius: 13,
-              }}
+          {
+            <View
+              style={{ flex: 1, justifyContent: "flex-end", marginBottom: 20 }}
             >
-              Go to dashboard
-              <Icon name="log-in-outline" color="white" type="ionicon" />
-            </Button>
-          </View>
+              <Button
+                title="Go to dashboard"
+                color={color.btn_clr}
+                onPress={login}
+                buttonStyle={{
+                  marginTop: 25,
+                  width: responsiveWidth(80),
+                  alignSelf: "center",
+                  borderRadius: 13,
+                }}
+              >
+                Go to dashboard
+                <Icon name="log-in-outline" color="white" type="ionicon" />
+              </Button>
+            </View>
+          }
         </>
       )}
     </View>

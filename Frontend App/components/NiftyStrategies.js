@@ -24,6 +24,10 @@ export default function NiftyStrategies() {
         source={require("../assets/UnderMaintenance.png")}
         style={styles.watermark}
       ></ImageBackground>
+      <Text style={{ color: "white", marginTop: 300, fontSize: 25 }}>
+        {" "}
+        Coming Soon...
+      </Text>
       {/* <Text style={{ color: color.txt_clr }}>Under Maintenance</Text> */}
     </View>
   );

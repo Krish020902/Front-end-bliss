@@ -26,55 +26,38 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { HIGHIV } from "../constants/api";
 import Spinner from "react-native-loading-spinner-overlay";
 import color from "../theme/Colour";
-// import styles from "./HighIVStyles";
+
 const HighIV = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
-  // Sample data for demonstration
   const { setSelectedIVcompany } = useDashboardContext();
-  const [stockData, setStockData] = useState([
-    {
-      name: "AARTIIND",
-      price: 100,
-    },
-    { name: "ABFRL", price: 150 },
-    { name: "ACC", price: 120 },
-    { name: "ALKEM", price: 80 },
-    { name: "ATUL", price: 200 },
-    { name: "BEL", price: 110 },
-    { name: "BHEL", price: 90 },
-    { name: "BPCL", price: 130 },
-    { name: "CIPLA", price: 180 },
-    { name: "CUB", price: 180 },
-    { name: "DABUR", price: 180 },
-    { name: "DLF", price: 180 },
-  ]);
-  // Sample data for demonstration
-
+  const [stockData, setStockData] = useState([]);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("9");
-
   const [options, setOptions] = useState([
     { label: "Top 3", value: "3" },
     { label: "Top 6", value: "6" },
     { label: "Top 9", value: "9" },
+    { label: "Top 12", value: "12" },
+    { label: "Top 15", value: "15" },
+    { label: "Top 18", value: "18" },
   ]);
+
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
+
   const handleRedirection = (company) => {
-    // console.log(company.name);
     setSelectedIVcompany(company.name);
     navigation.navigate("Dashboard");
   };
+
   const handleOptionSelect = async (value) => {
-    // console.log(value.value);
-    // console.log("value is ", value.value);
     setSelectedOption(value.value);
     setDropdownOpen(!isDropdownOpen);
     getAllCompanies();
   };
+
   const getAllCompanies = async () => {
-    // console.log("this is all companies");
     try {
       const token = await AsyncStorage.getItem("token");
       const res = await axios.get(`${HIGHIV}/${selectedOption}`, {
@@ -82,37 +65,34 @@ const HighIV = ({ navigation }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log("res is", res.data);
-      const newstockdata = res?.data?.data?.map((item) => {
-        return { name: item.name, price: item.atm_vol };
-      });
-      // console.log("new stock data", newstockdata);
-      // console.log("selected option ", selectedOption);
-      // console.log("stock data is ", stockData);
-      setStockData(newstockdata);
+      const newStockData = res?.data?.data?.map((item) => ({
+        name: item.name,
+        price: item.atm_vol,
+      }));
+      setStockData(newStockData);
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
-  useEffect(() => {
-    // setStockData(newstockdata);
-    // setCurrCompany(companyname);
-    getAllCompanies();
-  }, []);
+
   useEffect(() => {
     getAllCompanies();
-  }, [stockData]);
+  }, [selectedOption]);
+
   return (
     <View style={{ flex: 1, backgroundColor: color.bg_clr }}>
-      {/* <Spinner visible={loading} color="green" /> */}
       <View style={styles.selectedbar}>
-        <TouchableOpacity onPress={toggleDropdown}>
-          <Text style={styles.barfont}>
-            {selectedOption}
-            <Icon name="chevron-down" />
-          </Text>
-        </TouchableOpacity>
+        <Text style={styles.barfont1}>High IV Stocks</Text>
+        <View style={styles.TopCompany}>
+          <TouchableOpacity
+            onPress={toggleDropdown}
+            style={{ flexDirection: "row", alignItems: "center" }}
+          >
+            <Text style={styles.barfont}>Top {selectedOption}</Text>
+            <Icon name="chevron-down" color={color.bg_clr} />
+          </TouchableOpacity>
+        </View>
 
         <Modal
           visible={isDropdownOpen}
@@ -141,6 +121,14 @@ const HighIV = ({ navigation }) => {
             />
           </View>
         </Modal>
+      </View>
+
+      <View style={styles.resultContainer}>
+        <View style={styles.line} />
+        <Text style={styles.resultText}>
+          Total {stockData?.length} results found
+        </Text>
+        <View style={styles.line} />
       </View>
 
       <View style={styles.container}>
@@ -176,18 +164,18 @@ const HighIV = ({ navigation }) => {
               )}
             </TouchableOpacity>
           ))}
-
-        <ImageBackground
-          source={require("../assets/FooterLogo.png")}
-          style={styles.watermark}
-          blurRadius={7}
-        ></ImageBackground>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  // ... (your existing styles)
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+
   watermark: {
     position: "absolute",
     top: 210,
@@ -199,15 +187,31 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     position: "absolute",
-    // right: 0,
-    top: 30,
-    width: 200,
-    left: 7,
+    justifyContent: "flex-end",
+    right: 0,
+    top: 50,
+    width: responsiveWidth(40),
+    // left: 7,
 
     opacity: 0.93,
     backgroundColor: "#CCCCCC",
     borderRadius: 8,
     elevation: 4,
+  },
+  resultContainer: {
+    paddingTop: 24,
+    padding: 20,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  line: {
+    flex: 1,
+    height: 2,
+    backgroundColor: color.txt_clr, // Adjust the color as needed
+  },
+  resultText: {
+    marginHorizontal: 10,
+    color: color.txt_clr,
   },
 
   optionItem: {
@@ -253,16 +257,40 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   selectedbar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+
+    // justifyContent: "space-between",
     fontSize: 20,
-    marginTop: 20,
-    width: responsiveWidth(100),
+    marginTop: 40,
+
+    width: responsiveWidth(90),
     left: 17,
 
     // backgroundColor: color.bg_clr,
   },
   barfont: {
+    // marginRight: 40,
     fontSize: responsiveFontSize(2.5),
-    fontWeight: "bold",
+    // fontWeight: "bold",
+
+    borderRadius: 30,
+    paddingHorizontal: 10,
+    backgroundColor: "white",
+  },
+  TopCompany: {
+    // flexDirection: "row",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: color.txt_clr,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+  },
+  barfont1: {
+    // marginRight: 40,
+    fontSize: responsiveFontSize(2.5),
+    // fontWeight: "bold",
+    backgroundColor: color.bg_clr,
     color: color.txt_clr,
   },
 });

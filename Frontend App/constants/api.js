@@ -14,3 +14,5 @@ export const GET_USER_NOTIFICATION = `${HostedServer}/notification/`;
 export const LOWIV = `${HostedServer}/lowIV`;
 export const HIGHIV = `${HostedServer}/highIV`;
 export const HUGE_GAP = `${HostedServer}/huge_gap`;
+export const SUBSCRIPTION = `${HostedServer}/subscription/`;
+export const SUBSCRIPTIONPLANS = `${HostedServer}/getSubscriptionPlans`;

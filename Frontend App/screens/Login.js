@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  Keyboard,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { registerForPushNotificationsAsync } from "expo-notifications";
@@ -30,6 +31,7 @@ import { useToast } from "react-native-toast-notifications";
 const Login = ({ navigation }) => {
   const toast = useToast();
   const { setUserPhone, setUserOtp, phone } = useUserContext();
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   const clickemail = () => {
     navigation.navigate("Login_Pass");
@@ -115,6 +117,23 @@ const Login = ({ navigation }) => {
       console.log(err);
     }
   };
+  useEffect(() => {
+    // Listen for keyboard events
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => setIsKeyboardOpen(true)
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => setIsKeyboardOpen(false)
+    );
+
+    // Cleanup listeners when the component unmounts
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -211,21 +230,37 @@ const Login = ({ navigation }) => {
             click here
           </Text>
         </TouchableOpacity>
+        {isKeyboardOpen && (
+          <TouchableOpacity style={styles.roundButton} onPress={generateOtp}>
+            <Text
+              style={{
+                color: "white",
+
+                fontSize: 18,
+              }}
+            >
+              Get OTP
+            </Text>
+            <Icon name="chevron-right" size={32} color="white" />
+          </TouchableOpacity>
+        )}
       </View>
 
-      <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
-        <Button
-          title="NEXT"
-          color={color.btn_clr}
-          onPress={generateOtp}
-          buttonStyle={{
-            // marginTop: 25,
-            width: responsiveWidth(90),
-            alignSelf: "center",
-            borderRadius: 13,
-          }}
-        ></Button>
-      </View>
+      {!isKeyboardOpen && (
+        <View style={{ flex: 1, justifyContent: "flex-end", marginBottom: 30 }}>
+          <Button
+            title="NEXT"
+            color={color.btn_clr}
+            onPress={generateOtp}
+            buttonStyle={{
+              // marginTop: 25,
+              width: responsiveWidth(90),
+              alignSelf: "center",
+              borderRadius: 13,
+            }}
+          ></Button>
+        </View>
+      )}
 
       {/* <Image
         source={require("../assets/FooterLogo.png")}
@@ -243,6 +278,18 @@ const styles = StyleSheet.create({
     color: "white",
 
     // marginLeft: 2,
+  },
+  roundButton: {
+    flexDirection: "row",
+    position: "absolute",
+    right: 30,
+    bottom: -50,
+    justifyContent: "center",
+    alignItems: "center",
+
+    backgroundColor: color.btn_clr,
+    borderRadius: 50,
+    padding: 10,
   },
 
   logo: {

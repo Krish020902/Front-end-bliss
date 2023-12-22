@@ -71,7 +71,7 @@ const Notify = ({ navigation }) => {
         notification.data.data[0].created_at
       );
       // console.log(formattedDate);
-      setNotifications(notification.data.data);
+      setNotifications(notification?.data?.data);
       setTimeout(() => {
         setRefreshing(false);
       }, 2000);
